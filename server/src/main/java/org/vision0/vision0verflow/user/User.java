@@ -1,9 +1,9 @@
 package org.vision0.vision0verflow.user;
 
-import org.vision0.vision0verflow.user.dto.UserPatch;
-import org.vision0.vision0verflow.user.dto.UserPost;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.vision0.vision0verflow.user.dto.UserPatch;
+import org.vision0.vision0verflow.user.dto.UserPost;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name="app_user")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false, unique = true)
     private String email;

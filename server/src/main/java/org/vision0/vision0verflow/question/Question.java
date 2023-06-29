@@ -29,7 +29,10 @@ public class Question {
     public Question(QuestionPost questionPost) {
         this.title = questionPost.getTitle();
         this.content = questionPost.getContent();
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = this.createdAt;
+    }
+
+    public Question(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }

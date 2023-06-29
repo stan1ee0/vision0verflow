@@ -16,6 +16,8 @@ public class QuestionService {
     }
 
     public Question create(Question question) {
+        question.setCreatedAt(LocalDateTime.now());
+        question.setModifiedAt(question.getCreatedAt());
         Question createdQuestion = questionRepository.save(question);
 
         return createdQuestion;

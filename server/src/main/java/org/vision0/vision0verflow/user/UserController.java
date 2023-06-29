@@ -1,11 +1,11 @@
 package org.vision0.vision0verflow.user;
 
-import org.vision0.vision0verflow.user.dto.UserPatch;
-import org.vision0.vision0verflow.user.dto.UserPost;
-import org.vision0.vision0verflow.user.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.vision0.vision0verflow.user.dto.UserPatch;
+import org.vision0.vision0verflow.user.dto.UserPost;
+import org.vision0.vision0verflow.user.dto.UserResponse;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -24,8 +24,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users")
     public UserResponse postUser(@RequestBody UserPost userPost) {
-        User user = new User(userPost);
-        User registeredUser = userService.register(user);
+        User registeredUser = userService.register(new User(userPost));
 
         return new UserResponse(registeredUser);
     }
@@ -49,8 +48,7 @@ public class UserController {
     @PatchMapping("/users/{user-id}")
     public UserResponse patchUser(@PathVariable("user-id") long userId,
                                   @RequestBody UserPatch userPatch) {
-        User user = new User(userPatch);
-        User updatedUser = userService.update(userId, user);
+        User updatedUser = userService.update(userId, new User(userPatch));
 
         return new UserResponse(updatedUser);
     }

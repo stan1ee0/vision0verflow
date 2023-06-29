@@ -26,7 +26,9 @@ public class Answer {
 
     public Answer(AnswerPost answerPost) {
         this.content = answerPost.getContent();
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = this.createdAt;
+    }
+
+    public Answer(String content) {
+        this.content = content;
     }
 }
