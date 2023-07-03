@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const QLiContainer = styled.div`
+const Container = styled.div`
   border-top: 1px solid hsl(210, 8%, 90%);
   border-bottom: 1px solid hsl(210, 8%, 90%);
   padding: 16px;
@@ -10,7 +10,7 @@ const QLiContainer = styled.div`
   position: relative;
 `;
 
-const PostSummaryStats = styled.div`
+const Stats = styled.div`
   align-items: center;
   color: hsl(210, 8%, 45%);
   flex-direction: column;
@@ -47,7 +47,7 @@ const PostSummaryStats = styled.div`
   }
 `;
 
-const PostSummaryContent = styled.div`
+const Content = styled.div`
   flex-grow: 1;
   max-width: 100%;
   h3 {
@@ -92,7 +92,7 @@ const PostSummaryContent = styled.div`
   }
 `;
 
-const UserCardContainer = styled.div`
+const UserCard = styled.div`
   display: flex;
   font-size: 14px;
   flex-wrap: wrap;
@@ -105,8 +105,8 @@ const UserCardContainer = styled.div`
 
 export default function QuestionItem({ question }) {
   return (
-    <QLiContainer>
-      <PostSummaryStats>
+    <Container>
+      <Stats>
         <div>
           <span>0 vote</span>
         </div>
@@ -116,8 +116,8 @@ export default function QuestionItem({ question }) {
         <div>
           <span>0 views</span>
         </div>
-      </PostSummaryStats>
-      <PostSummaryContent>
+      </Stats>
+      <Content>
         <h3 className="Post-summary-title">
           <Link to={`/questions/${question.id}`}>{question.title}</Link>
         </h3>
@@ -127,13 +127,13 @@ export default function QuestionItem({ question }) {
               <li>No Tag</li>
             </ul>
           </div>
-          <UserCardContainer>
+          <UserCard>
             <div>Vision0</div>
             <div>Created At</div>
-          </UserCardContainer>
+          </UserCard>
         </div>
-      </PostSummaryContent>
-    </QLiContainer>
+      </Content>
+    </Container>
   );
 }
 

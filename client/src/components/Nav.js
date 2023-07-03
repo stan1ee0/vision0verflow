@@ -85,26 +85,24 @@ const StyledIoEarth = styled(IoEarth)`
 
 export default function Nav() {
   return (
-    <>
-      <NavContainer>
-        <div>
-          <MainMenu>
-            <li>Public</li>
-            <li className="youarehere">
-              <a href="/">
-                <StyledIoEarth />
-                <span>Questions</span>
-              </a>
-            </li>
-            <li>
-              <Link to="">Tags</Link>
-            </li>
-            <li>
-              <Link to="">Users</Link>
-            </li>
-          </MainMenu>
-        </div>
-      </NavContainer>
-    </>
+    <NavContainer>
+      <div>
+        <MainMenu>
+          <li>Public</li>
+          <li className="youarehere">
+            <a href="/">
+              <StyledIoEarth />
+              <span>Questions</span>
+            </a>
+          </li>
+          <li>
+            <Link to="">Tags</Link>
+          </li>
+          <li>
+            <Link to="">Users</Link>
+          </li>
+        </MainMenu>
+      </div>
+    </NavContainer>
   );
 }
