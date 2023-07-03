@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
@@ -10,7 +11,6 @@
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -21,6 +21,6 @@
   "rules": {
     "react/react-in-jsx-scope": 0,
     "react/jsx-uses-react": 0,
-    "prettier/prettier": "error"
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
   }
 }
