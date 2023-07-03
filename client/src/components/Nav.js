@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { IoEarth } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+
 const NavContainer = styled.div`
   display: block;
   position: sticky;
@@ -19,6 +20,7 @@ const NavContainer = styled.div`
   transform: translateZ(0);
   text-align: left;
 `;
+
 const MainMenu = styled.div`
   list-style: none;
   color: hsl(210, 8%, 35%);
@@ -74,11 +76,13 @@ const MainMenu = styled.div`
     cursor: pointer;
   }
 `;
+
 const StyledIoEarth = styled(IoEarth)`
   font-size: 18px;
   margin-top: 2px;
   margin-right: 3px;
 `;
+
 export default function Nav() {
   return (
     <>
@@ -98,7 +102,6 @@ export default function Nav() {
             <li>
               <Link to="">Users</Link>
             </li>
-            <img src="/images/nav-img.png" alt="nav-img" />
           </MainMenu>
         </div>
       </NavContainer>

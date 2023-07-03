@@ -1,7 +1,7 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import headerlogo from '../images/headerlogo.png';
 import hamlogo from '../images/hamburger.jpg';
-import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -14,6 +14,7 @@ const HeaderContainer = styled.div`
   position: sticky;
   top: 0;
 `;
+
 const Inner = styled.div`
   width: 82%;
   height: 50px;
@@ -21,14 +22,17 @@ const Inner = styled.div`
   display: inline-flex;
   justify-content: space-between;
 `;
+
 const Ham = styled.img`
   width: 16px;
   height: 12px;
   display: inline-block;
 `;
+
 const MainLogo = styled.img`
   width: 140px;
 `;
+
 const Nav = styled.div`
   width: 240px;
   display: flex;
@@ -48,10 +52,12 @@ const Nav = styled.div`
     background-color: #eee;
   }
 `;
+
 const Search = styled.input`
   width: 550px;
   padding: 6px 10px;
 `;
+
 const Button = styled.div`
   display: inline-block;
   margin-top: 0px;
@@ -78,6 +84,7 @@ const Button = styled.div`
     background-color: #316db9;
   }
 `;
+
 export default function Header() {
   return (
     <HeaderContainer>

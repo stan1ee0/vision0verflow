@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import QuestionBox from './QuestionBox';
+import QuestionItem from './QuestionItem';
 
 const rootUrl = process.env.HOST || 'http://localhost:8080';
 const questionsUrl = `${rootUrl}/questions`;
@@ -31,7 +31,7 @@ export default function QuestionList() {
   return (
     <div>
       {questions.map((question) => (
-        <QuestionBox key={question.id} data={question} />
+        <QuestionItem key={question.id} question={question} />
       ))}
     </div>
   );

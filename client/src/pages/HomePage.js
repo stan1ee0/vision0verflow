@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Nav from '../components/Nav';
 import Aside from '../components/Aside';
-import QuestionBox from '../components/QuestionBox';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -31,15 +30,12 @@ export default function HomePage() {
         <Content>
           <Main>
             <h1>Top Questions</h1>
-            <QuestionList>
-              {(question) => (
-                <QuestionBox
-                  key={question.id}
-                  title={question.title}
-                  description={question.description}
-                />
-              )}
-            </QuestionList>
+            <QuestionList />
+            <br />
+            <h2>
+              Looking for more? Browse the complete list of questions, or
+              popular tags. Help us answer unanswered questions.
+            </h2>
           </Main>
           <Aside />
         </Content>

@@ -7,6 +7,7 @@ const Sidebar = styled.div`
   margin-left: 25px;
   width: 300px;
 `;
+
 const SideWidget = styled.div`
   margin-bottom: 15px;
   width: 100%;
@@ -49,6 +50,7 @@ const SideWidget = styled.div`
     }
   }
 `;
+
 export default function Aside() {
   return (
     <Sidebar>

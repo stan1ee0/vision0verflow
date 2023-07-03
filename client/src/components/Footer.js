@@ -64,7 +64,8 @@ const CopyRight = styled.p`
   color: #9199a1; /* 9199A1 */
   margin-top: 12rem;
 `;
-function Footer() {
+
+export default function Footer() {
   return (
     <FooterWrapper>
       <LogoImage src={logo} alt="Stack Overflow" />
@@ -129,5 +130,3 @@ function Footer() {
     </FooterWrapper>
   );
 }
-
-export default Footer;
