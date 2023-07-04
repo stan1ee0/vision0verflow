@@ -1,9 +1,3 @@
-@media (prefers-color-scheme: dark) {
-}
-
-@media (prefers-color-scheme: dark) {
-}
-
 body.unified-theme {
     --theme-base-primary-color-h: 27;
     --theme-base-primary-color-s: 90%;
@@ -91,18 +85,6 @@ html,body {
     font-family: var(--theme-body-font-family);
     font-size: var(--fs-base);
     line-height: var(--lh-base)
-}
-
-@media (max-width: 640px) {
-    html.html__responsive:not(.html__unpinned-leftnav) ,html.html__responsive:not(.html__unpinned-leftnav) body {
-        font-size:11px
-    }
-}
-
-@media (max-width: 640px) {
-    html.html__responsive.html__unpinned-leftnav ,html.html__responsive.html__unpinned-leftnav body {
-        font-size:11px
-    }
 }
 
 body {
