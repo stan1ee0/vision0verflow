@@ -12,16 +12,16 @@ public class AnswerResponse {
     private long id;
     private String content;
     private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
-    private LocalDateTime deleteAt;
+    private LocalDateTime editedAt;
+    private LocalDateTime deletedAt;
     private boolean isDeleted;
 
     public AnswerResponse(Answer answer) {
         this.id = answer.getId();
         this.content = answer.getContent();
         this.createdAt = answer.getCreatedAt();
-        this.modifiedAt = answer.getModifiedAt();
-        this.deleteAt = answer.getDeletedAt();
+        this.editedAt = answer.getEditedAt();
+        this.deletedAt = answer.getDeletedAt();
         this.isDeleted = answer.isDeleted();
     }
 }

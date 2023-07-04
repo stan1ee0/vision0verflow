@@ -1,9 +1,10 @@
-package org.vision0.vision0verflow.answer;
+package org.vision0.vision0verflow.comment;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.vision0.vision0verflow.answer.dto.AnswerPatch;
-import org.vision0.vision0verflow.answer.dto.AnswerPost;
+import net.bytebuddy.asm.Advice;
+import org.vision0.vision0verflow.comment.dto.CommentPatch;
+import org.vision0.vision0verflow.comment.dto.CommentPost;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-public class Answer {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,17 +24,17 @@ public class Answer {
     private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
     @Column(nullable = false)
-    private boolean deleted;
+    private boolean isDeleted;
 
-    public Answer(AnswerPost answerPost) {
-        this.content = answerPost.getContent();
+    public Comment(CommentPost commentPost) {
+        this.content = commentPost.getContent();
     }
 
-    public Answer(AnswerPatch answerPatch) {
-        this.content = answerPatch.getContent();
+    public Comment(CommentPatch commentPatch) {
+        this.content = commentPatch.getContent();
     }
 
-    public Answer(String content) {
+    public Comment(String content) {
         this.content = content;
     }
 }

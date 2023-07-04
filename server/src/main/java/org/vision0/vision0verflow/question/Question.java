@@ -2,6 +2,7 @@ package org.vision0.vision0verflow.question;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Question {
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
-    private LocalDateTime modifiedAt;
+    private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
     @Column(nullable = false)
     private boolean deleted;
@@ -29,6 +30,11 @@ public class Question {
     public Question(QuestionPost questionPost) {
         this.title = questionPost.getTitle();
         this.content = questionPost.getContent();
+    }
+
+    public Question(QuestionPatch questionPatch) {
+        this.title = questionPatch.getTitle();
+        this.content = questionPatch.getContent();
     }
 
     public Question(String title, String content) {

@@ -3,6 +3,7 @@ package org.vision0.vision0verflow.question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
 import org.vision0.vision0verflow.question.dto.QuestionResponse;
 
@@ -10,6 +11,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 public class QuestionController {
     private final QuestionService questionService;
@@ -34,6 +36,28 @@ public class QuestionController {
         return allQuestions.stream()
                 .map(question -> new QuestionResponse(question))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/questions/{question-id}")
+    public QuestionResponse getQuestion(@PathVariable("question-id") long questionId) {
+        Question foundQuestion = questionService.find(questionId);
+
+        return new QuestionResponse(foundQuestion);
+    }
+
+    @PatchMapping("questions/{question-id}")
+    public QuestionResponse patchQuestion(@PathVariable("question-id") long questionId,
+                                          @RequestBody QuestionPatch questionPatch) {
+        Question editedQuestion = questionService.edit(questionId, new Question(questionPatch));
+
+        return new QuestionResponse(editedQuestion);
+    }
+
+    @DeleteMapping("questions/{question-id}")
+    public QuestionResponse deleteQuestion(@PathVariable("question-id") long questionId) {
+        Question deletedQuestion = questionService.delete(questionId);
+
+        return new QuestionResponse(deletedQuestion);
     }
 
     @PostConstruct

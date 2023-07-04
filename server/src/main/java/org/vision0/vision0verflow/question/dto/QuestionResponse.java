@@ -13,8 +13,8 @@ public class QuestionResponse {
     private String title;
     private String content;
     private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
-    private LocalDateTime deleteAt;
+    private LocalDateTime editedAt;
+    private LocalDateTime deletedAt;
     private boolean isDeleted;
 
     public QuestionResponse(Question question) {
@@ -22,8 +22,8 @@ public class QuestionResponse {
         this.title = question.getTitle();
         this.content = question.getContent();
         this.createdAt = question.getCreatedAt();
-        this.modifiedAt = question.getModifiedAt();
-        this.deleteAt = question.getDeletedAt();
+        this.editedAt = question.getEditedAt();
+        this.deletedAt = question.getDeletedAt();
         this.isDeleted = question.isDeleted();
     }
 }
