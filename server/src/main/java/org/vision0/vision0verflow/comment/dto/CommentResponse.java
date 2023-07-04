@@ -13,7 +13,7 @@ public class CommentResponse {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime editedAt;
-    private LocalDateTime deleteAt;
+    private LocalDateTime deletedAt;
     private boolean isDeleted;
 
     public CommentResponse(Comment comment) {
@@ -21,7 +21,7 @@ public class CommentResponse {
         this.content = comment.getContent();
         this.createdAt = comment.getCreatedAt();
         this.editedAt = comment.getEditedAt();
-        this.deleteAt = comment.getDeletedAt();
+        this.deletedAt = comment.getDeletedAt();
         this.isDeleted = comment.isDeleted();
     }
 }
