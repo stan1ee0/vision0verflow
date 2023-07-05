@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const Main = styled.div`
@@ -48,9 +50,50 @@ const Button = styled.button`
   user-select: none;
 `;
 
+const rootUrl = process.env.HOST || 'http://localhost:8080';
+const questionsUrl = `${rootUrl}/questions`;
+
 export default function QuestionInput() {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      title: title,
+      content: content,
+    };
+
+    fetch(questionsUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error posting question');
+        }
+      })
+      .then((data) => {
+        console.log('Question posted successfully!');
+        setTitle('');
+        setContent('');
+        const questionId = data.id;
+        navigate.push(`/questions/${questionId}`);
+      })
+      .catch((error) => {
+        console.error('Error posting question:', error);
+      });
+  };
+
   return (
-    <form action="/questions/ask/submit" method="post">
+    <form onSubmit={handleSubmit}>
       <Main>
         <Box>
           <div>
@@ -70,23 +113,31 @@ export default function QuestionInput() {
               type="text"
               maxLength={300}
               placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
             />
           </div>
         </Box>
         <Box>
           <div>
-            <label htmlFor="body"> Body </label>
+            <label htmlFor="content"> Content </label>
           </div>
           <div>
-            <label htmlFor="body">
+            <label htmlFor="content">
               Introduce the problem and expand on what you put in the title.
             </label>
           </div>
           <div>
-            <Textarea rows={10}></Textarea>
+            <Textarea
+              id="content"
+              name="content"
+              value={content}
+              rows={10}
+              onChange={(event) => setContent(event.target.value)}
+            ></Textarea>
           </div>
         </Box>
-        <Button type="button">Post Your Question</Button>
+        <Button type="submit">Post Your Question</Button>
       </Main>
     </form>
   );

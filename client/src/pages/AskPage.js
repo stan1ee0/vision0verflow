@@ -27,10 +27,10 @@ const Content = styled.div`
   border-left: 0;
   border-right: 0;
   border-radius: 0;
-  border: 1px solid var(--theme-content-border-color);
+  border: 1px solid sl(210, 8%, 85%);
   border-top-width: 0;
   border-bottom-width: 0;
-  padding: var(--su24);
+  padding: 24px;
   box-sizing: border-box;
 `;
 
