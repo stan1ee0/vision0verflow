@@ -2,9 +2,9 @@ import { styled } from 'styled-components';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import QuestionInput from '../components/QuestionInput';
+import AskInput from '../components/AskInput';
 
-const Container = styled.div`
+const AskContainer = styled.div`
   max-width: 100%;
   justify-content: center;
   margin: 0;
@@ -17,7 +17,7 @@ const Container = styled.div`
   background-color: hsl(210, 8%, 97.5%);
 `;
 
-const Content = styled.div`
+const AskContent = styled.div`
   min-height: 750px;
   overflow: visible;
   width: 100%;
@@ -34,7 +34,7 @@ const Content = styled.div`
   box-sizing: border-box;
 `;
 
-const Notice = styled.div`
+const AskHeader = styled.div`
   padding: 24px;
   background-color: hsl(206, 100%, 97%);
   border-style: solid;
@@ -46,13 +46,13 @@ export default function AskPage() {
   return (
     <div>
       <Header />
-      <Container>
-        <Content>
+      <AskContainer>
+        <AskContent>
           <div>
             <div>
               <h1>Ask a public question</h1>
             </div>
-            <Notice>
+            <AskHeader>
               <h2>Writing a good question</h2>
               <p>
                 You’re ready to ask a programming-related question and this form
@@ -75,11 +75,11 @@ export default function AskPage() {
                 </li>
                 <li>Review your question and post it to the site.</li>
               </ul>
-            </Notice>
+            </AskHeader>
           </div>
-          <QuestionInput />
-        </Content>
-      </Container>
+          <AskInput />
+        </AskContent>
+      </AskContainer>
       <Footer />
     </div>
   );

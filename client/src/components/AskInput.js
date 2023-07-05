@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { rootUrl } from '../config';
 
-const Main = styled.div`
+const AskInputMain = styled.div`
   margin-bottom: 48px;
   display: block;
 `;
 
-const Box = styled.div`
+const AskInputBox = styled.div`
   background-color: white;
   border-color: hsl(210, 8%, 90%);
   border-radius: 3px;
@@ -50,13 +51,12 @@ const Button = styled.button`
   user-select: none;
 `;
 
-const rootUrl = process.env.HOST || 'http://localhost:8080';
-const questionsUrl = `${rootUrl}/questions`;
-
-export default function QuestionInput() {
+export default function AskInput() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
+
+  const questionsUrl = `${rootUrl}/questions`;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -94,8 +94,8 @@ export default function QuestionInput() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Main>
-        <Box>
+      <AskInputMain>
+        <AskInputBox>
           <div>
             <label htmlFor="title"> Title </label>
           </div>
@@ -117,8 +117,8 @@ export default function QuestionInput() {
               onChange={(event) => setTitle(event.target.value)}
             />
           </div>
-        </Box>
-        <Box>
+        </AskInputBox>
+        <AskInputBox>
           <div>
             <label htmlFor="content"> Content </label>
           </div>
@@ -131,14 +131,14 @@ export default function QuestionInput() {
             <Textarea
               id="content"
               name="content"
-              value={content}
               rows={10}
+              value={content}
               onChange={(event) => setContent(event.target.value)}
             ></Textarea>
           </div>
-        </Box>
+        </AskInputBox>
         <Button type="submit">Post Your Question</Button>
-      </Main>
+      </AskInputMain>
     </form>
   );
 }
