@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
+import { rootUrl } from '../config';
 
 import QuestionItem from './QuestionItem';
-
-const rootUrl = process.env.HOST || 'http://localhost:8080';
-const questionsUrl = `${rootUrl}/questions`;
 
 export default function QuestionList() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const questionsUrl = `${rootUrl}/questions`;
 
   useEffect(() => {
     const fetchQuestions = async () => {
