@@ -6,8 +6,10 @@ import { rootUrl } from '../config';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Nav from '../components/Nav';
+import Aside from '../components/Aside';
 
 const QuestionContainer = styled.div`
+  margin-top: 0;
   max-width: 1264px;
   width: 100%;
   background: none;
@@ -31,6 +33,7 @@ const QuestionContent = styled.div`
   border-right-width: 0;
   padding: 24px;
   box-sizing: border-box;
+  margin: 0 auto;
 `;
 
 const QuestionHeader = styled.div`
@@ -39,15 +42,20 @@ const QuestionHeader = styled.div`
   display: flex !important;
 `;
 
-const QuestionMain = styled.div`
-  width: 100%;
-  float: none;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
+const H1 = styled.h1`
+  overflow-wrap: break-word !important;
+  font-size: 2.07692308rem !important;
+  margin-bottom: 8px !important;
+  flex: 1 auto !important;
+  line-height: 1.3;
+  margin: 0 0 1em;
 `;
 
-const AskButton = styled.div`
+const AskButtonContainer = styled.div`
+  margin-left: 12 !important;
+`;
+
+const A = styled.a`
   background-color: hsl(206, 100%, 52%);
   color: hsl(0, 0%, 100%);
   border: 1px solid transparent;
@@ -65,6 +73,13 @@ const AskButton = styled.div`
   text-align: center;
   text-decoration: none;
   user-select: none;
+`;
+
+const QuestionMain = styled.div`
+  width: calc(100% - 300px - 24px);
+  float: left;
+  margin: 0;
+  padding: 0;
 `;
 
 export default function QuestionPage() {
@@ -95,17 +110,18 @@ export default function QuestionPage() {
         <QuestionContent>
           <QuestionHeader>
             <div>
-              <h1>{question?.title}</h1>
+              <H1>{question?.title}</H1>
             </div>
-            <AskButton>
-              <a href="/questions/ask"> Ask Question </a>
-            </AskButton>
+            <AskButtonContainer>
+              <A href="/questions/ask"> Ask Question </A>
+            </AskButtonContainer>
           </QuestionHeader>
           <QuestionMain>
             <div>
               <p>{question?.content}</p>
             </div>
           </QuestionMain>
+          <Aside />
         </QuestionContent>
       </QuestionContainer>
       <Footer />

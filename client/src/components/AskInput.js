@@ -8,7 +8,15 @@ const AskInputMain = styled.div`
   display: block;
 `;
 
+const AskInputBoxContainer = styled.div`
+  width: 100% !important;
+  display: flex !important;
+  align-items: flex-start !important;
+`;
+
 const AskInputBox = styled.div`
+  width: 70% !important;
+  flex-shrink: 0 !important;
   background-color: white;
   border-color: hsl(210, 8%, 90%);
   border-radius: 3px;
@@ -95,48 +103,52 @@ export default function AskInput() {
   return (
     <form onSubmit={handleSubmit}>
       <AskInputMain>
-        <AskInputBox>
-          <div>
-            <label htmlFor="title"> Title </label>
-          </div>
-          <div>
-            <label htmlFor="title">
-              {' '}
-              Be specific and imagine you’re asking a question to another
-              person.{' '}
-            </label>
-          </div>
-          <div>
-            <Input
-              id="title"
-              name="title"
-              type="text"
-              maxLength={300}
-              placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-            />
-          </div>
-        </AskInputBox>
-        <AskInputBox>
-          <div>
-            <label htmlFor="content"> Content </label>
-          </div>
-          <div>
-            <label htmlFor="content">
-              Introduce the problem and expand on what you put in the title.
-            </label>
-          </div>
-          <div>
-            <Textarea
-              id="content"
-              name="content"
-              rows={10}
-              value={content}
-              onChange={(event) => setContent(event.target.value)}
-            ></Textarea>
-          </div>
-        </AskInputBox>
+        <AskInputBoxContainer>
+          <AskInputBox>
+            <div>
+              <label htmlFor="title"> Title </label>
+            </div>
+            <div>
+              <label htmlFor="title">
+                {' '}
+                Be specific and imagine you’re asking a question to another
+                person.{' '}
+              </label>
+            </div>
+            <div>
+              <Input
+                id="title"
+                name="title"
+                type="text"
+                maxLength={300}
+                placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+              />
+            </div>
+          </AskInputBox>
+        </AskInputBoxContainer>
+        <AskInputBoxContainer>
+          <AskInputBox>
+              <div>
+                <label htmlFor="content"> Content </label>
+              </div>
+              <div>
+                <label htmlFor="content">
+                  Introduce the problem and expand on what you put in the title.
+                </label>
+              </div>
+              <div>
+                <Textarea
+                  id="content"
+                  name="content"
+                  rows={10}
+                  value={content}
+                  onChange={(event) => setContent(event.target.value)}
+                ></Textarea>
+              </div>
+            </AskInputBox>
+        </AskInputBoxContainer>
         <Button type="submit">Post Your Question</Button>
       </AskInputMain>
     </form>

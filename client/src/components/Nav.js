@@ -3,22 +3,13 @@ import { IoEarth } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 const NavContainer = styled.div`
-  display: block;
-  position: sticky;
-  flex-direction: column;
-  justify-content: center;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  z-index: 1000;
-  width: 160px;
+  width: 164px;
   flex-shrink: 0;
-
-  box-shadow: 0 0 0 hsl(210deg 8% 5% / 5%);
+  z-index: 1000;
+  box-shadow: 0 0 0 hsla(210,8%,5%,0.05);
+  transition: box-shadow ease-in-out .1s,transform ease-in-out .1s;
   transform: translateZ(0);
-  text-align: left;
+  position: relative !important;
 `;
 
 const MainMenu = styled.div`
@@ -90,7 +81,7 @@ export default function Nav() {
         <MainMenu>
           <li>Public</li>
           <li className="youarehere">
-            <a href="/">
+            <a href="/questions">
               <StyledIoEarth />
               <span>Questions</span>
             </a>

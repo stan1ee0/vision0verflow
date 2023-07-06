@@ -4,15 +4,18 @@ import headerlogo from '../images/headerlogo.png';
 import hamlogo from '../images/hamburger.jpg';
 
 const HeaderContainer = styled.div`
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  min-width: auto;
   width: 100%;
-  height: 50px;
+  z-index: 5050;
+  background-color: hsl(0,0%,100%);
+  height: 56px;
   display: flex;
-  justify-content: center;
-  border-top: 3px solid #e5883e;
-  border-bottom: 1px solid #d6d9db;
-  background-color: #ffffff;
-  position: sticky;
-  top: 0;
+  border-top: 3px solid hsl(27, 90%, 55%);
+  border-bottom: 1px solid hsl(210,8%,85%);
+  align-items: center;
 `;
 
 const Inner = styled.div`
