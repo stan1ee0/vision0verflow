@@ -1,1 +1,1 @@
-export const rootUrl = process.env.HOST || 'http://localhost:8080';
+export const rootUrl = 'http://localhost:8080';
