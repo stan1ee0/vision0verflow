@@ -20,6 +20,7 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String name;
+    private String password;
     @Column(nullable = false)
     private LocalDateTime registeredAt;
     private LocalDateTime terminatedAt;
@@ -29,14 +30,17 @@ public class User {
     public User(UserPost userPost) {
         this.email = userPost.getEmail();
         this.name = userPost.getName();
+        this.password = userPost.getPassword();
     }
 
     public User(UserPatch userPatch) {
         this.name = userPatch.getName();
+        this.password = userPatch.getPassword();
     }
 
-    public User(String email, String name) {
+    public User(String email, String name, String password) {
         this.email = email;
         this.name = name;
+        this.password = password;
     }
 }

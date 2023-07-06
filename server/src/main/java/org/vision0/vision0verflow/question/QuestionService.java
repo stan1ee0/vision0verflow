@@ -20,6 +20,7 @@ public class QuestionService {
     public Question create(Question question) {
         question.setCreatedAt(LocalDateTime.now());
         question.setEditedAt(question.getCreatedAt());
+
         Question createdQuestion = questionRepository.save(question);
 
         return createdQuestion;
@@ -45,8 +46,10 @@ public class QuestionService {
 
         if (question.getTitle() != null)
             foundQuestion.setTitle(question.getTitle());
+
         if (question.getContent() != null)
             foundQuestion.setContent(question.getContent());
+
         foundQuestion.setEditedAt(LocalDateTime.now());
 
         Question editedQuestion = questionRepository.save(foundQuestion);

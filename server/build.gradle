@@ -30,6 +30,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
+	implementation 'org.springframework.security:spring-security-core'
 }
 
 tasks.named('test') {

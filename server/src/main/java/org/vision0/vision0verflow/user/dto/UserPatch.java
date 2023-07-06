@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class UserPatch {
     private String name;
+    private String password;
 }

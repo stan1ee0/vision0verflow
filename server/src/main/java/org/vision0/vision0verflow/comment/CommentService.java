@@ -20,6 +20,7 @@ public class CommentService {
     public Comment create(Comment comment) {
         comment.setCreatedAt(LocalDateTime.now());
         comment.setEditedAt(comment.getCreatedAt());
+
         Comment createdComment = commentRepository.save(comment);
 
         return createdComment;

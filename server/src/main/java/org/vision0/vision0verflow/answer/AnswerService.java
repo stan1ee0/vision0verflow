@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.vision0.vision0verflow.question.Question;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +20,7 @@ public class AnswerService {
     public Answer create(Answer answer) {
         answer.setCreatedAt(LocalDateTime.now());
         answer.setEditedAt(answer.getCreatedAt());
+
         Answer createdAnswer = answerRepository.save(answer);
 
         return createdAnswer;
