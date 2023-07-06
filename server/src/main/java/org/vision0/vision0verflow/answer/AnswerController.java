@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.vision0.vision0verflow.answer.dto.AnswerPatch;
 import org.vision0.vision0verflow.answer.dto.AnswerPost;
 import org.vision0.vision0verflow.answer.dto.AnswerResponse;
-import org.vision0.vision0verflow.question.Question;
-import org.vision0.vision0verflow.question.dto.QuestionPatch;
-import org.vision0.vision0verflow.question.dto.QuestionResponse;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

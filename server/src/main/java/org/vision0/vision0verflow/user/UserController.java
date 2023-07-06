@@ -62,7 +62,7 @@ public class UserController {
 
     @PostConstruct
     public void setInitialUsers() {
-        userService.register(new User("vision@verflow.org", "Vision0"));
-        userService.register(new User("test@verflow.org", "Test0"));
+        userService.register(new User("vision@verflow.org", "Vision0", "Vision0verflow"));
+        userService.register(new User("stan1ee@naver.com", "Stan Lee", "Stan1ee0verflow"));
     }
 }
