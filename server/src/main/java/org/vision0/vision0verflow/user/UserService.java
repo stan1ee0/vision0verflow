@@ -49,6 +49,13 @@ public class UserService {
         return foundUser;
     }
 
+    public User find(String email) {
+        User foundUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return foundUser;
+    }
+
     public User update(long userId, User user) {
         User foundUser = find(userId);
         if (user.getName() == null && user.getPassword() == null)
@@ -80,7 +87,7 @@ public class UserService {
         return terminatedUser;
     }
 
-    public boolean isRegistered(String email) {
+    boolean isRegistered(String email) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
         return optionalUser.isPresent();
