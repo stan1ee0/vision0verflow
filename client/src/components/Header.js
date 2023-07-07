@@ -204,7 +204,7 @@ export default function Header() {
         </Form>
         <Nav>
           <NavOl>
-            <NavLi role="none"><LoginA>Log in</LoginA></NavLi>
+            <NavLi role="none"><LoginA href="/users/login">Log in</LoginA></NavLi>
             <NavLi role="none"><SignupA>Sign up</SignupA></NavLi>
           </NavOl>
         </Nav>
