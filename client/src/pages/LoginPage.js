@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
 import Header from '../components/Header';
 

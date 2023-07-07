@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
 const AskInputMain = styled.div`
   margin-bottom: 48px;

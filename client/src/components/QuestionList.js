@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
 import QuestionItem from './QuestionItem';
 

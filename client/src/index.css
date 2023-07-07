@@ -15,6 +15,19 @@ body *, body *:before, body *:after {
     box-sizing: inherit
 }
 
+header {
+    min-width: auto;
+    width: 100%;
+    z-index: 5050;
+    background-color: hsl(0,0%,100%);
+    height: 56px;
+    display: flex;
+    border-top: 3px solid hsl(27, 90%, 55%);
+    border-bottom: 1px solid hsl(210,8%,85%);
+    position: relative;
+    align-items: center;
+}
+
 select, input, button {
     font-size: 100%
 }
@@ -257,6 +270,80 @@ body>.container {
     display: flex;
     justify-content: space-between;
     margin: 0 auto
+}
+
+.header-button {
+    display: flex;
+    height: 100%;
+    padding: 0 16px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-logo {
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+}
+
+.header-content {
+    display: flex;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    margin-left: auto;
+}
+
+.navigation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 2px 0;
+    display: flex;
+    list-style: none;
+    margin: 0;
+}
+
+.navigation-item {
+    color: hsl(210,8%,35%);
+    background-color: none;
+    font: unset;
+    font-size: unset;
+    padding: 6px 12px;
+    white-space: nowrap;
+    align-items: center;
+    border: none;
+    border-radius: 1000px;
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    user-select: auto;
+}
+
+.button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: none;
+    color: hsl(206,100%,40%);
+    font-size: 13px;
+    padding: 0.8em;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: normal;
+    line-height: calc(15 / 13);
+    position: relative;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
 }
 
 .left-sidebar {
