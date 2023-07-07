@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import QuestionsPage from './pages/QuestionsPage';
 import AskPage from './pages/AskPage';
 import QuestionPage from './pages/QuestionPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/questions" element={<QuestionsPage />} />
         <Route path="/questions/ask" element={<AskPage />} />
         <Route path="/questions/:questionId" element={<QuestionPage />} />
+        <Route path="/users/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
