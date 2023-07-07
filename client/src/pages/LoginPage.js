@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { styled } from 'styled-components';
+import { rootUrl } from '../config';
 
 import Header from '../components/Header';
 
@@ -201,6 +203,45 @@ const BottomContainer = styled.div`
 `;
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const authUrl = `${rootUrl}/auth`;
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    fetch(authUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error authenticating user');
+      }
+    })
+    .then((data) => {
+      console.log('User authenticated successfully!');
+      setEmail('');
+      setPassword('');
+      const token = data.token;
+      localStorage.setItem('token', token);
+    })
+    .catch((error) => {
+      console.error('Error authenticating user:', error);
+    });
+  };
+
   return(
     <div>
       <Header />
@@ -233,21 +274,25 @@ export default function LoginPage() {
               </GithubButton>
             </ButtonsContainer>
             <FormContainer>
-              <Form id="login-form" action="/users/login" method="POST">
+              <Form onSubmit={handleSubmit}>
                 <EmailContainer>
                   <Label for="email">Email</Label>
                   <InputContainer>
-                    <Input id="email" type="email" size="30" maxlength="100" name="email"></Input>
+                    <Input id="email" type="email" size="30" maxlength="100" name="email"
+                      value={email} onChange={(event) => setEmail(event.target.value)}
+                    />
                   </InputContainer>
                 </EmailContainer>
                 <PasswordContainer>
                   <InputContainer>
-                    <Input id="password" type="password" autocomplete="off" name="password"></Input>
+                    <Input id="password" type="password" autocomplete="off" name="password"
+                      value={password} onChange={(event) => setPassword(event.target.value)}
+                    />
                   </InputContainer>
                   <Label for="password">Password</Label>
                 </PasswordContainer>
                 <ButtonContainer>
-                  <LoginButton id="submit-button" name="submit-button">Log in</LoginButton>
+                  <LoginButton type="submit">Log in</LoginButton>
                 </ButtonContainer>
               </Form>
             </FormContainer>

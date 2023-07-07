@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-const NavContainer = styled.div`
+const LsideContainer = styled.div`
   width: 164px;
   flex-shrink: 0;
   z-index: 1000;
@@ -64,9 +64,9 @@ const NavA = styled.a`
   font-size: 13px;
 `;
 
-export default function LSide() {
+export default function Lside() {
   return (
-    <NavContainer>
+    <LsideContainer>
       <StickyContainer>
         <Nav role="navigation">
           <NavOl>
@@ -82,6 +82,6 @@ export default function LSide() {
           </NavOl>
         </Nav>
       </StickyContainer>
-    </NavContainer>
+    </LsideContainer>
   );
 }

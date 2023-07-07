@@ -81,23 +81,23 @@ export default function AskInput() {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error posting question');
-        }
-      })
-      .then((data) => {
-        console.log('Question posted successfully!');
-        setTitle('');
-        setContent('');
-        const questionId = data.id;
-        navigate.push(`/questions/${questionId}`);
-      })
-      .catch((error) => {
-        console.error('Error posting question:', error);
-      });
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error posting question');
+      }
+    })
+    .then((data) => {
+      console.log('Question posted successfully!');
+      setTitle('');
+      setContent('');
+      const questionId = data.id;
+      navigate.push(`/questions/${questionId}`);
+    })
+    .catch((error) => {
+      console.error('Error posting question:', error);
+    });
   };
 
   return (
@@ -116,14 +116,9 @@ export default function AskInput() {
               </label>
             </div>
             <div>
-              <Input
-                id="title"
-                name="title"
-                type="text"
-                maxLength={300}
+              <Input id="title" name="title" type="text" maxLength={300}
                 placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
+                value={title} onChange={(event) => setTitle(event.target.value)}
               />
             </div>
           </AskInputBox>
@@ -139,13 +134,9 @@ export default function AskInput() {
                 </label>
               </div>
               <div>
-                <Textarea
-                  id="content"
-                  name="content"
-                  rows={10}
-                  value={content}
-                  onChange={(event) => setContent(event.target.value)}
-                ></Textarea>
+                <Textarea id="content" name="content" rows={10}
+                  value={content} onChange={(event) => setContent(event.target.value)}
+                />
               </div>
             </AskInputBox>
         </AskInputBoxContainer>
