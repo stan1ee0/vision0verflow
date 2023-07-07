@@ -4,7 +4,7 @@ import QuestionList from '../components/QuestionList';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LSide from '../components/LSide';
-import Aside from '../components/ASide';
+import ASide from '../components/ASide';
 
 const HomeContainer = styled.div`
   margin-top: 0;
@@ -118,7 +118,7 @@ export default function HomePage() {
               </H2>
             </QuestionListContainer>
           </HomeMain>
-          <Aside />
+          <ASide />
         </HomeContent>
       </HomeContainer>
       <Footer />
