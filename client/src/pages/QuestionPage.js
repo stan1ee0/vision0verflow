@@ -5,8 +5,8 @@ import { rootUrl } from '../config';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Nav from '../components/Nav';
-import Aside from '../components/Aside';
+import LSide from '../components/LSide';
+import ASide from '../components/ASide';
 
 const QuestionContainer = styled.div`
   margin-top: 0;
@@ -106,7 +106,7 @@ export default function QuestionPage() {
     <div>
       <Header />
       <QuestionContainer>
-        <Nav />
+        <LSide />
         <QuestionContent>
           <QuestionHeader>
             <div>
@@ -121,7 +121,7 @@ export default function QuestionPage() {
               <p>{question?.content}</p>
             </div>
           </QuestionMain>
-          <Aside />
+          <ASide />
         </QuestionContent>
       </QuestionContainer>
       <Footer />

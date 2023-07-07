@@ -3,8 +3,8 @@ import { styled } from 'styled-components';
 import QuestionList from '../components/QuestionList';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Nav from '../components/Nav';
-import Aside from '../components/Aside';
+import LSide from '../components/LSide';
+import Aside from '../components/ASide';
 
 const HomeContainer = styled.div`
   margin-top: 0;
@@ -100,7 +100,7 @@ export default function HomePage() {
     <div>
       <Header />
       <HomeContainer>
-        <Nav />
+        <LSide />
         <HomeContent>
           <HomeMain>
             <HomeHeader>

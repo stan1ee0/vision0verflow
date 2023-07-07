@@ -3,7 +3,7 @@ import { FaStackOverflow } from 'react-icons/fa';
 import { BiMessageAlt } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 
-const AsideContainer = styled.div`
+const ASideContainer = styled.div`
   margin-left: 24px;
   float: right;
   width: 300px;
@@ -53,9 +53,9 @@ const SideWidget = styled.div`
   }
 `;
 
-export default function Aside() {
+export default function ASide() {
   return (
-    <AsideContainer>
+    <ASideContainer>
       <SideWidget>
         <ul>
           <li className="widget-title">The Overflow Blog</li>
@@ -108,6 +108,6 @@ export default function Aside() {
           </li>
         </ul>
       </SideWidget>
-    </AsideContainer>
+    </ASideContainer>
   );
 }
