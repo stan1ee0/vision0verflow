@@ -117,7 +117,7 @@ export default function Header() {
         </ol>
         <Form onSubmit={handleSubmit}>
           <InputContainer>
-            <Input name="q" type="text" role="combobox" autocomplete="off" maxlength="240"
+            <Input name="q" type="text" role="combobox" autoComplete="off" maxLength="240"
               placeholder="Search..."
               value={keyword} onChange={(event) => setKeyword(event.target.value)}
             />

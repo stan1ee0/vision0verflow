@@ -1,27 +1,7 @@
 import { styled } from 'styled-components';
 
 const LsideContainer = styled.div`
-  width: 164px;
-  flex-shrink: 0;
-  z-index: 1000;
-  box-shadow: 0 0 0 hsla(210,8%,5%,0.05);
-  transition: box-shadow ease-in-out .1s,transform ease-in-out .1s;
-  transform: translateZ(0);
   position: relative !important;
-`;
-
-const StickyContainer = styled.div`
-  position: sticky;
-  width: auto;
-  margin-bottom: 8px;
-  overflow-y: auto;
-  top: 56px;
-  max-height: calc(100vh - 56px);
-  padding-top: 24px;
-`;
-
-const Nav = styled.nav`
-  display: block;
 `;
 
 const NavOl = styled.ol`
@@ -36,8 +16,8 @@ const NavLi = styled.li`
 
 const HomeA = styled.a`
   font-weight: bold;
-  background: hsl(210,8%,95%);
-  color: hsl(210,8%,5%);
+  background: hsl(210, 8%, 95%);
+  color: hsl(210, 8%, 5%);
   border-right: 3px solid hsl(27, 90%, 55%);
   display: block;
   padding: 4px;
@@ -48,15 +28,36 @@ const HomeA = styled.a`
 
 const PublicLi = styled.li`
   text-transform: uppercase !important;
-  color: hsl(210,8%,45%) !important;
+  color: hsl(210, 8%, 45%) !important;
   font-size: 11px !important;
   margin-left: 8px !important;
   margin-bottom: 4px !important;
   margin-top: 16px !important;
 `;
 
+const QuestionsA = styled.a`
+  display: flex;
+  padding: 8px 6px 8px 0;
+  color: hsl(210, 8%, 35%);
+  line-height: 2;
+  font-size: 13px;
+  padding-left: 8px !important;
+`;
+
+const Svg = styled.svg`
+  flex-shrink: 0;
+  margin-top: -1px;
+  margin-right: 4px;
+  color: hsl(210, 8%, 55%);
+  vertical-align: bottom;
+`;
+
+const QuestionsSpan = styled.span`
+  line-height: calc(17 / 13);
+`;
+
 const NavA = styled.a`
-  color: hsl(210,8%,35%);
+  color: hsl(210, 8%, 35%);
   display: block;
   padding: 4px;
   padding-left: 30px;
@@ -66,22 +67,28 @@ const NavA = styled.a`
 
 export default function Lside() {
   return (
-    <LsideContainer>
-      <StickyContainer>
-        <Nav role="navigation">
+    <LsideContainer className="left-sidebar">
+      <div className='sticky-container'>
+        <nav role="navigation">
           <NavOl>
             <NavLi><HomeA href="/">Home</HomeA></NavLi>
             <li>
               <NavOl>
-                <PublicLi>Pubclic</PublicLi>
-                <NavLi><NavA href="/questions">Questions</NavA></NavLi>
+                <PublicLi>Public</PublicLi>
+                <NavLi>
+                  <QuestionsA href="/questions">
+                  <Svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M9 1C4.64 1 1 4.64 1 9c0 4.36 3.64 8 8 8 4.36 0 8-3.64 8-8 0-4.36-3.64-8-8-8ZM8 15.32a6.46 6.46 0 0 1-4.3-2.74 6.46 6.46 0 0 1-.93-5.01L7 11.68v.8c0 .88.12 1.32 1 1.32v1.52Zm5.72-2c-.2-.66-1-1.32-1.72-1.32h-1v-2c0-.44-.56-1-1-1H6V7h1c.44 0 1-.56 1-1V5h2c.88 0 1.4-.72 1.4-1.6v-.33a6.45 6.45 0 0 1 3.83 4.51 6.45 6.45 0 0 1-1.51 5.73v.01Z"></path>
+                  </Svg>
+                  <QuestionsSpan>Questions</QuestionsSpan>
+                </QuestionsA></NavLi>
                 <NavLi><NavA>Tags</NavA></NavLi>
                 <NavLi><NavA>Users</NavA></NavLi>
               </NavOl>
             </li>
           </NavOl>
-        </Nav>
-      </StickyContainer>
+        </nav>
+      </div>
     </LsideContainer>
   );
 }
