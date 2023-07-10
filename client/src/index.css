@@ -12,11 +12,11 @@ body {
 }
 
 body *, body *:before, body *:after {
-    box-sizing: inherit
+    box-sizing: inherit;
 }
 
 select, input, button {
-    font-size: 100%
+    font-size: 100%;
 }
 
 input[type="text"], input[type="password"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="datetime"], input[type="datetime-local"], input[type="date"], textarea {
@@ -25,87 +25,87 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     font-size: 1.15384615rem;
     color: hsl(210,8%,25%);
     background: hsl(0,0%,100%);
-    border: 1px solid hsl(210,8%,80%)
+    border: 1px solid hsl(210,8%,80%);
 }
 
 input {
-    margin: 5px 0
+    margin: 5px 0;
 }
 
 input[type="checkbox"], input[type="radio"] {
     border: none;
-    margin-right: 5px
+    margin-right: 5px;
 }
 
 label>input[type="checkbox"] {
     vertical-align: middle;
-    margin: 0 3px 3px 0
+    margin: 0 3px 3px 0;
 }
 
 label>input[type="radio"] {
-    margin: 0 3px 4px 0
+    margin: 0 3px 4px 0;
 }
 
 input[type="radio"], input[type="checkbox"] {
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 ul, ol, li {
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
 ul, ol {
     margin-left: 30px;
-    margin-bottom: 1em
+    margin-bottom: 1em;
 }
 
 ul ul, ol ul, ul ol, ol ol {
-    margin-bottom: 0
+    margin-bottom: 0;
 }
 
 ul {
-    list-style-type: disc
+    list-style-type: disc;
 }
 
 ol {
-    list-style-type: decimal
+    list-style-type: decimal;
 }
 
 table {
     border-spacing: 0;
-    border-collapse: collapse
+    border-collapse: collapse;
 }
 
 a {
     color: hsl(206,100%,40%);
     text-decoration: none;
-    cursor: pointer
+    cursor: pointer;
 }
 
 a:hover, a:active {
     color: hsl(206,100%,52%);
-    text-decoration: none
+    text-decoration: none;
 }
 
 b, strong {
-    font-weight: bold
+    font-weight: bold;
 }
 
 i, em {
-    font-style: italic
+    font-style: italic;
 }
 
 sup, sub {
-    font-size: 80%
+    font-size: 80%;
 }
 
 ins {
-    text-decoration: none
+    text-decoration: none;
 }
 
 del, s {
-    text-decoration: line-through
+    text-decoration: line-through;
 }
 
 kbd {
@@ -121,17 +121,17 @@ kbd {
     border: 1px solid hsl(210,8%,65%);
     border-radius: 3px;
     box-shadow: 0 1px 1px hsla(210,8%,5%,0.15),inset 0 1px 0 0 hsl(0,0%,100%);
-    white-space: nowrap
+    white-space: nowrap;
 }
 
 p {
     clear: both;
     margin-bottom: 1em;
-    margin-top: 0
+    margin-top: 0;
 }
 
 p code {
-    padding: 1px 5px
+    padding: 1px 5px;
 }
 
 code {
@@ -149,20 +149,20 @@ pre {
     font-size: 13px;
     background-color: hsl(210,8%,95%);
     border-radius: 3px;
-    scrollbar-color: var(--scrollbar) transparent
+    scrollbar-color: var(--scrollbar) transparent;
 }
 
 pre code {
-    background-color: transparent
+    background-color: transparent;
 }
 
 li pre {
-    margin: .5em 0 1em 0
+    margin: .5em 0 1em 0;
 }
 
 h1,h2,h3 {
     line-height: 1.3;
-    margin: 0 0 1em
+    margin: 0 0 1em;
 }
 
 h1 {
@@ -178,13 +178,13 @@ h3 {
 }
 
 blockquote,q {
-    quotes: none
+    quotes: none;
 }
 
 blockquote {
     position: relative;
     margin-bottom: 1em;
-    padding: 12px 12px 12px 16px
+    padding: 12px 12px 12px 16px;
 }
 
 blockquote:before {
@@ -200,16 +200,16 @@ blockquote:before {
 }
 
 blockquote *:last-child {
-    margin-bottom: 0
+    margin-bottom: 0;
 }
 
 li blockquote {
-    margin: .5em 0 1em 0
+    margin: .5em 0 1em 0;
 }
 
 html {
     height: 100%;
-    min-width: 1264px
+    min-width: 1264px;
 }
 
 body {
@@ -222,7 +222,20 @@ body {
     background-repeat: repeat;
     background-size: auto;
     background-attachment: auto;
-    min-width: 1279px;
+    min-width: 1264px;
+}
+
+header {
+    min-width: auto;
+    width: 100%;
+    z-index: 5050;
+    background-color: hsl(0,0%,100%);
+    height: 56px;
+    display: flex;
+    border-top: 3px solid hsl(27, 90%, 55%);
+    border-bottom: 1px solid hsl(210,8%,85%);
+    position: relative;
+    align-items: center;
 }
 
 hr {
@@ -230,40 +243,315 @@ hr {
     color: hsl(210,8%,65%);
     background-color: hsl(210,8%,65%);
     height: 1px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 pre code {
     white-space: inherit;
-    padding: 0
+    padding: 0;
 }
 
 textarea {
-    resize: none
-}
-
-html, body {
-    min-width: 1264px
+    resize: none;
 }
 
 body {
-    padding-top: 56px
+    padding-top: 56px;
+    margin: 0;
 }
 
-body>.container {
+.header-button {
+    display: flex;
+    height: 100%;
+    padding: 0 16px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-logo {
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+}
+
+.header-content {
+    display: flex;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    margin-left: auto;
+}
+
+.navigation {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 2px 0;
+    display: flex;
+    list-style: none;
+    margin: 0;
+}
+
+.navigation-item {
+    color: hsl(210,8%,35%);
+    background-color: none;
+    font: unset;
+    font-size: unset;
+    padding: 6px 12px;
+    white-space: nowrap;
+    align-items: center;
+    border: none;
+    border-radius: 1000px;
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    user-select: auto;
+}
+
+.input {
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid hsl(210, 8%, 75%) !important;
+    border-radius: 3px;
+    color: hsl(210,8%,5%);
+    cursor: unset;
+    font-size: 13px !important;
+    opacity: unset;
+    padding: 0.6em 0.7em 0.6em 32px !important;
+    font-family: inherit !important;
+    margin: 0;
+    width: 100%;
+}
+
+.button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, 0.4);
+    color: hsl(206,100%,40%);
+    font-size: 13px;
+    padding: 0.8em;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: normal;
+    line-height: calc(15 / 13);
+    position: relative;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+}
+
+.body-container {
     max-width: 1264px;
     width: 100%;
     background: none;
     display: flex;
     justify-content: space-between;
-    margin: 0 auto
+    margin: 0 auto;
+    position: relative;
+    flex: 1 0 auto;
+    text-align: left;
 }
 
 .left-sidebar {
     width: 164px;
     flex-shrink: 0;
     z-index: 1000;
-    box-shadow: 0 0 0 hsla(210,8%,5%,0.05);
-    transition: box-shadow ease-in-out .1s, transform ease-in-out .1s;
-    transform: translateZ(0)
+    box-shadow: 0 0 0 hsla(210, 8%, 5%, 0.05);
+    transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s;
+    transform: translateZ(0);
+}
+
+.sticky-container {
+    position: sticky;
+    width: auto;
+    margin-bottom: 8px;
+    overflow-y: auto;
+    top: 56px;
+    max-height: calc(100vh - 56px);
+    padding-top: 24px;
+}
+
+.content {
+    max-width: 1100px;
+    width: calc(100% - 164px);
+    background-color: hsl(0, 0%, 100%);
+    border-radius: 0;
+    border: 1px solid hsl(210, 8%, 85%);
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 1px;
+    border-right-width: 0;
+    padding: 24px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.mainbar {
+    width: calc(100% - 300px - 24px);
+    float: left;
+    margin: 0;
+    padding: 0;    
+}
+
+.bottom-notice {
+    margin-top: 15px;
+    padding-top: 10px;
+    font-weight: normal;
+    padding: 0 10px 0 0;
+    line-height: 1.4;
+    font-size: 1.30769231rem;
+}
+
+.question-box {
+    background-color: unset;
+    border-bottom: 1px solid hsl(210, 8%, 90%);
+    display: flex;
+    padding: 16px;
+    position: relative;
+}
+
+.question-stats {
+    align-items: flex-end;
+    color: hsl(210, 8%, 45%);
+    flex-direction: column;
+    width: 108px;
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    font-size: 13px;
+    gap: 6px;
+    margin-bottom: 4px;
+    margin-right: 16px;
+}
+
+.question-stats-item {
+    align-items: center;
+    border: 1px solid transparent;
+    display: inline-flex;
+    gap: 0.3em;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.question-content-title {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+    display: block;
+    font-size: 1.30769231rem;
+    font-weight: normal;
+    line-height: calc(17 / 13);
+    margin-bottom: 0.3846rem;
+    margin-top: -0.15rem;
+    padding-right: 24px;
+}
+
+.question-meta {
+    align-items: center;
+    column-gap: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 8px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.4em 0.5em;
+    margin: 2px 2px 2px 0;
+    font-size: 11px;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+}
+
+.user-card {
+    align-items: center;
+    background-color: unset;
+    border-radius: unset;
+    color: unset;
+    display: flex;
+    gap: 4px;
+    line-height: 1;
+    padding: 0;
+}
+
+.avatar {
+    background-color: hsl(0, 0%, 100%);
+    border-radius: 3px;
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: inline-block;
+    position: relative;
+    vertical-align: bottom;
+}
+
+.avatar-image {
+    border-radius: 3px;
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+.user-card-info {
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+    gap: 4px;
+}
+
+.user-card-time {
+    color: hsl(210,8%,45%);
+    white-space: nowrap;
+    font-size: 12px;
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+
+.user-card-lnnk {
+    font-size: 12px;
+    white-space: nowrap;
+    align-items: center;
+    flex-wrap: wrap;
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
+.sidebar {
+    margin-left: 24px !important;
+    float: right;
+    width: 300px;
+    margin: 0 0 15px
+}
+
+.sidebarwidget {
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid hsl(47,65%,84%);
+    border-radius: 3px;
+    font-size: 13px;
+    position: relative;
+}
+
+.sidebarwidget-header {
+    background: hsl(210,8%,97.5%);
+    border-top: 1px solid hsl(210,8%,90%);
+    color: hsl(210,8%,35%);
+    font-size: 1.15384615rem;
+    font-weight: normal;
+    margin: 0;
+    padding: 12px 15px;
 }

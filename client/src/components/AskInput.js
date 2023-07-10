@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
 const AskInputMain = styled.div`
   margin-bottom: 48px;
@@ -33,7 +33,7 @@ const Input = styled.input`
   cursor: unset;
   font-size: 13px;
   opacity: unset;
-  padding: 0.6em 0.7em 0.6em 0.7em;
+  padding: 0.6em 0.7em 0.6em 32px;
 `;
 
 const Textarea = styled.textarea`

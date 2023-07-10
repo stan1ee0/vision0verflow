@@ -1,18 +1,12 @@
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
-const HeaderContainer = styled.div`
+import hamburger from '../images/hamburger.jpg';
+
+const HeaderContainer = styled.header`
   position: fixed !important;
   left: 0 !important;
   top: 0 !important;
-  min-width: auto;
-  width: 100%;
-  z-index: 5050;
-  background-color: hsl(0,0%,100%);
-  height: 56px;
-  display: flex;
-  border-top: 3px solid hsl(27, 90%, 55%);
-  border-bottom: 1px solid hsl(210,8%,85%);
-  align-items: center;
 `;
 
 const InnerContainer = styled.div`
@@ -24,18 +18,7 @@ const InnerContainer = styled.div`
   align-items: center;
 `;
 
-const LogoA = styled.a`
-  padding: 0 8px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  color: hsl(206,100%,40%);
-  text-decoration: none;
-  cursor: pointer;
-`;
-
-const Span = styled.span`
+const LogoSpan = styled.span`
   margin-left: 0;
   width: 150px;
   height: 30px;
@@ -46,45 +29,11 @@ const Span = styled.span`
   background-position: 0 -500px;
 `;
 
-const Ol = styled.ol`
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 2px 0;
-  display: flex;
-  list-style: none;
-  margin: 0;
-`;
-
-const Li = styled.li`
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-`;
-
 const A = styled.a`
-  color: hsl(210,8%,35%);
-  background-color: none;
-  font: unset;
-  font-size: unset;
-  padding: 6px 12px;
-  white-space: nowrap
-  align-items: center;
-  border: none;
-  border-radius: 1000px;
-  box-shadow: none;
-  cursor: pointer;
-  display: flex;
-  position: relative;
-  user-select: auto;
-  text-decoration: none;
 `;
 
 const Form = styled.form`
-  padding: 0 var(--su8);
+  padding: 0 8px;
   display: flex;
   align-items: center;
   flex-shrink: 10000;
@@ -97,20 +46,22 @@ const InputContainer = styled.div`
 `;
 
 const Input = styled.input`
-  border-color: hsl(210,8%,75%);
-  background-color: hsl(0,0%,100%);
-  color: hsl(210,8%,25%);
+  border-color: hsl(210, 8%, 75%);
+  background-color: hsl(0, 0%, 100%);
+  color: hsl(210, 8%, 25%);
   display: block;
   line-height: calc((13+2)/13);
-  border: 1px solid hsl(210, 8%, 75%);
-  border-radius: 3px;
-  cursor: unset;
-  font-size: 13px;
-  opacity: unset;
-  padding: 0.6em 0.7em 0.6em 0.7em;
-  font-family: inherit;
-  margin: 0;
-  width: 100%;
+`;
+
+const Svg = styled.svg`
+  color: hsl(210,8%,55%);
+  left: 0.7em;
+  vertical-align: bottom;
+  right: auto;
+  margin-top: -9px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
 `;
 
 const Nav = styled.nav`
@@ -118,17 +69,6 @@ const Nav = styled.nav`
   overflow-x: auto !important;
   padding-right: 12px !important;
   margin-left: auto !important;
-  display: block;
-`;
-
-const NavOl = styled.ol`
-  display: flex;
-  height: 100%;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow-x: auto;
-  margin-left: auto;
 `;
 
 const NavLi = styled.li`
@@ -136,77 +76,63 @@ const NavLi = styled.li`
 `;
 
 const LoginA = styled.a`
-  background-color: hsl(205,46%,92%);
-  color: hsl(205,47%,42%);
+  background-color: hsl(205, 46%, 92%);
+  color: hsl(205, 47%, 42%);
   align-self: center;
   padding-top: 8px;
-  padding-bottom: 8px
+  padding-bottom: 8px;
   border-color: hsl(205,41%,63%);
   box-shadow: inset 0 1px 0 0 hsla(0,0%,100%,0.7);
   white-space: nowrap !important;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  font-size: 13px;
-  padding: 0.8em;
-  cursor: pointer;
-  display: inline-block;
-  font-family: inherit;
-  font-weight: normal;
-  line-height: calc(15 / 13);
-  position: relative;
-  outline: none;
-  text-align: center;
-  text-decoratin: none;
-  user-select: none;
 `;
 
 const SignupA = styled.a`
-  background-color: hsl(206,100%,52%);
-  color: hsl(0,0%,100%);
+  background-color: hsl(206, 100%, 52%);
+  color: hsl(0, 0%, 100%);
   align-self: center;
   padding-top: 8px;
-  padding-bottom: 8px
-  white-space: 4px !important;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 0 0 hsla(0,0%,100%,0.4);
-  font-size: 13px;
-  padding: 0.8em;
-  cursor: pointer;
-  display: inline-block;
-  font-family: inherit;
-  font-weight: normal;
-  line-height: calc(15 / 13);
-  position: relative;
-  outline: none;
-  text-align: center;
-  text-decoratin: none;
-  user-select: none;
+  padding-bottom: 8px;
+  white-space: nowrap !important;
+  margin-left: 4px !important;
 `;
 
 export default function Header() {
+  const [keyword, setKeyword] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <HeaderContainer>
       <InnerContainer>
-        <LogoA href="/">
-          <Span>Stack Overflow</Span>
-        </LogoA>
-        <Ol>
-          <Li><A>About</A></Li>
-          <Li><A>Products</A></Li>
-          <Li><A>For Teams</A></Li>
-        </Ol>
-        <Form id="search" role="search" action="/search" autocomplete="off">
+        <a className='header-button' href="/users/login">
+          <img src={hamburger} alt="Hamburger"/>
+        </a>
+        <a className='header-logo' href="/">
+          <LogoSpan>Stack Overflow</LogoSpan>
+        </a>
+        <ol className='navigation'>
+          <li><A className='navigation-item'>About</A></li>
+          <li><A className='navigation-item'>Products</A></li>
+          <li><A className='navigation-item'>For Teams</A></li>
+        </ol>
+        <Form onSubmit={handleSubmit}>
           <InputContainer>
-            <Input name="q" type="text" role="combobox" placeholder="Search..." autocomplete="off" maxlength="240">
-            </Input>
+            <Input className="input" name="q" type="text" role="combobox" autoComplete="off"
+              maxLength="240" placeholder="Search..."
+              value={keyword} onChange={(event) => setKeyword(event.target.value)}
+            />
+            <Svg width="18" height="18" viewBox="0 0 18 18">
+              <path d="m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5ZM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0Z"></path>
+            </Svg>
           </InputContainer>
         </Form>
         <Nav>
-          <NavOl>
-            <NavLi role="none"><LoginA href="/users/login">Log in</LoginA></NavLi>
-            <NavLi role="none"><SignupA>Sign up</SignupA></NavLi>
-          </NavOl>
+          <ol className='header-content'>
+            <NavLi role="none"><LoginA className="button" href="/users/login">Log in</LoginA></NavLi>
+            <NavLi role="none"><SignupA className="button">Sign up</SignupA></NavLi>
+          </ol>
         </Nav>
       </InnerContainer>
     </HeaderContainer>

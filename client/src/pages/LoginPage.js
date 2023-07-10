@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
 import Header from '../components/Header';
 
@@ -152,7 +152,7 @@ const Input = styled.input`
   cursor: unset;
   font-size: 13px;
   opacity: unset;
-  padding: 0.6em 0.7em 0.6em 0.7em;
+  padding: 0.6em 0.7em 0.6em 32px;
   font-family: inherit;
   margin: 0;
   width: 100%;
@@ -278,14 +278,14 @@ export default function LoginPage() {
                 <EmailContainer>
                   <Label for="email">Email</Label>
                   <InputContainer>
-                    <Input id="email" type="email" size="30" maxlength="100" name="email"
+                    <Input id="email" type="email" size="30" maxLength="100" name="email"
                       value={email} onChange={(event) => setEmail(event.target.value)}
                     />
                   </InputContainer>
                 </EmailContainer>
                 <PasswordContainer>
                   <InputContainer>
-                    <Input id="password" type="password" autocomplete="off" name="password"
+                    <Input id="password" type="password" autoComplete="off" name="password"
                       value={password} onChange={(event) => setPassword(event.target.value)}
                     />
                   </InputContainer>

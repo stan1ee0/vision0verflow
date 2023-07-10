@@ -3,20 +3,15 @@ import { FaStackOverflow } from 'react-icons/fa';
 import { BiMessageAlt } from 'react-icons/bi';
 import { HiPencil } from 'react-icons/hi';
 
-const AsideContainer = styled.div`
-  margin-left: 24px;
-  float: right;
-  width: 300px;
-  margin: 0 0 15px
-`;
-
 const SideWidget = styled.div`
-  margin-bottom: 15px;
-  width: 100%;
-  background-color: #fdf8e2;
-  border: 1px solid hsl(205, 53%, 88%);
-  border-radius: 3px;
+  background-color: hsl(47,87%,94%);
+  border-color: hsl(47,65%,84%);
+  margin-bottom: 16px !important;
+
   ul {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
     list-style: none;
   }
   li {
@@ -55,8 +50,8 @@ const SideWidget = styled.div`
 
 export default function Aside() {
   return (
-    <AsideContainer>
-      <SideWidget>
+    <div className="sidebar">
+      <SideWidget className="sidebarwidget">
         <ul>
           <li className="widget-title">The Overflow Blog</li>
           <li className="widget-content">
@@ -108,6 +103,6 @@ export default function Aside() {
           </li>
         </ul>
       </SideWidget>
-    </AsideContainer>
+    </div>
   );
 }

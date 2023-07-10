@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
-import QuestionItem from './QuestionItem';
+import QuestionBox from './QuestionBox';
 
 export default function QuestionList() {
   const [questions, setQuestions] = useState([]);
@@ -31,7 +31,7 @@ export default function QuestionList() {
   return (
     <div>
       {questions.map((question) => (
-        <QuestionItem key={question.id} question={question} />
+        <QuestionBox key={question.id} question={question} />
       ))}
     </div>
   );

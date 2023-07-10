@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useState, useEffect } from 'react';
-import { rootUrl } from '../config';
+import { rootUrl } from '../index';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
