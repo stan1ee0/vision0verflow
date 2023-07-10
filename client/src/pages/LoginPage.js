@@ -46,9 +46,9 @@ const ButtonsContainer = styled.div`
 `;
 
 const GoogleButton = styled.button`
+  margin: 4px;
   margin-right: 0;
   margin-left: 0;
-  margin: 4px;
   flex: 1 auto;
   border-color: hsl(210, 8%, 85%) !important;
   border-radius: 5px !important;
@@ -80,9 +80,9 @@ const ButtonSvg = styled.svg`
 `;
 
 const GithubButton = styled.button`
+  margin: 4px;
   margin-right: 0;
   margin-left: 0;
-  margin: 4px;
   flex: 1 auto;
   border-color: hsl(210, 8%, 85%) !important;
   border-radius: 5px !important;
@@ -120,23 +120,23 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex !important;
   flex-direction: column !important;
+  margin: -6px;
   margin-right: 0;
   margin-left: 0;
-  margin: -6px;
 `;
 
 const EmailContainer = styled.div`
+  margin: 6px;
   margin-right: 0;
   margin-left: 0;
-  margin: 6px;
   display: flex !important;
   flex-direction: column !important;
 `;
 
 const Label = styled.label`
+  margin: 2px;
   margin-right: 0;
   margin-left: 0;
-  margin: 2px;
   cursor: pointer;
   font-size: 1.15384615rem;
   color: hsl(210,8%,5%);
@@ -146,33 +146,33 @@ const Label = styled.label`
 `;
 
 const InputContainer = styled.div`
+  margin: 2px;
   margin-right: 0;
   margin-left: 0;
-  margin: 2px;
   position: relative !important;
   display: flex !important
 `;
 
 const PasswordContainer = styled.div`
+  margin: 6px;
   margin-right: 0;
   margin-left: 0;
-  margin: 6px;
   display: flex !important;
   flex-direction: column-reverse !important;
 `;
 
 const ButtonContainer = styled.div`
+  margin: 6px;
   margin-right: 0;
   margin-left: 0;
-  margin: 6px;
   display: flex !important;
   flex-direction: column !important;
 `;
 
 const LoginButton = styled.button`
+  margin: 2px;
   margin-right: 0;
   margin-left: 0;
-  margin: 2px;
   background-color: hsl(206, 100%, 52%);
   border: 1px solid transparent;
   border-radius: 3px;
