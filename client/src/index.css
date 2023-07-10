@@ -314,6 +314,20 @@ body {
     user-select: auto;
 }
 
+.input {
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid hsl(210, 8%, 75%) !important;
+    border-radius: 3px;
+    color: hsl(210,8%,5%);
+    cursor: unset;
+    font-size: 13px !important;
+    opacity: unset;
+    padding: 0.6em 0.7em 0.6em 32px !important;
+    font-family: inherit !important;
+    margin: 0;
+    width: 100%;
+}
+
 .button {
     background-color: transparent;
     border: 1px solid transparent;
@@ -515,4 +529,29 @@ body {
     flex-wrap: wrap;
     min-width: 0;
     overflow-wrap: break-word;
+}
+
+.sidebar {
+    margin-left: 24px !important;
+    float: right;
+    width: 300px;
+    margin: 0 0 15px
+}
+
+.sidebarwidget {
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid hsl(47,65%,84%);
+    border-radius: 3px;
+    font-size: 13px;
+    position: relative;
+}
+
+.sidebarwidget-header {
+    background: hsl(210,8%,97.5%);
+    border-top: 1px solid hsl(210,8%,90%);
+    color: hsl(210,8%,35%);
+    font-size: 1.15384615rem;
+    font-weight: normal;
+    margin: 0;
+    padding: 12px 15px;
 }

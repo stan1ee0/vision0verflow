@@ -51,15 +51,17 @@ const Input = styled.input`
   color: hsl(210, 8%, 25%);
   display: block;
   line-height: calc((13+2)/13);
-  border: 1px solid hsl(210, 8%, 75%);
-  border-radius: 3px;
-  cursor: unset;
-  font-size: 13px;
-  opacity: unset;
-  padding: 0.6em 0.7em 0.6em 0.7em;
-  font-family: inherit;
-  margin: 0;
-  width: 100%;
+`;
+
+const Svg = styled.svg`
+  color: hsl(210,8%,55%);
+  left: 0.7em;
+  vertical-align: bottom;
+  right: auto;
+  margin-top: -9px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
 `;
 
 const Nav = styled.nav`
@@ -117,10 +119,13 @@ export default function Header() {
         </ol>
         <Form onSubmit={handleSubmit}>
           <InputContainer>
-            <Input name="q" type="text" role="combobox" autoComplete="off" maxLength="240"
-              placeholder="Search..."
+            <Input className="input" name="q" type="text" role="combobox" autoComplete="off"
+              maxLength="240" placeholder="Search..."
               value={keyword} onChange={(event) => setKeyword(event.target.value)}
             />
+            <Svg width="18" height="18" viewBox="0 0 18 18">
+              <path d="m18 16.5-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5ZM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0Z"></path>
+            </Svg>
           </InputContainer>
         </Form>
         <Nav>
