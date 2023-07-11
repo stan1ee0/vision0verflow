@@ -59,7 +59,7 @@ export default function HomePage() {
             <HomeMainHeader>
               <H1>Top Questions</H1>
               <AskButtonContainer>
-                <AskButtonA className="button" href="/questions/ask">
+                <AskButtonA className="ask-button" href="/questions/ask">
                   {' '}Ask Question{' '}
                 </AskButtonA>
               </AskButtonContainer>

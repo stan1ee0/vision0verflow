@@ -113,7 +113,7 @@ export default function QuestionPage() {
               <H1>{question?.title}</H1>
             </div>
             <AskButtonContainer>
-              <A href="/questions/ask"> Ask Question </A>
+              <A className='ask-button' href="/questions/ask"> Ask Question </A>
             </AskButtonContainer>
           </QuestionHeader>
           <QuestionMain>

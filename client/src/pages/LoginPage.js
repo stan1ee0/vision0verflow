@@ -174,23 +174,6 @@ const LoginButton = styled.button`
   margin: 2px;
   margin-right: 0;
   margin-left: 0;
-  background-color: hsl(206, 100%, 52%);
-  border: 1px solid transparent;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 0 0 hsla(0,0%,100%,0.4);
-  color: hsl(0,0%,100%);
-  font-size: 13px;
-  padding: 0.8em;
-  cursor: pointer;
-  display: inline-block;
-  font-family: inherit;
-  font-weight: normal;
-  line-height: calc(15 / 13);
-  position: relative;
-  outline: none;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
 `;
 
 const BottomContainer = styled.div`
@@ -307,7 +290,7 @@ export default function LoginPage() {
                   <Label htmlFor="password">Password</Label>
                 </PasswordContainer>
                 <ButtonContainer>
-                  <LoginButton type="submit">Log in</LoginButton>
+                  <LoginButton className='button' type="submit">Log in</LoginButton>
                 </ButtonContainer>
               </Form>
             </FormContainer>

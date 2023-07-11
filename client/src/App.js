@@ -5,6 +5,7 @@ import QuestionsPage from './pages/QuestionsPage';
 import AskPage from './pages/AskPage';
 import QuestionPage from './pages/QuestionPage';
 import LoginPage from './pages/LoginPage';
+import LogoutPage from './pages/LogoutPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/questions/ask" element={<AskPage />} />
         <Route path="/questions/:questionId" element={<QuestionPage />} />
         <Route path="/users/login" element={<LoginPage />} />
+        <Route path="/users/logout" element={<LogoutPage />} />
       </Routes>
     </BrowserRouter>
   );
