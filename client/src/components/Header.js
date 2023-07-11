@@ -128,7 +128,7 @@ export default function Header() {
     <HeaderContainer>
       <InnerContainer>
       {isLoggedIn ? null : (
-        <a className='header-button' href="/users/login">
+        <a className='menu-button' href="/users/login">
           <img src={hamburger} alt="Hamburger"/>
         </a>
       )}
@@ -200,8 +200,8 @@ export default function Header() {
           </ol>
         ) : (
           <ol className='header-content'>
-            <NavLi role="none"><LoginA className="button" href="/users/login">Log in</LoginA></NavLi>
-            <NavLi role="none"><SignupA className="button">Sign up</SignupA></NavLi>
+            <NavLi role="none"><LoginA className="header-button" href="/users/login">Log in</LoginA></NavLi>
+            <NavLi role="none"><SignupA className="header-button">Sign up</SignupA></NavLi>
           </ol>
         )}
         </Nav>
