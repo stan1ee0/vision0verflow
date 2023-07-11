@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { rootUrl } from '../index';
 
@@ -206,8 +207,16 @@ const BottomContainer = styled.div`
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const authUrl = `${rootUrl}/auth`;
+  const isLoggedIn = !!localStorage.getItem('token');
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -227,6 +236,10 @@ export default function LoginPage() {
     .then((response) => {
       if (response.ok) {
         return response.json();
+      } else if (response.status == 404) {
+        throw new Error('No user found with matching email');
+      } else if (response.status == 401) {
+        throw new Error('Not matching password');
       } else {
         throw new Error('Error authenticating user');
       }
@@ -237,13 +250,14 @@ export default function LoginPage() {
       setPassword('');
       const token = data.token;
       localStorage.setItem('token', token);
+      navigate('/');
     })
     .catch((error) => {
       console.error('Error authenticating user:', error);
     });
   };
 
-  return(
+  return isLoggedIn ? null : (
     <div>
       <Header />
       <LoginContainer className='body-container'>

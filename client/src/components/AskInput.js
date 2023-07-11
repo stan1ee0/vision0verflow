@@ -93,7 +93,7 @@ export default function AskInput() {
       setTitle('');
       setContent('');
       const questionId = data.id;
-      navigate.push(`/questions/${questionId}`);
+      navigate(`/questions/${questionId}`);
     })
     .catch((error) => {
       console.error('Error posting question:', error);
