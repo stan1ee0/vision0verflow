@@ -125,7 +125,7 @@ export default function Header() {
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer className='header'>
       <InnerContainer>
       {isLoggedIn ? null : (
         <a className='menu-button' href="/users/login">

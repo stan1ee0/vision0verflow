@@ -225,19 +225,6 @@ body {
     min-width: 1264px;
 }
 
-header {
-    min-width: auto;
-    width: 100%;
-    z-index: 5050;
-    background-color: hsl(0,0%,100%);
-    height: 56px;
-    display: flex;
-    border-top: 3px solid hsl(27, 90%, 55%);
-    border-bottom: 1px solid hsl(210,8%,85%);
-    position: relative;
-    align-items: center;
-}
-
 hr {
     border: 0;
     color: hsl(210,8%,65%);
@@ -258,6 +245,19 @@ textarea {
 body {
     padding-top: 56px;
     margin: 0;
+}
+
+.header {
+    min-width: auto;
+    width: 100%;
+    z-index: 5050;
+    background-color: hsl(0,0%,100%);
+    height: 56px;
+    display: flex;
+    border-top: 3px solid hsl(27, 90%, 55%);
+    border-bottom: 1px solid hsl(210,8%,85%);
+    position: relative;
+    align-items: center;
 }
 
 .menu-button {
