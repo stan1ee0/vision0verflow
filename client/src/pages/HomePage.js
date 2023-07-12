@@ -168,7 +168,7 @@ const HomeHeaderH2 = styled.h2`
   font-size: 1.46153846rem !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  font-weight: normal !important;
+  font-weight: unset !important;
 `;
 
 const HomeHeaderSpan = styled.span`
@@ -200,6 +200,9 @@ const HomeHeaderItemBottomDiv = styled.div`
   margin-bottom: 4px !important;
 `;
 
+const A = styled.a`
+`;
+
 export default function HomePage() {
   const isLoggedIn = !!localStorage.getItem('token');
 
@@ -214,7 +217,7 @@ export default function HomePage() {
             <HomeMainHeader>
               <H1>Top Questions</H1>
               <AskButtonContainer>
-                <AskButtonA className="ask-button" href="/questions/ask">
+                <AskButtonA className="button" href="/questions/ask">
                   {' '}Ask Question{' '}
                 </AskButtonA>
               </AskButtonContainer>
@@ -229,8 +232,9 @@ export default function HomePage() {
               Looking for more? Browse the{' '}
               <a href='/questions'>complete list of questions</a>
               , or{' '}
-              <a href='/tags'>popular tags</a>
-              . Help us answer unanswered questions.
+              <A>popular tags</A>
+              . Help us answer{' '}
+              <A>unanswered questions.</A>
             </H2>
           </div>
           <Aside />
@@ -251,7 +255,7 @@ export default function HomePage() {
                     <HomeHeaderH2>
                       Find the best answer to your technical question, help others answer theirs
                     </HomeHeaderH2>
-                    <HomeHeaderItemLeftA className='button' href="/users/signup">Join the community</HomeHeaderItemLeftA>
+                    <HomeHeaderItemLeftA className='button'>Join the community</HomeHeaderItemLeftA>
                   </HomeHeaderItemLeftDiv>
                 </HomeHeaderItemContainer>
                 <HomeHeaderItemContainer>
