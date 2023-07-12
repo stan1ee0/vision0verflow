@@ -86,13 +86,6 @@ export default function Aside() {
           </li>
           <li className="widget-content">
             <FaStackOverflow className="icon-stack" />
-            <div>
-              Does the policy change for AI-generated content affect users who
-              (want to)...
-            </div>
-          </li>
-          <li className="widget-content">
-            <FaStackOverflow className="icon-stack" />
             <div>Temporary policy: Generative AI (e.g., ChatGPT) is banned</div>
           </li>
           <li className="widget-content">

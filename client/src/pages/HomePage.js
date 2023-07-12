@@ -168,7 +168,7 @@ const HomeHeaderH2 = styled.h2`
   font-size: 1.46153846rem !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  font-weight: normal !important;
+  font-weight: unset !important;
 `;
 
 const HomeHeaderSpan = styled.span`

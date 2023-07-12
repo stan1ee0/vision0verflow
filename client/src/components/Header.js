@@ -111,6 +111,7 @@ const SignupA = styled.a`
   align-self: center;
   padding-top: 8px;
   padding-bottom: 8px;
+  box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, 0.4);
   white-space: nowrap !important;
   margin-left: 4px !important;
 `;
