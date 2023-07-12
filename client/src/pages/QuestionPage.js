@@ -14,7 +14,7 @@ const QuestionHeader = styled.div`
   display: flex !important;
 `;
 
-const H1 = styled.h1`
+const QuestionHeaderH1 = styled.h1`
   overflow-wrap: break-word !important;
   font-size: 2.07692308rem !important;
   margin-bottom: 8px !important;
@@ -22,7 +22,7 @@ const H1 = styled.h1`
   font-weight: unset;
 `;
 
-const A = styled.a`
+const QuestionHeaderA = styled.a`
   color: hsl(210,8%,25%);
   font-size: 2.07692308rem;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI Adjusted","Segoe UI","Liberation Sans",sans-serif;
@@ -238,7 +238,7 @@ const UserAvatarDiv = styled.div`
   border-radius: 1px;
 `;
 
-const UserA = styled.a`
+const A = styled.a`
 `;
 
 const UserAvatarContainer = styled.div`
@@ -266,11 +266,51 @@ const Span = styled.span`
   margin-right: 2px;
 `;
 
+const AnswersContainer = styled.div`
+  width: auto;
+  float: none;
+  padding-top: 10px;
+  clear: both;
+`;
+
+const AnswersH2 = styled.h2`
+  padding-top: 8px;
+  margin-bottom: -8px;
+  font-weight: 400;
+`;
+
+const AnswerHeaderH2 = styled.h2`
+  font-weight: 400;
+  padding-top: 20px;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  padding: 10px 0 15px 0;
+  clear: both !important;
+  display: flex !important;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin: -2px;
+`;
+
+const Button = styled.button`
+  margin-top: 0;
+  margin-bottom: 0;
+  margin: 2px;
+`;
+
 export default function QuestionPage() {
   const { questionId } = useParams();
   const [question, setQuestion] = useState(null);
+  const [content, setContent] = useState('');
 
   const questionUrl = `${rootUrl}/questions/${questionId}`;
+  const answersUrl = `${rootUrl}/answers`;
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -286,6 +326,38 @@ export default function QuestionPage() {
     fetchQuestion();
   }, [questionId]);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      content: content,
+    };
+
+    fetch(answersUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error posting answer');
+      }
+    })
+    .then((data) => {
+      console.log('Answer posted successfully!');
+      console.log('answerId: ', data.id);
+      setContent('');
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Error posting answer:', error);
+    });
+  };
+
   return (
     <div>
       <Header />
@@ -295,7 +367,7 @@ export default function QuestionPage() {
           <div>
             <div>
               <QuestionHeader>
-                <H1><A href={`/questions/${questionId}`}>{question?.title}</A></H1>
+                <QuestionHeaderH1><QuestionHeaderA href={`/questions/${questionId}`}>{question?.title}</QuestionHeaderA></QuestionHeaderH1>
                 <AskButtonContainer>
                   <AskButtonA className='button' href="/questions/ask"> Ask Question </AskButtonA>
                 </AskButtonContainer>
@@ -348,16 +420,16 @@ export default function QuestionPage() {
                           <UserCardContainer>
                             <UserInfoDiv>
                               <UserAvatarDiv>
-                                <UserA href='/users/1'>
+                                <A href='/users/1'>
                                   <UserAvatarContainer>
                                     <img className='user-avatar-image' alt='Vision0'
                                       src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
                                     />
                                   </UserAvatarContainer>
-                                </UserA>
+                                </A>
                               </UserAvatarDiv>
                               <UserDetailsDiv>
-                                <UserA href='/users/1'>Vision0</UserA>
+                                <A href='/users/1'>Vision0</A>
                                 <UserStatsDiv>
                                   <Span>100</Span>
                                 </UserStatsDiv>
@@ -369,6 +441,28 @@ export default function QuestionPage() {
                     </QuestionPostDiv>
                   </QuestionPostContainer>
                 </QuestionContainer>
+                <AnswersContainer>
+                  <AnswersH2 className='bottom-notice'>
+                    {' '}Know someone who can answer? Share a link to this{' '}
+                    <a href={`/questions/${questionId}`}>question</a>
+                    {' '}via{' '}
+                    <A>email</A>
+                    ,{' '}
+                    <A>Twitter</A>
+                    , or{' '}
+                    <A>Facebook</A>
+                    .{' '}
+                  </AnswersH2>
+                  <form onSubmit={handleSubmit}>
+                    <AnswerHeaderH2>{' '}Your Answer{' '}</AnswerHeaderH2>
+                    <Textarea rows={10} value={content}
+                      onChange={(event) => setContent(event.target.value)}
+                    />
+                    <ButtonContainer>
+                      <Button className='button' type='submit'>{' '}Post Your Answer{' '}</Button>
+                    </ButtonContainer>
+                  </form>
+                </AnswersContainer>  
               </QuestionMain>
               <Aside />
             </div>

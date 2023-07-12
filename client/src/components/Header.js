@@ -129,9 +129,9 @@ export default function Header() {
     <HeaderContainer className='header'>
       <InnerContainer>
       {isLoggedIn ? null : (
-        <a className='menu-button' href="/users/login">
+        <A className='menu-button'>
           <img src={hamburger} alt="Hamburger"/>
-        </a>
+        </A>
       )}
         <a className='header-logo' href="/">
           <LogoSpan>Stack Overflow</LogoSpan>

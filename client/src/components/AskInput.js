@@ -140,7 +140,7 @@ export default function AskInput() {
               </div>
             </AskInputBox>
         </AskInputBoxContainer>
-        <Button type="submit">Post Your Question</Button>
+        <Button className='button' type='submit'>{' '}Post Your Question{' '}</Button>
       </AskInputMain>
     </form>
   );

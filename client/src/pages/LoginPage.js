@@ -187,6 +187,9 @@ const BottomContainer = styled.div`
   margin-right: auto !important;
 `;
 
+const A = styled.a`
+`;
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -296,7 +299,7 @@ export default function LoginPage() {
             </FormContainer>
             <BottomContainer>
               {' '}Don’t have an account?{' '}
-              <a href="/users/signup">Sign up</a>
+              <A>Sign up</A>
             </BottomContainer>
           </div>
         </LoginContent>
