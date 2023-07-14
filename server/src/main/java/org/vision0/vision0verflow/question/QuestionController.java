@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.vision0.vision0verflow.question.dto.QuestionAnswersResponse;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
 import org.vision0.vision0verflow.question.dto.QuestionResponse;
@@ -63,10 +64,10 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/{question-id}")
-    public QuestionResponse getQuestion(@PathVariable("question-id") long questionId) {
+    public QuestionAnswersResponse getQuestion(@PathVariable("question-id") long questionId) {
         Question foundQuestion = questionService.find(questionId);
 
-        return new QuestionResponse(foundQuestion);
+        return new QuestionAnswersResponse(foundQuestion);
     }
 
     @PatchMapping("questions/{question-id}")

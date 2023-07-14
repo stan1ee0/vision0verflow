@@ -13,6 +13,7 @@ public class AnswerResponse {
     private long id;
     private String content;
     private UserResponse user;
+    private long questionId;
     private LocalDateTime createdAt;
     private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
@@ -23,6 +24,8 @@ public class AnswerResponse {
         this.content = answer.getContent();
         if (answer.getUser() != null)
             this.user = new UserResponse(answer.getUser());
+        if (answer.getQuestion() != null)
+            this.questionId = answer.getQuestion().getId();
         this.createdAt = answer.getCreatedAt();
         this.editedAt = answer.getEditedAt();
         this.deletedAt = answer.getDeletedAt();

@@ -8,6 +8,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.vision0.vision0verflow.answer.dto.AnswerPatch;
 import org.vision0.vision0verflow.answer.dto.AnswerPost;
 import org.vision0.vision0verflow.answer.dto.AnswerResponse;
+import org.vision0.vision0verflow.question.Question;
+import org.vision0.vision0verflow.question.QuestionService;
 import org.vision0.vision0verflow.security.JwtTokenizer;
 import org.vision0.vision0verflow.user.User;
 import org.vision0.vision0verflow.user.UserService;
@@ -22,14 +24,17 @@ public class AnswerController {
     private final AnswerService answerService;
     private final UserService userService;
     private final JwtTokenizer jwtTokenizer;
+    private final QuestionService questionService;
 
     @Autowired
     public AnswerController(AnswerService answerService,
                             UserService userService,
-                            JwtTokenizer jwtTokenizer) {
+                            JwtTokenizer jwtTokenizer,
+                            QuestionService questionService) {
         this.answerService = answerService;
         this.userService = userService;
         this.jwtTokenizer = jwtTokenizer;
+        this.questionService = questionService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,6 +42,11 @@ public class AnswerController {
     public AnswerResponse postAnswer(@RequestBody AnswerPost answerPost,
                                      @RequestHeader (value = "Authorization", required = false) String token) {
         Answer answer = new Answer(answerPost);
+
+        if (answerPost.getQuestionId() > 0) {
+            Question foundQuestion = questionService.find(answerPost.getQuestionId());
+            answer.setQuestion(foundQuestion);
+        }
 
         if (token != null && token.startsWith("Bearer ")) {
             try {

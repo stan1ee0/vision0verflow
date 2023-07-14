@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.vision0.vision0verflow.answer.dto.AnswerPatch;
 import org.vision0.vision0verflow.answer.dto.AnswerPost;
 import org.vision0.vision0verflow.comment.Comment;
+import org.vision0.vision0verflow.question.Question;
 import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
@@ -22,6 +23,8 @@ public class Answer {
     private String content;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private Question question;
     @OneToMany
     private List<Comment> comments;
     @Column(nullable = false)
