@@ -3,6 +3,7 @@ package org.vision0.vision0verflow.answer.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.vision0.vision0verflow.answer.Answer;
+import org.vision0.vision0verflow.user.dto.UserResponse;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 public class AnswerResponse {
     private long id;
     private String content;
+    private UserResponse user;
     private LocalDateTime createdAt;
     private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
@@ -19,6 +21,8 @@ public class AnswerResponse {
     public AnswerResponse(Answer answer) {
         this.id = answer.getId();
         this.content = answer.getContent();
+        if (answer.getUser() != null)
+            this.user = new UserResponse(answer.getUser());
         this.createdAt = answer.getCreatedAt();
         this.editedAt = answer.getEditedAt();
         this.deletedAt = answer.getDeletedAt();

@@ -1,11 +1,16 @@
 package org.vision0.vision0verflow.question;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
 import org.vision0.vision0verflow.question.dto.QuestionResponse;
+import org.vision0.vision0verflow.security.JwtTokenizer;
+import org.vision0.vision0verflow.user.User;
+import org.vision0.vision0verflow.user.UserService;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -15,16 +20,35 @@ import java.util.stream.Collectors;
 @RestController
 public class QuestionController {
     private final QuestionService questionService;
+    private final UserService userService;
+    private final JwtTokenizer jwtTokenizer;
 
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService,
+                              UserService userService,
+                              JwtTokenizer jwtTokenizer) {
         this.questionService = questionService;
+        this.userService = userService;
+        this.jwtTokenizer = jwtTokenizer;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/questions")
-    public QuestionResponse postQuestion(@RequestBody QuestionPost questionPost) {
-        Question createdQuestion = questionService.create(new Question(questionPost));
+    public QuestionResponse postQuestion(@RequestBody QuestionPost questionPost,
+                                         @RequestHeader(value = "Authorization", required = false) String token) {
+        Question question = new Question(questionPost);
+
+        if (token != null && token.startsWith("Bearer ")) {
+            try {
+                String email = jwtTokenizer.getVerifiedSubject(token.substring(7));
+                User user = userService.find(email);
+                question.setUser(user);
+            } catch (JWTVerificationException e) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            }
+        }
+
+        Question createdQuestion = questionService.create(question);
 
         return new QuestionResponse(createdQuestion);
     }
