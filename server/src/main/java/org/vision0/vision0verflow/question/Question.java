@@ -2,11 +2,16 @@ package org.vision0.vision0verflow.question;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.vision0.vision0verflow.answer.Answer;
+import org.vision0.vision0verflow.comment.Comment;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
+import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -19,6 +24,12 @@ public class Question {
     private String title;
     @Column(nullable = false)
     private String content;
+    @ManyToOne
+    private User user;
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
+    @OneToMany
+    private List<Comment> comments;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)

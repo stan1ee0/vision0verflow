@@ -2,9 +2,9 @@ package org.vision0.vision0verflow.comment;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.asm.Advice;
 import org.vision0.vision0verflow.comment.dto.CommentPatch;
 import org.vision0.vision0verflow.comment.dto.CommentPost;
+import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +18,8 @@ public class Comment {
     private long id;
     @Column(nullable = false)
     private String content;
+    @ManyToOne
+    private User user;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
