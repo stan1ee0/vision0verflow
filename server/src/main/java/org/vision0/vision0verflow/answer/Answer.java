@@ -4,9 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.vision0.vision0verflow.answer.dto.AnswerPatch;
 import org.vision0.vision0verflow.answer.dto.AnswerPost;
+import org.vision0.vision0verflow.comment.Comment;
+import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -17,6 +20,10 @@ public class Answer {
     private long id;
     @Column(nullable = false)
     private String content;
+    @ManyToOne
+    private User user;
+    @OneToMany
+    private List<Comment> comments;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
