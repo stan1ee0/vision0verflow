@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import Header from '../components/Header';
@@ -106,7 +108,17 @@ const Ul = styled.ul`
 `;
 
 export default function AskPage() {
-  return (
+  const navigate = useNavigate();
+
+  const isLoggedIn = !!localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/users/login');
+    }
+  }, [navigate]);
+
+  return !isLoggedIn ? null : (
     <div>
       <Header />
       <AskContainer>

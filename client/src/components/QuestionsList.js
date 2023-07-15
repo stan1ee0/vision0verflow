@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
+
+import { rootUrl } from '../index';
 
 const Div = styled.div`
   opacity: unset;
@@ -70,7 +73,7 @@ const UserCardLinkA = styled.a`
   margin: 2px;
 `;
 
-export default function QuestionBox({ question }) {
+function QuestionsBox({ question }) {
   return (
     <div className='question-box'>
       <div className='question-stats'>
@@ -120,6 +123,38 @@ export default function QuestionBox({ question }) {
   );
 }
 
-QuestionBox.propTypes = {
+export default function QuestionList() {
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const questionsUrl = `${rootUrl}/questions`;
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(questionsUrl);
+        const data = await response.json();
+        setQuestions(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    <div>
+      {questions.map((question) => (
+        <QuestionsBox key={question.id} question={question} />
+      ))}
+    </div>
+  );
+}
+
+QuestionsBox.propTypes = {
   question: PropTypes.object.isRequired,
 };
