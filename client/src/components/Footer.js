@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+
 import logo from '../images/footerlogo.png';
 
 const FooterWrapper = styled.footer`

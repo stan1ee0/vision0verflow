@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-import QuestionList from '../components/QuestionList';
+import QuestionsList from '../components/QuestionsList';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Lside from '../components/Lside';
@@ -224,7 +224,7 @@ export default function HomePage() {
             </HomeMainHeader>
             <QuestionListContainer>
               <InnerContainer>
-                <QuestionList />
+                <QuestionsList />
               </InnerContainer>
             </QuestionListContainer>
             <Br />

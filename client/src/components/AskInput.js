@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+
 import { rootUrl } from '../index';
 
 const AskInputMain = styled.div`
@@ -69,6 +70,7 @@ export default function AskInput() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const token = localStorage.getItem('token');
     const data = {
       title: title,
       content: content,
@@ -78,6 +80,7 @@ export default function AskInput() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })

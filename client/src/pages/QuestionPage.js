@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
-import { rootUrl } from '../index';
 
+import { rootUrl } from '../index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Lside from '../components/Lside';
 import Aside from '../components/Aside';
+import AnswersList from '../components/AnswersList';
 
 const QuestionHeader = styled.div`
   flex-flow: row nowrap;
@@ -279,7 +280,7 @@ const AnswersH2 = styled.h2`
   font-weight: 400;
 `;
 
-const AnswerHeaderH2 = styled.h2`
+const AnswerFormH2 = styled.h2`
   font-weight: 400;
   padding-top: 20px;
 `;
@@ -304,10 +305,22 @@ const Button = styled.button`
   margin: 2px;
 `;
 
+const AnswersHeader = styled.div`
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 8px !important;
+`;
+
+const AnswersHeaderH2 = styled.h2`
+  font-weight: 400;
+  margin-bottom: 0 !important;
+`;
+
 export default function QuestionPage() {
   const { questionId } = useParams();
   const [question, setQuestion] = useState(null);
   const [content, setContent] = useState('');
+  const [answers, setAnswers] = useState([]);
 
   const questionUrl = `${rootUrl}/questions/${questionId}`;
   const answersUrl = `${rootUrl}/answers`;
@@ -318,6 +331,7 @@ export default function QuestionPage() {
         const response = await fetch(questionUrl);
         const data = await response.json();
         setQuestion(data);
+        setAnswers(data?.answers || []);
       } catch (error) {
         console.error('Error fetching question:', error);
       }
@@ -329,14 +343,17 @@ export default function QuestionPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const token = localStorage.getItem('token');
     const data = {
       content: content,
+      questionId: questionId,
     };
 
     fetch(answersUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })
@@ -442,19 +459,28 @@ export default function QuestionPage() {
                   </QuestionPostContainer>
                 </QuestionContainer>
                 <AnswersContainer>
+                  {answers.length === 0 ? (
                   <AnswersH2 className='bottom-notice'>
-                    {' '}Know someone who can answer? Share a link to this{' '}
-                    <a href={`/questions/${questionId}`}>question</a>
-                    {' '}via{' '}
-                    <A>email</A>
-                    ,{' '}
-                    <A>Twitter</A>
-                    , or{' '}
-                    <A>Facebook</A>
-                    .{' '}
+                  {' '}Know someone who can answer? Share a link to this{' '}
+                  <a href={`/questions/${questionId}`}>question</a>
+                  {' '}via{' '}
+                  <A>email</A>
+                  ,{' '}
+                  <A>Twitter</A>
+                  , or{' '}
+                  <A>Facebook</A>
+                  .{' '}
                   </AnswersH2>
+                  ) : (
+                  <AnswersHeader>
+                    <AnswersHeaderH2>
+                      {' '}{answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}{' '}
+                    </AnswersHeaderH2>
+                  </AnswersHeader>
+                  )}
+                  <AnswersList answers={answers} />
                   <form onSubmit={handleSubmit}>
-                    <AnswerHeaderH2>{' '}Your Answer{' '}</AnswerHeaderH2>
+                    <AnswerFormH2>{' '}Your Answer{' '}</AnswerFormH2>
                     <Textarea rows={10} value={content}
                       onChange={(event) => setContent(event.target.value)}
                     />

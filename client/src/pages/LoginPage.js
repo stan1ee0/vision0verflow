@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { rootUrl } from '../index';
 
+import { rootUrl } from '../index';
 import Header from '../components/Header';
 
 const LoginContainer = styled.div`
