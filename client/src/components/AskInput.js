@@ -6,39 +6,126 @@ import { rootUrl } from '../index';
 
 const AskInputMain = styled.div`
   margin-bottom: 48px;
-  display: block;
 `;
 
-const AskInputBoxContainer = styled.div`
+const AskInputTitleContainer = styled.div`
   width: 100% !important;
   display: flex !important;
+  gap: 16px 16px;
   align-items: flex-start !important;
 `;
 
-const AskInputBox = styled.div`
+const AskInputTitleInnerContainer = styled.div`
   width: 70% !important;
   flex-shrink: 0 !important;
-  background-color: white;
-  border-color: hsl(210, 8%, 90%);
-  border-radius: 3px;
-  border-style: solid;
-  border-width: 1px;
-  padding: 24px;
-  margin: 20px 0;
+  background-color: hsl(0,0%,100%) !important;
+  border-color: hsl(210,8%,90%) !important;
+  border-radius: 3px !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+`;
+
+const AskInputTitleDiv = styled.div`
+  padding: 24px !important;
+`;
+
+const AskInputTitleInnerDiv = styled.div`
+  display: flex !important;
+  flex-direction: column !important;
+  margin-right: 0;
+  margin-left: 0;
+  margin: -2px;
+`;
+
+const AskInputTitleHeadlineContainer = styled.div`
+  margin-right: 0;
+  margin-left: 0;
+  margin: 2px;
+  display: flex !important;
+  flex-direction: column !important;
+`;
+
+const Label = styled.label`
+  cursor: pointer;
+  font-weight: 600;
+`;
+
+const AskInputTitleHeadlineLabelContainer = styled.div`
+  display: flex !important;
+`;
+
+const AskInputTitleHeadlineLabelInnerContainer = styled.div`
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+  flex-basis: 75%;
+  color: hsl(210,8%,25%);
+  font-size: 12px;
+  padding: 0 2px;
+`;
+
+const AskInputTitleInputContainer = styled.div`
+  margin-right: 0;
+  margin-left: 0;
+  margin: 2px;
+  position: relative !important;
+  display: flex !important;
 `;
 
 const Input = styled.input`
-  width: 100%;
-  border: 1px solid hsl(210, 8%, 75%);
-  border-radius: 3px;
-  cursor: unset;
-  font-size: 13px;
-  opacity: unset;
-  padding: 0.6em 0.7em 0.6em 32px;
+  padding: 0.6em 0.7em 0.6em 0.7em !important;
+`;
+
+const AskInputContentContainer = styled.div`
+  width: 100% !important;
+  display: flex !important;
+  margin-top: 12px !important;
+  gap: 16px 16px;
+  align-items: flex-start !important;
+`;
+
+const AskInputContentInnerContainer = styled.div`
+  width: 70% !important;
+  flex-shrink: 0 !important;
+  background-color: hsl(0,0%,100%) !important;
+  border-color: hsl(210,8%,90%) !important;
+  border-radius: 3px !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+`;
+
+const AskInputContentDiv = styled.div`
+  padding: 24px !important;
+`;
+
+const AskInputContentInnerDiv = styled.div`
+  display: flex !important;
+  flex-direction: column !important;
+  margin-right: 0;
+  margin-left: 0;
+  margin: -2px;
+`;
+
+const AskInputContentHeadlineContainer = styled.div`
+  margin-right: 0;
+  margin-left: 0;
+  margin: 2px;
+`;
+
+const AskInputContentHeadlineLabelContainer = styled.div`
+  font-weight: normal;
+  padding: 0;
+  margin-bottom: 6px !important;
+  margin-top: 2px !important;
+  color: hsl(210,8%,25%);
+  font-size: 12px;
 `;
 
 const Textarea = styled.textarea`
   width: 100%;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 10px;
 `;
 
 const Button = styled.button`
@@ -106,44 +193,62 @@ export default function AskInput() {
   return (
     <form onSubmit={handleSubmit}>
       <AskInputMain>
-        <AskInputBoxContainer>
-          <AskInputBox>
-            <div>
-              <label htmlFor="title"> Title </label>
-            </div>
-            <div>
-              <label htmlFor="title">
-                {' '}
-                Be specific and imagine you’re asking a question to another
-                person.{' '}
-              </label>
-            </div>
-            <div>
-              <Input id="title" name="title" type="text" maxLength={300}
-                placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-                value={title} onChange={(event) => setTitle(event.target.value)}
-              />
-            </div>
-          </AskInputBox>
-        </AskInputBoxContainer>
-        <AskInputBoxContainer>
-          <AskInputBox>
-              <div>
-                <label htmlFor="content"> Content </label>
-              </div>
-              <div>
-                <label htmlFor="content">
-                  Introduce the problem and expand on what you put in the title.
-                </label>
-              </div>
+        <AskInputTitleContainer>
+          <AskInputTitleInnerContainer>
+            <AskInputTitleDiv>
+              <AskInputTitleInnerDiv>
+                <AskInputTitleHeadlineContainer>
+                  <div>
+                    <Label className='label' htmlFor="title">
+                      {' '}Title{' '}
+                    </Label>
+                  </div>
+                  <AskInputTitleHeadlineLabelContainer>
+                    <AskInputTitleHeadlineLabelInnerContainer>
+                      <label className='label' htmlFor="title">
+                        {' '}Be specific and imagine you’re asking a question to another person.{' '}
+                      </label>
+                    </AskInputTitleHeadlineLabelInnerContainer>
+                  </AskInputTitleHeadlineLabelContainer>
+                </AskInputTitleHeadlineContainer>
+                <AskInputTitleInputContainer>
+                  <Input className='input' id="title" name="title" type="text" maxLength={300}
+                    placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                    value={title} onChange={(event) => setTitle(event.target.value)}
+                  />
+                </AskInputTitleInputContainer>
+              </AskInputTitleInnerDiv>
+            </AskInputTitleDiv>
+          </AskInputTitleInnerContainer>
+        </AskInputTitleContainer>
+        <AskInputContentContainer>
+          <AskInputContentInnerContainer>
+            <AskInputContentDiv>
+              <AskInputContentInnerDiv>
+                <AskInputContentHeadlineContainer>
+                  <div>
+                    <Label className='label' htmlFor="content">
+                      {' '}Content{' '}
+                    </Label>
+                  </div>
+                  <AskInputContentHeadlineLabelContainer>
+                    <label className='label' htmlFor="content">
+                      {' '}Introduce the problem and expand on what you put in the title.{' '}
+                    </label>
+                  </AskInputContentHeadlineLabelContainer>
+                </AskInputContentHeadlineContainer>
+              </AskInputContentInnerDiv>
               <div>
                 <Textarea id="content" name="content" rows={10}
                   value={content} onChange={(event) => setContent(event.target.value)}
                 />
               </div>
-            </AskInputBox>
-        </AskInputBoxContainer>
-        <Button className='button' type='submit'>{' '}Post Your Question{' '}</Button>
+              <ButtonContainer>
+                <Button className='button' type='submit'>{' '}Post Your Question{' '}</Button>
+              </ButtonContainer>
+            </AskInputContentDiv>
+          </AskInputContentInnerContainer>
+        </AskInputContentContainer>
       </AskInputMain>
     </form>
   );

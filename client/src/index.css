@@ -618,3 +618,21 @@ body {
     margin: 0 auto;
     border-radius: 3px !important;
 }
+
+.notice {
+    background: rgb(234.6, calc(234.6 + 115.6 * .08), calc(234.6 + 204 * .08));
+    border-color: rgb(165.75, calc(165.75 + 115.6 * .35), calc(165.75 + 204 * .35));
+    color: hsl(210,8%,25%);
+    border-style: solid;
+    font-size: 13px;
+    border-radius: 3px;
+    border-width: 1px;
+    padding: 16px;
+}
+
+.label {
+    font-size: 1.15384615rem;
+    color: hsl(210,8%,5%);
+    font-weight: normal;
+    padding: 0 2px;
+}
