@@ -324,6 +324,8 @@ export default function QuestionPage() {
 
   const questionUrl = `${rootUrl}/questions/${questionId}`;
   const answersUrl = `${rootUrl}/answers`;
+  const chatgptUrl = 'https://api.openai.com/v1/chat/completions';
+  const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -340,39 +342,84 @@ export default function QuestionPage() {
     fetchQuestion();
   }, [questionId]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const token = localStorage.getItem('token');
-    const data = {
-      content: content,
-      questionId: questionId,
-    };
+    let data = {content: content, questionId: questionId};
+    const storedMessages = localStorage.getItem('messages');
+    let messages = [];
+    if (storedMessages) {
+      messages = JSON.parse(storedMessages);
+      localStorage.removeItem('messages');
+    }
 
-    fetch(answersUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    })
-    .then((response) => {
+    try {
+      const response = await fetch(answersUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
       if (response.ok) {
-        return response.json();
+        const questionData = await response.json();
+        console.log('Question posted successfully!');
+        
+        messages.push({role: 'user', content: questionData.content});
+
+        const chatgptResponse = await fetch(chatgptUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: messages,
+          }),
+        });
+
+        if (chatgptResponse.ok) {
+          const chatgptData = await chatgptResponse.json();
+          console.log('Answer generated successfully!');
+
+          data = {
+            content: chatgptData.choices[0].message.content,
+            questionId: questionId,
+          };
+          messages.push({role: 'assistant', content: data.content});
+
+          const answerResponse = await fetch(answersUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (answerResponse.ok) {
+            const answerData = await answerResponse.json();
+            console.log('Answer posted successfully!');
+            console.log('answerId: ', answerData.id);
+
+            localStorage.setItem('messages', JSON.stringify(messages));
+            window.location.reload();
+          } else {
+            throw new Error('Error posting answer');
+          }
+        } else {
+          throw new Error('Error generating answer');
+        }
       } else {
-        throw new Error('Error posting answer');
+        throw new Error('Error posting question');
       }
-    })
-    .then((data) => {
-      console.log('Answer posted successfully!');
-      console.log('answerId: ', data.id);
-      setContent('');
-      window.location.reload();
-    })
-    .catch((error) => {
-      console.error('Error posting answer:', error);
-    });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -474,18 +521,18 @@ export default function QuestionPage() {
                   ) : (
                   <AnswersHeader>
                     <AnswersHeaderH2>
-                      {' '}{answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}{' '}
+                      {' '}{answers.length} {answers.length === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
                     </AnswersHeaderH2>
                   </AnswersHeader>
                   )}
                   <AnswersList answers={answers} />
                   <form onSubmit={handleSubmit}>
-                    <AnswerFormH2>{' '}Your Answer{' '}</AnswerFormH2>
+                    <AnswerFormH2>{' '}Your Follow-up{' '}</AnswerFormH2>
                     <Textarea rows={10} value={content}
                       onChange={(event) => setContent(event.target.value)}
                     />
                     <ButtonContainer>
-                      <Button className='button' type='submit'>{' '}Post Your Answer{' '}</Button>
+                      <Button className='button' type='submit'>{' '}Post Your Follow-up{' '}</Button>
                     </ButtonContainer>
                   </form>
                 </AnswersContainer>  

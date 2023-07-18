@@ -161,10 +161,8 @@ export default function AskInput() {
     event.preventDefault();
 
     const token = localStorage.getItem('token');
-    let data = {
-      title: title,
-      content: content,
-    };
+    let data = {title: title, content: content};
+    const messages = [{role: 'system', content: 'Vision0 is asking.'}];
 
     try {
       const response = await fetch(questionsUrl, {
@@ -179,12 +177,12 @@ export default function AskInput() {
       if (response.ok) {
         const questionData = await response.json();
         console.log('Question posted successfully!');
+        
         setTitle('');
         setContent('');
         const questionId = questionData.id;
-        navigate(`/questions/${questionId}`);
+        messages.push({role: 'user', content: data.content});
 
-        console.log(apiKey);
         const chatgptResponse = await fetch(chatgptUrl, {
           method: 'POST',
           headers: {
@@ -193,20 +191,19 @@ export default function AskInput() {
           },
           body: JSON.stringify({
             model: 'gpt-3.5-turbo',
-            messages: [
-              { role: 'system', content: 'Vision0 is asking.'},
-              { role: 'user', content: data.content}
-            ]
+            messages: messages,
           }),
         });
 
         if (chatgptResponse.ok) {
           const chatgptData = await chatgptResponse.json();
           console.log('Answer generated successfully!');
+        
           data = {
             content: chatgptData.choices[0].message.content,
             questionId: questionId,
           };
+          messages.push({role: 'assistant', content: data.content});
 
           const answerResponse = await fetch(answersUrl, {
             method: 'POST',
@@ -221,7 +218,9 @@ export default function AskInput() {
             const answerData = await answerResponse.json();
             console.log('Answer posted successfully!');
             console.log('answerId: ', answerData.id);
-            window.location.reload();
+
+            localStorage.setItem('messages', JSON.stringify(messages));
+            navigate(`/questions/${questionId}`);
           } else {
             throw new Error('Error posting answer');
           }
