@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.vision0.vision0verflow.question.dto.QuestionAnswersResponse;
+import org.vision0.vision0verflow.question.dto.QuestionDetailResponse;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
 import org.vision0.vision0verflow.question.dto.QuestionResponse;
@@ -13,7 +13,6 @@ import org.vision0.vision0verflow.security.JwtTokenizer;
 import org.vision0.vision0verflow.user.User;
 import org.vision0.vision0verflow.user.UserService;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,10 +63,10 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/{question-id}")
-    public QuestionAnswersResponse getQuestion(@PathVariable("question-id") long questionId) {
+    public QuestionDetailResponse getQuestion(@PathVariable("question-id") long questionId) {
         Question foundQuestion = questionService.find(questionId);
 
-        return new QuestionAnswersResponse(foundQuestion);
+        return new QuestionDetailResponse(foundQuestion);
     }
 
     @PatchMapping("questions/{question-id}")
@@ -83,11 +82,5 @@ public class QuestionController {
         Question deletedQuestion = questionService.delete(questionId);
 
         return new QuestionResponse(deletedQuestion);
-    }
-
-    @PostConstruct
-    void setInitialQuestions() {
-        questionService.create(new Question("About Vision0", "What is the meaning of Vision0?"));
-        questionService.create(new Question("About Vision 0verflow" ,"What is the meaning of Vision 0verflow?"));
     }
 }

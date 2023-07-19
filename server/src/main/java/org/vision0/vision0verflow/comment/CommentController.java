@@ -12,7 +12,6 @@ import org.vision0.vision0verflow.security.JwtTokenizer;
 import org.vision0.vision0verflow.user.User;
 import org.vision0.vision0verflow.user.UserService;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,11 +80,5 @@ public class CommentController {
         Comment deletedComment = commentService.delete(commentId);
 
         return new CommentResponse(deletedComment);
-    }
-
-    @PostConstruct
-    public void setInitialComments() {
-        commentService.create(new Comment("How awesome Vision0 is!"));
-        commentService.create(new Comment("How more awesome Vision 0verflow is!!"));
     }
 }

@@ -2,8 +2,10 @@ package org.vision0.vision0verflow.comment;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.vision0.vision0verflow.answer.Answer;
 import org.vision0.vision0verflow.comment.dto.CommentPatch;
 import org.vision0.vision0verflow.comment.dto.CommentPost;
+import org.vision0.vision0verflow.question.Question;
 import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
@@ -20,6 +22,10 @@ public class Comment {
     private String content;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private Question question;
+    @ManyToOne
+    private Answer answer;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
@@ -36,7 +42,15 @@ public class Comment {
         this.content = commentPatch.getContent();
     }
 
-    public Comment(String content) {
+    public Comment(String content, User user, Question question) {
         this.content = content;
+        this.user = user;
+        this.question = question;
+    }
+
+    public Comment(String content, User user, Answer answer) {
+        this.content = content;
+        this.user = user;
+        this.answer = answer;
     }
 }

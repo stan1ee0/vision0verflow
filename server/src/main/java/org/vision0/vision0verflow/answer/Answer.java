@@ -10,6 +10,7 @@ import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,8 +26,8 @@ public class Answer {
     private User user;
     @ManyToOne
     private Question question;
-    @OneToMany
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "answer")
+    private List<Comment> comments = new ArrayList<>();
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
@@ -43,7 +44,9 @@ public class Answer {
         this.content = answerPatch.getContent();
     }
 
-    public Answer(String content) {
+    public Answer(String content, User user, Question question) {
         this.content = content;
+        this.user = user;
+        this.question = question;
     }
 }
