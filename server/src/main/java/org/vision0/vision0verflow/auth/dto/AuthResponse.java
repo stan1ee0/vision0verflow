@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class AuthResponse {
     private String token;
+    private String aiToken;
 
-    public AuthResponse(String token) {
+    public AuthResponse(String token, String aiToken) {
         this.token = token;
+        this.aiToken = aiToken;
     }
 }

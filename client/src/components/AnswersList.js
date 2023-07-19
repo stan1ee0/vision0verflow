@@ -75,48 +75,6 @@ const P = styled.p`
   margin-bottom: 1.1em;
 `;
 
-const TagListContainer = styled.div`
-  margin-bottom: 12px !important;
-  margin-top: 24px !important;
-`;
-
-const TagListInnerContainer = styled.div`
-  margin-bottom: 10px;
-  clear: both;
-  display: flex !important;
-  flex-direction: column !important;
-  margin-right: 0;
-  margin-left: 0;
-  margin: -2px;
-`;
-
-const TagsDiv = styled.div`
-  margin-right: 0;
-  margin-left: 0;
-  margin: 2px;
-  position: relative !important;
-  display: flex !important;
-  flex-wrap: wrap !important;
-`;
-
-const TagsUl = styled.ul`
-  display: inline !important;
-  list-style: none !important;
-  margin-left: 0 !important;
-`;
-
-const TagsLi = styled.li`
-  display: inline !important;
-  margin-right: 4px !important;
-`;
-
-const TagsA = styled.a`
-  font-size: 12px;
-  color: hsl(205,47%,42%);
-  background-color: hsl(205,46%,92%);
-  border-color: transparent;
-`;
-
 const PostBottomContainer = styled.div`
   margin-bottom: 0 !important;
 `;
@@ -212,6 +170,9 @@ const Span = styled.span`
 `;
 
 function AnswersBox({ answer }) {
+  const userId = answer.user.id;
+  const userName = answer.user.name;
+
   return (
     <AnswerContainer>
       <AnswerPostContainer>
@@ -234,16 +195,6 @@ function AnswersBox({ answer }) {
           <PostBodyDiv className='prose'>
             <P>{answer?.content}</P>
           </PostBodyDiv>
-          <TagListContainer>
-            <TagListInnerContainer>
-              <TagsDiv>
-                <TagsUl>
-                  <TagsLi><TagsA className='tag'>vision0</TagsA></TagsLi>
-                  <TagsLi><TagsA className='tag'>vision0verflow</TagsA></TagsLi>
-                </TagsUl>
-              </TagsDiv>
-            </TagListInnerContainer>
-          </TagListContainer>
           <PostBottomContainer>
             <PostBottomInnerContainer>
               <UserItemsContainer>
@@ -258,18 +209,28 @@ function AnswersBox({ answer }) {
               <UserCardContainer>
                 <UserInfoDiv>
                   <UserAvatarDiv>
-                    <A href='/users/1'>
+                    <A href={`/users/${userId}`}>
                       <UserAvatarContainer>
-                        <img className='user-avatar-image' alt='Vision0'
+                        {userId == 1 ? (
+                        <img className='user-avatar-image' alt={userName}
                           src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
                         />
+                        ) : (
+                        <img className='user-avatar-image' alt={userName}
+                          src='https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg'
+                        />
+                        )}
                       </UserAvatarContainer>
                     </A>
                   </UserAvatarDiv>
                   <UserDetailsDiv>
-                    <A href='/users/1'>Vision0</A>
+                    <A href={`/users/${userId}`}>{userName}</A>
                     <UserStatsDiv>
+                      { userId === 1 ? (
                       <Span>100</Span>
+                      ) : (
+                      <Span>200</Span>
+                      )}
                     </UserStatsDiv>
                   </UserDetailsDiv>
                 </UserInfoDiv>

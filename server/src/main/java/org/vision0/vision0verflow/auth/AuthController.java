@@ -27,8 +27,9 @@ public class AuthController {
         String password = authRequest.getPassword();
         authService.authenticate(email, password);
 
-        String generatedToken = jwtTokenizer.generate(email);
+        String token = jwtTokenizer.generate(email);
+        String aiToken = jwtTokenizer.generate("aision@verflow.org");
 
-        return new AuthResponse(generatedToken);
+        return new AuthResponse(token, aiToken);
     }
 }

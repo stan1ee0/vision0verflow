@@ -153,41 +153,91 @@ export default function AskInput() {
   const navigate = useNavigate();
 
   const questionsUrl = `${rootUrl}/questions`;
+  const answersUrl = `${rootUrl}/answers`;
+  const chatgptUrl = 'https://api.openai.com/v1/chat/completions';
+  const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const token = localStorage.getItem('token');
-    const data = {
-      title: title,
-      content: content,
-    };
+    const aiToken = localStorage.getItem('aiToken');
+    let data = {title: title, content: content};
+    const messages = [{role: 'system', content: 'Vision0 is asking.'}];
 
-    fetch(questionsUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    })
-    .then((response) => {
+    try {
+      const response = await fetch(questionsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
       if (response.ok) {
-        return response.json();
+        const questionData = await response.json();
+        console.log('Question posted successfully!');
+        
+        setTitle('');
+        setContent('');
+        const questionId = questionData.id;
+        messages.push({role: 'user', content: data.content});
+
+        const chatgptResponse = await fetch(chatgptUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,        
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: messages,
+          }),
+        });
+
+        if (chatgptResponse.ok) {
+          const chatgptData = await chatgptResponse.json();
+          console.log('Answer generated successfully!');
+        
+          data = {
+            content: chatgptData.choices[0].message.content,
+            questionId: questionId,
+          };
+          messages.push({role: 'assistant', content: data.content});
+
+          const answerResponse = await fetch(answersUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${aiToken}`,
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (answerResponse.ok) {
+            const answerData = await answerResponse.json();
+            console.log('Answer posted successfully!');
+            console.log('answerId: ', answerData.id);
+
+            localStorage.setItem('messages', JSON.stringify(messages));
+            navigate(`/questions/${questionId}`);
+          } else {
+            throw new Error('Error posting answer');
+          }
+        } else {
+          throw new Error('Error generating answer');
+        }
+      } else if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('aiToken');
+        navigate('/users/login');
       } else {
         throw new Error('Error posting question');
       }
-    })
-    .then((data) => {
-      console.log('Question posted successfully!');
-      setTitle('');
-      setContent('');
-      const questionId = data.id;
-      navigate(`/questions/${questionId}`);
-    })
-    .catch((error) => {
-      console.error('Error posting question:', error);
-    });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (

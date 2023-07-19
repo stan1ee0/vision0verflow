@@ -235,7 +235,9 @@ export default function LoginPage() {
       setEmail('');
       setPassword('');
       const token = data.token;
+      const aiToken = data.aiToken;
       localStorage.setItem('token', token);
+      localStorage.setItem('aiToken', aiToken);
       navigate('/');
     })
     .catch((error) => {
