@@ -321,6 +321,7 @@ export default function QuestionPage() {
   const [question, setQuestion] = useState(null);
   const [content, setContent] = useState('');
   const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const questionUrl = `${rootUrl}/questions/${questionId}`;
@@ -345,6 +346,7 @@ export default function QuestionPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const token = localStorage.getItem('token');
     const aiToken = localStorage.getItem('aiToken');
@@ -534,11 +536,11 @@ export default function QuestionPage() {
                   <AnswersList answers={answers} />
                   <form onSubmit={handleSubmit}>
                     <AnswerFormH2>{' '}Your Follow-up{' '}</AnswerFormH2>
-                    <Textarea rows={10} value={content}
-                      onChange={(event) => setContent(event.target.value)}
+                    <Textarea rows={10} value={loading ? 'Waiting for response...' : content}
+                      disabled={loading} onChange={(event) => setContent(event.target.value)}
                     />
                     <ButtonContainer>
-                      <Button className='button' type='submit'>{' '}Post Your Follow-up{' '}</Button>
+                      <Button className='button' type='submit' disabled={loading}>{' '}Post Your Follow-up{' '}</Button>
                     </ButtonContainer>
                   </form>
                 </AnswersContainer>  

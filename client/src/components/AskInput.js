@@ -150,6 +150,7 @@ const Button = styled.button`
 export default function AskInput() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const questionsUrl = `${rootUrl}/questions`;
@@ -159,6 +160,7 @@ export default function AskInput() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const token = localStorage.getItem('token');
     const aiToken = localStorage.getItem('aiToken');
@@ -264,7 +266,8 @@ export default function AskInput() {
                 <AskInputTitleInputContainer>
                   <Input className='input' id="title" name="title" type="text" maxLength={300}
                     placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-                    value={title} onChange={(event) => setTitle(event.target.value)}
+                    value={title} disabled={loading}
+                    onChange={(event) => setTitle(event.target.value)}
                   />
                 </AskInputTitleInputContainer>
               </AskInputTitleInnerDiv>
@@ -290,11 +293,12 @@ export default function AskInput() {
               </AskInputContentInnerDiv>
               <div>
                 <Textarea id="content" name="content" rows={10}
-                  value={content} onChange={(event) => setContent(event.target.value)}
+                  value={loading ? 'Waiting for response...' : content} disabled={loading}
+                  onChange={(event) => setContent(event.target.value)}
                 />
               </div>
               <ButtonContainer>
-                <Button className='button' type='submit'>{' '}Post Your Question{' '}</Button>
+                <Button className='button' type='submit' disabled={loading}>{' '}Post Your Question{' '}</Button>
               </ButtonContainer>
             </AskInputContentDiv>
           </AskInputContentInnerContainer>
