@@ -7,7 +7,6 @@ import org.vision0.vision0verflow.user.dto.UserPatch;
 import org.vision0.vision0verflow.user.dto.UserPost;
 import org.vision0.vision0verflow.user.dto.UserResponse;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,11 +57,5 @@ public class UserController {
         User terminatedUser = userService.terminate(userId);
 
         return new UserResponse(terminatedUser);
-    }
-
-    @PostConstruct
-    public void setInitialUsers() {
-        userService.register(new User("vision@verflow.org", "Vision0", "Vision0verflow"));
-        userService.register(new User("aision@verflow.org", "Aision0", "Aision0verflow"));
     }
 }

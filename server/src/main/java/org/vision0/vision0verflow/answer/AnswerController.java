@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.vision0.vision0verflow.answer.dto.AnswerDetailResponse;
 import org.vision0.vision0verflow.answer.dto.AnswerPatch;
 import org.vision0.vision0verflow.answer.dto.AnswerPost;
 import org.vision0.vision0verflow.answer.dto.AnswerResponse;
@@ -14,7 +15,6 @@ import org.vision0.vision0verflow.security.JwtTokenizer;
 import org.vision0.vision0verflow.user.User;
 import org.vision0.vision0verflow.user.UserService;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,10 +73,10 @@ public class AnswerController {
     }
 
     @GetMapping("/answers/{answer-id}")
-    public AnswerResponse getAnswer(@PathVariable("answer-id") long answerId) {
+    public AnswerDetailResponse getAnswer(@PathVariable("answer-id") long answerId) {
         Answer foundAnswer = answerService.find(answerId);
 
-        return new AnswerResponse(foundAnswer);
+        return new AnswerDetailResponse(foundAnswer);
     }
 
     @PatchMapping("answers/{answer-id}")
@@ -92,12 +92,5 @@ public class AnswerController {
         Answer deletedAnswer = answerService.delete(answerId);
 
         return new AnswerResponse(deletedAnswer);
-    }
-
-    @PostConstruct
-    void setInitialAnswers() {
-        answerService.create(new Answer("Vision0 means a pure vision."));
-        answerService.create(new Answer("Vision 0verflow means that a vision is overflowing," +
-                " but it's not a problem because it is pure."));
     }
 }

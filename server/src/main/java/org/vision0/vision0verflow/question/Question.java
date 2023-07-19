@@ -28,8 +28,8 @@ public class Question {
     private User user;
     @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
-    @OneToMany
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "question")
+    private List<Comment> comments = new ArrayList<>();
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
@@ -48,8 +48,9 @@ public class Question {
         this.content = questionPatch.getContent();
     }
 
-    public Question(String title, String content) {
+    public Question(String title, String content, User user) {
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 }
