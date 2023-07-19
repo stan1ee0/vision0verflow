@@ -72,6 +72,7 @@ export default function LogoutPage() {
     event.preventDefault();
 
     localStorage.removeItem('token');
+    localStorage.removeItem('aiToken');
     navigate('/');
   };
 

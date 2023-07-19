@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 
@@ -321,6 +321,7 @@ export default function QuestionPage() {
   const [question, setQuestion] = useState(null);
   const [content, setContent] = useState('');
   const [answers, setAnswers] = useState([]);
+  const navigate = useNavigate();
 
   const questionUrl = `${rootUrl}/questions/${questionId}`;
   const answersUrl = `${rootUrl}/answers`;
@@ -346,6 +347,7 @@ export default function QuestionPage() {
     event.preventDefault();
 
     const token = localStorage.getItem('token');
+    const aiToken = localStorage.getItem('aiToken');
     let data = {content: content, questionId: questionId};
     const storedMessages = localStorage.getItem('messages');
     let messages = [];
@@ -396,7 +398,7 @@ export default function QuestionPage() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${aiToken}`,
             },
             body: JSON.stringify(data),
           });
@@ -414,6 +416,10 @@ export default function QuestionPage() {
         } else {
           throw new Error('Error generating answer');
         }
+      } else if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('aiToken');
+        navigate('/users/login');
       } else {
         throw new Error('Error posting question');
       }

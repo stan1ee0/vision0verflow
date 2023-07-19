@@ -161,6 +161,7 @@ export default function AskInput() {
     event.preventDefault();
 
     const token = localStorage.getItem('token');
+    const aiToken = localStorage.getItem('aiToken');
     let data = {title: title, content: content};
     const messages = [{role: 'system', content: 'Vision0 is asking.'}];
 
@@ -209,7 +210,7 @@ export default function AskInput() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
+              'Authorization': `Bearer ${aiToken}`,
             },
             body: JSON.stringify(data),
           });
@@ -227,6 +228,10 @@ export default function AskInput() {
         } else {
           throw new Error('Error generating answer');
         }
+      } else if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('aiToken');
+        navigate('/users/login');
       } else {
         throw new Error('Error posting question');
       }
