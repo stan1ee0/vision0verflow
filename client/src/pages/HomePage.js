@@ -32,10 +32,6 @@ const QuestionListContainer = styled.div`
   border-top: 1px solid hsl(210, 8%, 85%);
 `;
 
-const InnerContainer = styled.div`
-  margin-bottom: 30px;
-`;
-
 const Br = styled.br`
   clear: both !important;
 `;
@@ -223,9 +219,7 @@ export default function HomePage() {
               </AskButtonContainer>
             </HomeMainHeader>
             <QuestionListContainer>
-              <InnerContainer>
-                <QuestionsList />
-              </InnerContainer>
+              <QuestionsList />
             </QuestionListContainer>
             <Br />
             <H2 className="bottom-notice">

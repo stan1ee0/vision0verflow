@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-import { rootUrl } from '../index';
+import { rootUrl, chatgptUrl, apiKey } from '../index';
 
 const AskInputMain = styled.div`
   margin-bottom: 48px;
@@ -153,39 +153,36 @@ export default function AskInput() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const questionsUrl = `${rootUrl}/questions`;
-  const answersUrl = `${rootUrl}/answers`;
-  const chatgptUrl = 'https://api.openai.com/v1/chat/completions';
-  const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
     const token = localStorage.getItem('token');
     const aiToken = localStorage.getItem('aiToken');
-    let data = {title: title, content: content};
     const messages = [{role: 'system', content: 'Vision0 is asking.'}];
 
     try {
-      const response = await fetch(questionsUrl, {
+      const questionsUrl = `${rootUrl}/questions`;
+      const questionResponse = await fetch(questionsUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          title: title,
+          content: content
+        }),
       });
 
-      if (response.ok) {
-        const questionData = await response.json();
+      if (questionResponse.ok) {
+        const questionData = await questionResponse.json();
         console.log('Question posted successfully!');
-        
         setTitle('');
         setContent('');
-        const questionId = questionData.id;
-        messages.push({role: 'user', content: data.content});
 
+        const questionId = questionData.id;
+        messages.push({role: 'user', content: questionData.content});
         const chatgptResponse = await fetch(chatgptUrl, {
           method: 'POST',
           headers: {
@@ -202,43 +199,53 @@ export default function AskInput() {
           const chatgptData = await chatgptResponse.json();
           console.log('Answer generated successfully!');
         
-          data = {
-            content: chatgptData.choices[0].message.content,
-            questionId: questionId,
-          };
-          messages.push({role: 'assistant', content: data.content});
-
-          const answerResponse = await fetch(answersUrl, {
+          const commentsUrl = `${questionsUrl}/${questionId}/comments`;
+          const commentContent = chatgptData.choices[0].message.content;
+          messages.push({role: 'assistant', content: commentContent});
+          const commentResponse = await fetch(commentsUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${aiToken}`,
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({
+              content: commentContent,
+            }),
           });
 
-          if (answerResponse.ok) {
-            const answerData = await answerResponse.json();
-            console.log('Answer posted successfully!');
-            console.log('answerId: ', answerData.id);
-
+          if (commentResponse.ok) {
+            const commentData = await commentResponse.json();
+            console.log('Comment posted successfully!');
+            console.log('commentId: ', commentData.id);
             localStorage.setItem('messages', JSON.stringify(messages));
-            navigate(`/questions/${questionId}`);
+            navigate(`/questions/${questionId}`); 
           } else {
-            throw new Error('Error posting answer');
+            const commentError = new Error('Error posting comment');
+            commentError.status = commentResponse.status;
+            throw commentError;
           }
         } else {
-          throw new Error('Error generating answer');
+          const chatgptError = new Error('Error generating answer');
+          chatgptError.status = chatgptResponse.status;
+          throw chatgptError;
         }
-      } else if (response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('aiToken');
-        navigate('/users/login');
       } else {
-        throw new Error('Error posting question');
+        const questionError = new Error('Error posting question');
+        questionError.status = questionResponse.status;
+        throw  questionError;
       }
     } catch (error) {
       console.error('Error:', error);
+
+      switch(error.status) {
+        case 401:
+          localStorage.removeItem('token');
+          localStorage.removeItem('aiToken');
+          navigate('/users/login');
+          break;
+        default:
+          navigate('/');
+      }
     }
   };
 

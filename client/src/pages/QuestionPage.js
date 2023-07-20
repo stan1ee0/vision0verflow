@@ -2,12 +2,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 
-import { rootUrl } from '../index';
+import { rootUrl, chatgptUrl, apiKey } from '../index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Lside from '../components/Lside';
 import Aside from '../components/Aside';
-import AnswersList from '../components/AnswersList';
+import FollowupsList from '../components/FollowupsList';
+import CommentsList from '../components/CommentsList';
 
 const QuestionHeader = styled.div`
   flex-flow: row nowrap;
@@ -267,20 +268,36 @@ const Span = styled.span`
   margin-right: 2px;
 `;
 
-const AnswersContainer = styled.div`
+const QuestionCommentsDiv = styled.div`
+  padding-right: 16px;
+  grid-column: 2;
+  width: auto;
+  min-width: 0;
+`;
+
+const QuestionCommentsContainer = styled.div`
+  width: 100%;
+  padding-bottom: 10px;
+  margin-top: 12px !important;
+  border-color: hsl(210,8%,90%) !important;
+  border-top-style: solid !important;
+  border-top-width: 1px !important;
+`;
+
+const FollowupsContainer = styled.div`
   width: auto;
   float: none;
   padding-top: 10px;
   clear: both;
 `;
 
-const AnswersH2 = styled.h2`
+const FollowupsH2 = styled.h2`
   padding-top: 8px;
   margin-bottom: -8px;
   font-weight: 400;
 `;
 
-const AnswerFormH2 = styled.h2`
+const FollowupFormH2 = styled.h2`
   font-weight: 400;
   padding-top: 20px;
 `;
@@ -305,13 +322,13 @@ const Button = styled.button`
   margin: 2px;
 `;
 
-const AnswersHeader = styled.div`
+const FollowupsHeader = styled.div`
   width: 100%;
   margin-top: 10px;
   margin-bottom: 8px !important;
 `;
 
-const AnswersHeaderH2 = styled.h2`
+const FollowupsHeaderH2 = styled.h2`
   font-weight: 400;
   margin-bottom: 0 !important;
 `;
@@ -319,28 +336,27 @@ const AnswersHeaderH2 = styled.h2`
 export default function QuestionPage() {
   const { questionId } = useParams();
   const [question, setQuestion] = useState(null);
+  const [followups, setFollowups] = useState([]);
+  const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
-  const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const questionUrl = `${rootUrl}/questions/${questionId}`;
-  const answersUrl = `${rootUrl}/answers`;
-  const chatgptUrl = 'https://api.openai.com/v1/chat/completions';
-  const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+
+  const fetchQuestion = async () => {
+    try {
+      const response = await fetch(questionUrl);
+      const data = await response.json();
+      setQuestion(data);
+      setFollowups(data?.answers || []);
+      setComments(data?.comments || []);
+    } catch (error) {
+      console.error('Error fetching question:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchQuestion = async () => {
-      try {
-        const response = await fetch(questionUrl);
-        const data = await response.json();
-        setQuestion(data);
-        setAnswers(data?.answers || []);
-      } catch (error) {
-        console.error('Error fetching question:', error);
-      }
-    };
-
     fetchQuestion();
   }, [questionId]);
 
@@ -350,30 +366,29 @@ export default function QuestionPage() {
 
     const token = localStorage.getItem('token');
     const aiToken = localStorage.getItem('aiToken');
-    let data = {content: content, questionId: questionId};
-    const storedMessages = localStorage.getItem('messages');
-    let messages = [];
-    if (storedMessages) {
-      messages = JSON.parse(storedMessages);
-      localStorage.removeItem('messages');
-    }
+    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    localStorage.removeItem('messages');
 
     try {
-      const response = await fetch(answersUrl, {
+      const followupsUrl = `${questionUrl}/answers`;
+      const followupResponse = await fetch(followupsUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          content: content,
+        }),
       });
 
-      if (response.ok) {
-        const questionData = await response.json();
-        console.log('Question posted successfully!');
+      if (followupResponse.ok) {
+        const followupData = await followupResponse.json();
+        console.log('Followup posted successfully!');
+        setContent('');
         
-        messages.push({role: 'user', content: questionData.content});
-
+        const followupId = followupData.id;
+        messages.push({role: 'user', content: followupData.content});
         const chatgptResponse = await fetch(chatgptUrl, {
           method: 'POST',
           headers: {
@@ -390,43 +405,55 @@ export default function QuestionPage() {
           const chatgptData = await chatgptResponse.json();
           console.log('Answer generated successfully!');
 
-          data = {
-            content: chatgptData.choices[0].message.content,
-            questionId: questionId,
-          };
-          messages.push({role: 'assistant', content: data.content});
-
-          const answerResponse = await fetch(answersUrl, {
+          const followupUrl = `${rootUrl}/answers/${followupId}`;
+          const commentsUrl = `${followupUrl}/comments`;
+          const commentContent = chatgptData.choices[0].message.content;
+          messages.push({role: 'assistant', content: commentContent});
+          const commentResponse = await fetch(commentsUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${aiToken}`,
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({
+              content: commentContent,
+            }),
           });
 
-          if (answerResponse.ok) {
-            const answerData = await answerResponse.json();
-            console.log('Answer posted successfully!');
-            console.log('answerId: ', answerData.id);
-
+          if (commentResponse.ok) {
+            const commentData = await commentResponse.json();
+            console.log('Comment posted successfully!');
+            console.log('commentId: ', commentData.id);
             localStorage.setItem('messages', JSON.stringify(messages));
-            window.location.reload();
+            await fetchQuestion();
+            setLoading(false);
           } else {
-            throw new Error('Error posting answer');
+            const commentError = new Error('Error posting comment');
+            commentError.status = commentResponse.status;
+            throw commentError;
           }
         } else {
-          throw new Error('Error generating answer');
+          const chatgptError = new Error('Error generating answer');
+          chatgptError.status = chatgptResponse.status;
+          throw chatgptError;
         }
-      } else if (response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('aiToken');
-        navigate('/users/login');
       } else {
-        throw new Error('Error posting question');
+        const followupError = new Error('Error posting followup');
+        followupError.status = followupResponse.status;
+        throw  followupError;
       }
     } catch (error) {
       console.error('Error:', error);
+
+      switch(error.status) {
+        case 401:
+          localStorage.removeItem('token');
+          localStorage.removeItem('aiToken');
+          navigate('/users/login');
+          break;
+        default:
+          navigate('/');
+      }
     }
   };
 
@@ -511,11 +538,16 @@ export default function QuestionPage() {
                         </PostBottomInnerContainer>
                       </PostBottomContainer>
                     </QuestionPostDiv>
+                    <QuestionCommentsDiv>
+                      <QuestionCommentsContainer>
+                        <CommentsList comments={comments} />
+                      </QuestionCommentsContainer>
+                    </QuestionCommentsDiv>
                   </QuestionPostContainer>
                 </QuestionContainer>
-                <AnswersContainer>
-                  {answers.length === 0 ? (
-                  <AnswersH2 className='bottom-notice'>
+                <FollowupsContainer>
+                  {followups.length === 0 ? (
+                  <FollowupsH2 className='bottom-notice'>
                   {' '}Know someone who can answer? Share a link to this{' '}
                   <a href={`/questions/${questionId}`}>question</a>
                   {' '}via{' '}
@@ -525,17 +557,17 @@ export default function QuestionPage() {
                   , or{' '}
                   <A>Facebook</A>
                   .{' '}
-                  </AnswersH2>
+                  </FollowupsH2>
                   ) : (
-                  <AnswersHeader>
-                    <AnswersHeaderH2>
-                      {' '}{answers.length} {answers.length === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
-                    </AnswersHeaderH2>
-                  </AnswersHeader>
+                  <FollowupsHeader>
+                    <FollowupsHeaderH2>
+                      {' '}{followups.length} {followups.length === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
+                    </FollowupsHeaderH2>
+                  </FollowupsHeader>
                   )}
-                  <AnswersList answers={answers} />
+                  <FollowupsList followups={followups} />
                   <form onSubmit={handleSubmit}>
-                    <AnswerFormH2>{' '}Your Follow-up{' '}</AnswerFormH2>
+                    <FollowupFormH2>{' '}Your Follow-up{' '}</FollowupFormH2>
                     <Textarea rows={10} value={loading ? 'Waiting for response...' : content}
                       disabled={loading} onChange={(event) => setContent(event.target.value)}
                     />
@@ -543,7 +575,7 @@ export default function QuestionPage() {
                       <Button className='button' type='submit' disabled={loading}>{' '}Post Your Follow-up{' '}</Button>
                     </ButtonContainer>
                   </form>
-                </AnswersContainer>  
+                </FollowupsContainer>  
               </QuestionMain>
               <Aside />
             </div>

@@ -38,15 +38,14 @@ public class AnswerController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/answers")
-    public AnswerResponse postAnswer(@RequestBody AnswerPost answerPost,
+    @PostMapping("/questions/{question-id}/answers")
+    public AnswerResponse postAnswer(@PathVariable("question-id") long questionId,
+                                     @RequestBody AnswerPost answerPost,
                                      @RequestHeader (value = "Authorization", required = false) String token) {
         Answer answer = new Answer(answerPost);
 
-        if (answerPost.getQuestionId() > 0) {
-            Question foundQuestion = questionService.find(answerPost.getQuestionId());
-            answer.setQuestion(foundQuestion);
-        }
+        Question foundQuestion = questionService.find(questionId);
+        answer.setQuestion(foundQuestion);
 
         if (token != null && token.startsWith("Bearer ")) {
             try {
@@ -81,7 +80,7 @@ public class AnswerController {
 
     @PatchMapping("answers/{answer-id}")
     public AnswerResponse patchAnswer(@PathVariable("answer-id") long answerId,
-                                          @RequestBody AnswerPatch answerPatch) {
+                                      @RequestBody AnswerPatch answerPatch) {
         Answer editedAnswer = answerService.edit(answerId, new Answer(answerPatch));
 
         return new AnswerResponse(editedAnswer);

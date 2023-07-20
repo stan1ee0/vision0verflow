@@ -1,26 +1,35 @@
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const AnswerContainer = styled.div`
+import CommentsList from './CommentsList';
+
+const InnerContainer = styled.div`
+  width: auto;
+  float: none;
+  padding-top: 10px;
+  clear: both;
+`;
+
+const FollowupContainer = styled.div`
   border-bottom: 1px solid hsl(210,8%,90%);
   width: 100%;
   padding-bottom: 16px;
   padding-top: 16px;
 `;
 
-const AnswerPostContainer = styled.div`
+const FollowupPostContainer = styled.div`
   display: grid;
   grid-template-columns: max-content 1fr;
 `;
 
-const AnswerVoteDiv = styled.div`
+const FollowupVoteDiv = styled.div`
   width: auto;
   padding-right: 16px;
   vertical-align: top;
   grid-column: 1;
 `;
 
-const AnswerVoteContainer = styled.div`
+const FollowupVoteContainer = styled.div`
   display: flex !important;
   align-items: stretch !important;
   justify-content: center !important;
@@ -60,7 +69,7 @@ const VoteCountDiv = styled.div`
   flex-direction: column !important;
 `;
 
-const AnswerPostDiv = styled.div`
+const FollowupPostDiv = styled.div`
   padding-right: 16px;
   grid-column: 2;
   width: auto;
@@ -169,15 +178,43 @@ const Span = styled.span`
   margin-right: 2px;
 `;
 
-function AnswersBox({ answer }) {
-  const userId = answer.user.id;
-  const userName = answer.user.name;
+const FollowupCommentsDiv = styled.div`
+  padding-right: 16px;
+  grid-column: 2;
+  width: auto;
+  min-width: 0;
+`;
+
+const FollowupCommentsContainer = styled.div`
+  width: 100%;
+  padding-bottom: 10px;
+  margin-top: 12px !important;
+  border-color: hsl(210,8%,90%) !important;
+  border-top-style: solid !important;
+  border-top-width: 1px !important;
+`;
+
+export default function FollowupsList({ followups }) {
+  return (
+    <InnerContainer>
+      {followups.map((followup) => (
+        <FollowupsBox key={followup.id} followup={followup} />
+      ))}
+    </InnerContainer>
+  );
+}
+
+function FollowupsBox({ followup }) {
+  const userId = followup.user.id;
+  const userName = followup.user.name;
+  const followupContent = followup.content;
+  const followupComments = followup.comments;
 
   return (
-    <AnswerContainer>
-      <AnswerPostContainer>
-        <AnswerVoteDiv>
-          <AnswerVoteContainer>
+    <FollowupContainer>
+      <FollowupPostContainer>
+        <FollowupVoteDiv>
+          <FollowupVoteContainer>
             <VoteButton className='header-button'>
             <Svg width="18" height="18" viewBox="0 0 18 18">
               <path d="M1 12h16L9 4l-8 8Z"></path>
@@ -189,11 +226,11 @@ function AnswersBox({ answer }) {
                 <path d="M1 6h16l-8 8-8-8Z"></path>
               </Svg>
             </VoteDownButton>
-          </AnswerVoteContainer>
-        </AnswerVoteDiv>
-        <AnswerPostDiv>
+          </FollowupVoteContainer>
+        </FollowupVoteDiv>
+        <FollowupPostDiv>
           <PostBodyDiv className='prose'>
-            <P>{answer?.content}</P>
+            <P>{followupContent}</P>
           </PostBodyDiv>
           <PostBottomContainer>
             <PostBottomInnerContainer>
@@ -237,26 +274,21 @@ function AnswersBox({ answer }) {
               </UserCardContainer>
             </PostBottomInnerContainer>
           </PostBottomContainer>
-        </AnswerPostDiv>
-      </AnswerPostContainer>
-    </AnswerContainer>
+        </FollowupPostDiv>
+        <FollowupCommentsDiv>
+          <FollowupCommentsContainer>
+            <CommentsList comments={followupComments} />
+          </FollowupCommentsContainer>
+        </FollowupCommentsDiv>
+      </FollowupPostContainer>
+    </FollowupContainer>
   )
 }
 
-export default function AnswersList({ answers }) {
-  return (
-    <div>
-      {answers.map((answer) => (
-        <AnswersBox key={answer.id} answer={answer} />
-      ))}
-    </div>
-  );
-}
-
-AnswersBox.propTypes = {
-  answer: PropTypes.object.isRequired,
+FollowupsBox.propTypes = {
+  followup: PropTypes.object.isRequired,
 };
 
-AnswersList.propTypes = {
-  answers: PropTypes.array.isRequired,
+FollowupsList.propTypes = {
+  followups: PropTypes.array.isRequired,
 };

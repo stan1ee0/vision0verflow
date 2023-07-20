@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.vision0.vision0verflow.answer.Answer;
+import org.vision0.vision0verflow.answer.AnswerService;
 import org.vision0.vision0verflow.comment.dto.CommentPatch;
 import org.vision0.vision0verflow.comment.dto.CommentPost;
 import org.vision0.vision0verflow.comment.dto.CommentResponse;
+import org.vision0.vision0verflow.question.Question;
+import org.vision0.vision0verflow.question.QuestionService;
 import org.vision0.vision0verflow.security.JwtTokenizer;
 import org.vision0.vision0verflow.user.User;
 import org.vision0.vision0verflow.user.UserService;
@@ -21,20 +25,38 @@ public class CommentController {
     private final CommentService commentService;
     private final UserService userService;
     private final JwtTokenizer jwtTokenizer;
+    private final QuestionService questionService;
+    private final AnswerService answerService;
 
     @Autowired
     public CommentController(CommentService commentService,
                              UserService userService,
-                             JwtTokenizer jwtTokenizer) {
+                             JwtTokenizer jwtTokenizer,
+                             QuestionService questionService,
+                             AnswerService answerService) {
         this.commentService = commentService;
         this.userService = userService;
         this.jwtTokenizer = jwtTokenizer;
+        this.questionService = questionService;
+        this.answerService = answerService;
     }
 
-    @PostMapping("/comments")
-    public CommentResponse postComment(@RequestBody CommentPost commentPost,
-                                       @RequestHeader(value = "Authorization", required = false) String token) {
+    @PostMapping("/{source}/{id}/comments")
+    public CommentResponse postQuestionComment(@PathVariable String source,
+                                               @PathVariable long id,
+                                               @RequestBody CommentPost commentPost,
+                                               @RequestHeader(value = "Authorization", required = false) String token) {
         Comment comment = new Comment(commentPost);
+
+        if (source.equals("questions")) {
+            Question foundQuestion = questionService.find(id);
+            comment.setQuestion(foundQuestion);
+        } else if (source.equals("answers")) {
+            Answer foundAnswer = answerService.find(id);
+            comment.setAnswer(foundAnswer);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
         if (token != null && token.startsWith("Bearer ")) {
             try {
