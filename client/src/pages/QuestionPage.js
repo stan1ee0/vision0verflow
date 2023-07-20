@@ -366,8 +366,13 @@ export default function QuestionPage() {
 
     const token = localStorage.getItem('token');
     const aiToken = localStorage.getItem('aiToken');
-    const messages = JSON.parse(localStorage.getItem('messages')) || [];
-    localStorage.removeItem('messages');
+    const messages = [{role: 'system', content: 'Vision0 is asking.'}];
+    messages.push({role: 'user', content: question.content});
+    messages.push({role: 'assistant', content: question.comments[0].content});
+    followups.forEach((followup) => {
+      messages.push({role: 'user', content: followup.content});
+      messages.push({role: 'assistant', content: followup.comments[0].content});
+    })
 
     try {
       const followupsUrl = `${questionUrl}/answers`;
@@ -408,7 +413,6 @@ export default function QuestionPage() {
           const followupUrl = `${rootUrl}/answers/${followupId}`;
           const commentsUrl = `${followupUrl}/comments`;
           const commentContent = chatgptData.choices[0].message.content;
-          messages.push({role: 'assistant', content: commentContent});
           const commentResponse = await fetch(commentsUrl, {
             method: 'POST',
             headers: {
@@ -424,7 +428,6 @@ export default function QuestionPage() {
             const commentData = await commentResponse.json();
             console.log('Comment posted successfully!');
             console.log('commentId: ', commentData.id);
-            localStorage.setItem('messages', JSON.stringify(messages));
             await fetchQuestion();
             setLoading(false);
           } else {
@@ -444,15 +447,14 @@ export default function QuestionPage() {
       }
     } catch (error) {
       console.error('Error:', error);
+      setLoading(false);
+      setContent(error.status);
 
       switch(error.status) {
         case 401:
           localStorage.removeItem('token');
           localStorage.removeItem('aiToken');
           navigate('/users/login');
-          break;
-        default:
-          navigate('/');
       }
     }
   };
