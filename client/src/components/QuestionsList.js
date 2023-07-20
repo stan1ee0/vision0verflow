@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 
 import { rootUrl } from '../index';
 
+const InnerContainer = styled.div`
+  margin-bottom: 30px;
+`;
+
 const Div = styled.div`
   opacity: unset;
   color: hsl(210, 8% 5%);
@@ -73,7 +77,42 @@ const UserCardLinkA = styled.a`
   margin: 2px;
 `;
 
+export default function QuestionList() {
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const questionsUrl = `${rootUrl}/questions`;
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(questionsUrl);
+        const data = await response.json();
+        setQuestions(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
+  return loading ? (
+    <InnerContainer>Loading...</InnerContainer>
+  ) : (
+    <InnerContainer>
+      {questions.map((question) => (
+        <QuestionsBox key={question.id} question={question} />
+      ))}
+    </InnerContainer>
+  );
+}
+
 function QuestionsBox({ question }) {
+  const questionId = question.id;
+  const questionTitle = question.title;
+
   return (
     <div className='question-box'>
       <div className='question-stats'>
@@ -92,7 +131,7 @@ function QuestionsBox({ question }) {
       </div>
       <QuestionContent>
         <H3 className='question-content-title'>
-          <Link to={`/questions/${question.id}`}>{question.title}</Link>
+          <Link to={`/questions/${questionId}`}>{questionTitle}</Link>
         </H3>
         <div className="question-meta">
           <TagsDiv>
@@ -119,38 +158,6 @@ function QuestionsBox({ question }) {
           </UserCardDiv>
         </div>
       </QuestionContent>
-    </div>
-  );
-}
-
-export default function QuestionList() {
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const questionsUrl = `${rootUrl}/questions`;
-
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await fetch(questionsUrl);
-        const data = await response.json();
-        setQuestions(data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchQuestions();
-  }, []);
-
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
-    <div>
-      {questions.map((question) => (
-        <QuestionsBox key={question.id} question={question} />
-      ))}
     </div>
   );
 }
