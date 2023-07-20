@@ -201,7 +201,6 @@ export default function AskInput() {
         
           const commentsUrl = `${questionsUrl}/${questionId}/comments`;
           const commentContent = chatgptData.choices[0].message.content;
-          messages.push({role: 'assistant', content: commentContent});
           const commentResponse = await fetch(commentsUrl, {
             method: 'POST',
             headers: {
@@ -217,7 +216,6 @@ export default function AskInput() {
             const commentData = await commentResponse.json();
             console.log('Comment posted successfully!');
             console.log('commentId: ', commentData.id);
-            localStorage.setItem('messages', JSON.stringify(messages));
             navigate(`/questions/${questionId}`); 
           } else {
             const commentError = new Error('Error posting comment');
@@ -236,15 +234,14 @@ export default function AskInput() {
       }
     } catch (error) {
       console.error('Error:', error);
+      setLoading(false);
+      setContent(error.status);
 
       switch(error.status) {
         case 401:
           localStorage.removeItem('token');
           localStorage.removeItem('aiToken');
           navigate('/users/login');
-          break;
-        default:
-          navigate('/');
       }
     }
   };
