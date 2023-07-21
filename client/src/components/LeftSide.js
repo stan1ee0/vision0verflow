@@ -66,8 +66,10 @@ const Svg = styled.svg`
   flex-shrink: 0;
   margin-top: -1px;
   margin-right: 4px;
-  color: hsl(210, 8%, 55%);
   vertical-align: bottom;
+  path {
+    fill: hsl(210, 8%, 55%);
+  }
 `;
 
 const QuestionsSpan = styled.span`

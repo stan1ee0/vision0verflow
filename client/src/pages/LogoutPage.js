@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import {useEffect} from 'react';
+import {useNavigate, Link} from 'react-router-dom';
+import {styled} from 'styled-components';
 
 import Header from '../components/Header';
 
@@ -43,7 +43,7 @@ const LogoutButton = styled.button`
   margin: 2px;
 `;
 
-const CancelA = styled.a`
+const CancelLink = styled(Link)`
   background-color: transparent;
   color: hsl(206,100%,40%);
   margin: 2px;
@@ -73,7 +73,7 @@ export default function LogoutPage() {
 
     localStorage.removeItem('token');
     localStorage.removeItem('aiToken');
-    navigate('/');
+    navigate(-1);
   };
 
   return !isLoggedIn ? null : (
@@ -85,7 +85,7 @@ export default function LogoutPage() {
             <Form onSubmit={handleSubmit}>
               <ButtonContainer>
                 <LogoutButton className='button'>Log out</LogoutButton>
-                <CancelA className='button' href='/'>Cancel</CancelA>
+                <CancelLink className='button' onClick={() => navigate(-1)}>Cancel</CancelLink>
               </ButtonContainer>
               <CaptionContainer>
                 {' '}If you’re on a shared computer, remember to log out of your Open ID provider (Facebook, Google, Stack Exchange, etc.) as well.{' '}
