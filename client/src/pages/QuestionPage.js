@@ -1,8 +1,8 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { styled } from 'styled-components';
+import {useParams, useNavigate, Link} from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {styled} from 'styled-components';
 
-import { serverUrl, chatgptUrl, chatgptKey } from '../index';
+import {serverUrl, chatgptUrl, chatgptKey} from '../index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeftSide from '../components/LeftSide';
@@ -24,23 +24,32 @@ const QuestionHeaderH1 = styled.h1`
   font-weight: unset;
 `;
 
-const QuestionHeaderA = styled.a`
+const QuestionHeaderLink = styled(Link)`
   color: hsl(210,8%,25%);
   font-size: 2.07692308rem;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI Adjusted","Segoe UI","Liberation Sans",sans-serif;
   line-height: 1.35;
   font-weight: normal;
   margin-bottom: 0;
+
+  &:hover {
+    color: hsl(210,8%,25%);
+  }
 `;
 
 const AskButtonContainer = styled.div`
   margin-left: 12 !important;
 `;
 
-const AskButtonA = styled.a`
+const AskButtonLink = styled(Link)`
   background-color: hsl(206, 100%, 52%);
   color: hsl(0, 0%, 100%);
   white-space: nowrap;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const QuestionStats = styled.div`
@@ -94,6 +103,10 @@ const VoteButton = styled.button`
   border-radius: 1000px !important;
   border-style: solid !important;
   border-width: 1px !important;
+
+  &:hover {
+    background-color: hsl(27,95%,90%); 
+  }
 `;
 
 const VoteDownButton = styled(VoteButton)`
@@ -167,11 +180,16 @@ const TagsLi = styled.li`
   margin-right: 4px !important;
 `;
 
-const TagsA = styled.a`
+const TagsLink = styled(Link)`
   font-size: 12px;
   color: hsl(205,47%,42%);
   background-color: hsl(205,46%,92%);
   border-color: transparent;
+
+  &:hover {
+    background-color: hsl(205,46%,88%);
+    color: hsl(205,47%,42%);
+  }
 `;
 
 const PostBottomContainer = styled.div`
@@ -212,8 +230,12 @@ const UserItemDiv = styled.div`
   margin: 4px;
 `;
 
-const UserItemA = styled.a`
+const UserItemLink = styled(Link)`
   color: hsl(210,8%,45%);
+
+  &:hover {
+    color: hsl(210,8%,55%);
+  }
 `;
 
 const UserCardContainer = styled.div`
@@ -238,9 +260,6 @@ const UserAvatarDiv = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 1px;
-`;
-
-const A = styled.a`
 `;
 
 const UserAvatarContainer = styled.div`
@@ -320,6 +339,11 @@ const Button = styled.button`
   margin-top: 0;
   margin-bottom: 0;
   margin: 2px;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const FollowupsHeader = styled.div`
@@ -331,6 +355,10 @@ const FollowupsHeader = styled.div`
 const FollowupsHeaderH2 = styled.h2`
   font-weight: 400;
   margin-bottom: 0 !important;
+`;
+
+const H2 = styled.h2`
+  font-weight: 400;
 `;
 
 export default function QuestionPage() {
@@ -468,9 +496,9 @@ export default function QuestionPage() {
           <div>
             <div>
               <QuestionHeader>
-                <QuestionHeaderH1><QuestionHeaderA href={`/questions/${questionId}`}>{question?.title}</QuestionHeaderA></QuestionHeaderH1>
+                <QuestionHeaderH1><QuestionHeaderLink to={`/questions/${questionId}`}>{question?.title}</QuestionHeaderLink></QuestionHeaderH1>
                 <AskButtonContainer>
-                  <AskButtonA className='button' href="/questions/ask"> Ask Question </AskButtonA>
+                  <AskButtonLink className='button' to="/questions/ask"> Ask Question </AskButtonLink>
                 </AskButtonContainer>
               </QuestionHeader>
               <QuestionStats>
@@ -481,9 +509,9 @@ export default function QuestionPage() {
                     <QuestionVoteDiv>
                       <QuestionVoteContainer>
                         <VoteButton className='header-button'>
-                        <Svg width="18" height="18" viewBox="0 0 18 18">
-                          <path d="M1 12h16L9 4l-8 8Z"></path>
-                        </Svg>
+                          <Svg width="18" height="18" viewBox="0 0 18 18">
+                            <path d="M1 12h16L9 4l-8 8Z"></path>
+                          </Svg>
                         </VoteButton>
                         <VoteCountDiv>{' '}0{' '}</VoteCountDiv>
                         <VoteDownButton className='header-button'>
@@ -501,8 +529,8 @@ export default function QuestionPage() {
                         <TagListInnerContainer>
                           <TagsDiv>
                             <TagsUl>
-                              <TagsLi><TagsA className='tag'>vision0</TagsA></TagsLi>
-                              <TagsLi><TagsA className='tag'>vision0verflow</TagsA></TagsLi>
+                              <TagsLi><TagsLink className='tag'>vision0</TagsLink></TagsLi>
+                              <TagsLi><TagsLink className='tag'>vision0verflow</TagsLink></TagsLi>
                             </TagsUl>
                           </TagsDiv>
                         </TagListInnerContainer>
@@ -512,25 +540,25 @@ export default function QuestionPage() {
                           <UserItemsContainer>
                             <UserItemsInnerContainer>
                               <UserItemsDiv>
-                                <UserItemDiv><UserItemA>Share</UserItemA></UserItemDiv>
-                                <UserItemDiv><UserItemA>Edit</UserItemA></UserItemDiv>
-                                <UserItemDiv><UserItemA>Follow</UserItemA></UserItemDiv>
+                                <UserItemDiv><UserItemLink>Share</UserItemLink></UserItemDiv>
+                                <UserItemDiv><UserItemLink>Edit</UserItemLink></UserItemDiv>
+                                <UserItemDiv><UserItemLink>Follow</UserItemLink></UserItemDiv>
                               </UserItemsDiv>
                             </UserItemsInnerContainer>
                           </UserItemsContainer>
                           <UserCardContainer>
                             <UserInfoDiv>
                               <UserAvatarDiv>
-                                <A href='/users/1'>
+                                <Link to='/users/1'>
                                   <UserAvatarContainer>
                                     <img className='user-avatar-image' alt='Vision0'
                                       src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
                                     />
                                   </UserAvatarContainer>
-                                </A>
+                                </Link>
                               </UserAvatarDiv>
                               <UserDetailsDiv>
-                                <A href='/users/1'>Vision0</A>
+                                <Link to='/users/1'>Vision0</Link>
                                 <UserStatsDiv>
                                   <Span>100</Span>
                                 </UserStatsDiv>
@@ -551,13 +579,13 @@ export default function QuestionPage() {
                   {followups.length === 0 ? (
                   <FollowupsH2 className='bottom-notice'>
                   {' '}Know someone who can answer? Share a link to this{' '}
-                  <a href={`/questions/${questionId}`}>question</a>
+                  <Link to={`/questions/${questionId}`}>question</Link>
                   {' '}via{' '}
-                  <A>email</A>
+                  <Link>email</Link>
                   ,{' '}
-                  <A>Twitter</A>
+                  <Link>Twitter</Link>
                   , or{' '}
-                  <A>Facebook</A>
+                  <Link>Facebook</Link>
                   .{' '}
                   </FollowupsH2>
                   ) : (
@@ -577,6 +605,18 @@ export default function QuestionPage() {
                       <Button className='button' type='submit' disabled={loading}>{' '}Post Your Follow-up{' '}</Button>
                     </ButtonContainer>
                   </form>
+                  <H2 className='bottom-notice'>
+                    <div>
+                      {' '}Browse other questions tagged{' '}
+                      <TagsUl>
+                        <TagsLi><TagsLink className='tag'>vision0</TagsLink></TagsLi>
+                        <TagsLi><TagsLink className='tag'>vision0verflow</TagsLink></TagsLi>
+                      </TagsUl>
+                      {' '}or{' '}
+                      <Link to='/questions/ask'>ask your own question</Link>
+                      .{' '}
+                    </div>
+                  </H2>
                 </FollowupsContainer>  
               </QuestionMain>
               <Aside />

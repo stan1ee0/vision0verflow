@@ -1,4 +1,5 @@
-import { styled } from 'styled-components';
+import {Link} from 'react-router-dom';
+import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
 import CommentsList from './CommentsList';
@@ -47,6 +48,10 @@ const VoteButton = styled.button`
   border-radius: 1000px !important;
   border-style: solid !important;
   border-width: 1px !important;
+
+  &:hover {
+    background-color: hsl(27,95%,90%); 
+  }
 `;
 
 const VoteDownButton = styled(VoteButton)`
@@ -122,8 +127,12 @@ const UserItemDiv = styled.div`
   margin: 4px;
 `;
 
-const UserItemA = styled.a`
+const UserItemLink = styled(Link)`
   color: hsl(210,8%,45%);
+
+  &:hover {
+    color: hsl(210,8%,55%);
+  }
 `;
 
 const UserCardContainer = styled.div`
@@ -148,9 +157,6 @@ const UserAvatarDiv = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 1px;
-`;
-
-const A = styled.a`
 `;
 
 const UserAvatarContainer = styled.div`
@@ -237,16 +243,16 @@ function FollowupsBox({ followup }) {
               <UserItemsContainer>
                 <UserItemsInnerContainer>
                   <UserItemsDiv>
-                    <UserItemDiv><UserItemA>Share</UserItemA></UserItemDiv>
-                    <UserItemDiv><UserItemA>Edit</UserItemA></UserItemDiv>
-                    <UserItemDiv><UserItemA>Follow</UserItemA></UserItemDiv>
+                    <UserItemDiv><UserItemLink>Share</UserItemLink></UserItemDiv>
+                    <UserItemDiv><UserItemLink>Edit</UserItemLink></UserItemDiv>
+                    <UserItemDiv><UserItemLink>Follow</UserItemLink></UserItemDiv>
                   </UserItemsDiv>
                 </UserItemsInnerContainer>
               </UserItemsContainer>
               <UserCardContainer>
                 <UserInfoDiv>
                   <UserAvatarDiv>
-                    <A href={`/users/${userId}`}>
+                    <Link to={`/users/${userId}`}>
                       <UserAvatarContainer>
                         {userId == 1 ? (
                         <img className='user-avatar-image' alt={userName}
@@ -258,10 +264,10 @@ function FollowupsBox({ followup }) {
                         />
                         )}
                       </UserAvatarContainer>
-                    </A>
+                    </Link>
                   </UserAvatarDiv>
                   <UserDetailsDiv>
-                    <A href={`/users/${userId}`}>{userName}</A>
+                    <Link to={`/users/${userId}`}>{userName}</Link>
                     <UserStatsDiv>
                       { userId === 1 ? (
                       <Span>100</Span>

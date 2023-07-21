@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {styled} from 'styled-components';
 
-import { serverUrl, chatgptUrl, chatgptKey } from '../index';
+import {serverUrl, chatgptUrl, chatgptKey} from '../index';
 
 const AskInputMain = styled.div`
   margin-bottom: 48px;
@@ -145,6 +145,11 @@ const Button = styled.button`
   text-align: center;
   text-decoration: none;
   user-select: none;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 export default function AskInput() {
