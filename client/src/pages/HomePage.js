@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import QuestionsList from '../components/QuestionsList';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Lside from '../components/Lside';
+import LeftSide from '../components/LeftSide';
 import Aside from '../components/Aside';
 
 const HomeMainHeader = styled.div`
@@ -207,7 +207,7 @@ export default function HomePage() {
       <Header />
       {isLoggedIn ? (
       <div className="body-container">
-        <Lside />
+        <LeftSide />
         <div className="content">
           <div className="mainbar">
             <HomeMainHeader>

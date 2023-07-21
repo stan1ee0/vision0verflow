@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import QuestionsList from '../components/QuestionsList';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Lside from '../components/Lside';
+import LeftSide from '../components/LeftSide';
 import Aside from '../components/Aside';
 
 const QuestionsContainer = styled.div`
@@ -95,7 +95,7 @@ export default function QuestionsPage() {
     <div>
       <Header />
       <QuestionsContainer>
-        <Lside />
+        <LeftSide />
         <QuestionsContent>
           <QuestionsMain>
             <QuestionsHeader>

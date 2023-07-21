@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-import { rootUrl } from '../index';
+import { serverUrl } from '../index';
 import Header from '../components/Header';
 
 const LoginContainer = styled.div`
@@ -195,7 +195,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const authUrl = `${rootUrl}/auth`;
+  const authUrl = `${serverUrl}/auth`;
   const isLoggedIn = !!localStorage.getItem('token');
 
   useEffect(() => {

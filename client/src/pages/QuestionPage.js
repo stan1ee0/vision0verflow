@@ -2,10 +2,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 
-import { rootUrl, chatgptUrl, apiKey } from '../index';
+import { serverUrl, chatgptUrl, chatgptKey } from '../index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Lside from '../components/Lside';
+import LeftSide from '../components/LeftSide';
 import Aside from '../components/Aside';
 import FollowupsList from '../components/FollowupsList';
 import CommentsList from '../components/CommentsList';
@@ -342,7 +342,7 @@ export default function QuestionPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const questionUrl = `${rootUrl}/questions/${questionId}`;
+  const questionUrl = `${serverUrl}/questions/${questionId}`;
 
   const fetchQuestion = async () => {
     try {
@@ -398,7 +398,7 @@ export default function QuestionPage() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${chatgptKey}`,
           },
           body: JSON.stringify({
             model: 'gpt-3.5-turbo',
@@ -410,7 +410,7 @@ export default function QuestionPage() {
           const chatgptData = await chatgptResponse.json();
           console.log('Answer generated successfully!');
 
-          const followupUrl = `${rootUrl}/answers/${followupId}`;
+          const followupUrl = `${serverUrl}/answers/${followupId}`;
           const commentsUrl = `${followupUrl}/comments`;
           const commentContent = chatgptData.choices[0].message.content;
           const commentResponse = await fetch(commentsUrl, {
@@ -463,7 +463,7 @@ export default function QuestionPage() {
     <div>
       <Header />
       <div className='body-container'>
-        <Lside />
+        <LeftSide />
         <div className='content'>
           <div>
             <div>

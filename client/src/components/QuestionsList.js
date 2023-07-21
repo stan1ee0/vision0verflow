@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { rootUrl } from '../index';
+import { serverUrl } from '../index';
 
 const InnerContainer = styled.div`
   margin-bottom: 30px;
@@ -81,7 +81,7 @@ export default function QuestionList() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const questionsUrl = `${rootUrl}/questions`;
+  const questionsUrl = `${serverUrl}/questions`;
 
   useEffect(() => {
     const fetchQuestions = async () => {

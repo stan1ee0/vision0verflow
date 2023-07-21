@@ -134,7 +134,7 @@ export default function Header() {
         </A>
       )}
         <a className='header-logo' href="/">
-          <LogoSpan>Stack Overflow</LogoSpan>
+          <LogoSpan>Vision 0verflow</LogoSpan>
         </a>
         {isLoggedIn ? (
           <ol className='navigation'>
