@@ -73,7 +73,7 @@ export default function LogoutPage() {
 
     localStorage.removeItem('token');
     localStorage.removeItem('aiToken');
-    navigate(-1);
+    navigate('/');
   };
 
   return !isLoggedIn ? null : (

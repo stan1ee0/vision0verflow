@@ -45,12 +45,17 @@ const TagsLi = styled.li`
   margin-right: 4px !important;
 `;
 
-const TagsA = styled.a`
+const TagsLink = styled(Link)`
   opacity: unset;
   font-size: 12px;
   color: hsl(205,47%,42%);
   background-color: hsl(205,46%,92%);
   border-color: transparent;
+
+  &:hover {
+    background-color: hsl(205,46%,88%);
+    color: hsl(205,47%,42%);
+  }
 `;
 
 const UserCardDiv = styled.div`
@@ -59,7 +64,7 @@ const UserCardDiv = styled.div`
   margin-left: auto;
 `;
 
-const UserCardA = styled.a`
+const AvatarLink = styled(Link)`
   opacity: unset;
 `;
 
@@ -68,12 +73,12 @@ const AvatarContainer = styled.div`
   overflow: hidden;
 `;
 
-const UserCardLinkDiv = styled.div`
+const UserNameContainer = styled.div`
   display: flex !important;
   margin: -2px;
 `;
 
-const UserCardLinkA = styled.a`
+const UserNameLink = styled(Link)`
   margin: 2px;
 `;
 
@@ -112,6 +117,7 @@ export default function QuestionList() {
 function QuestionsBox({ question }) {
   const questionId = question.id;
   const questionTitle = question.title;
+  const numOfFollowups = question.numOfAnswers;
 
   return (
     <div className='question-box'>
@@ -121,11 +127,11 @@ function QuestionsBox({ question }) {
           <span>votes</span>
         </Div>
         <Div className='question-stats-item'>
-          <Span>0</Span>
-          <span>answers</span>
+          <Span>{numOfFollowups}</Span>
+          <span>follow-ups</span>
         </Div>
         <Div className='question-stats-item'>
-          <Span>0</Span>
+          <Span>1</Span>
           <span>views</span>
         </Div>
       </div>
@@ -136,22 +142,22 @@ function QuestionsBox({ question }) {
         <div className="question-meta">
           <TagsDiv>
             <TagsUl>
-              <TagsLi><TagsA className='tag'>vision0</TagsA></TagsLi>
-              <TagsLi><TagsA className='tag'>vision0verflow</TagsA></TagsLi>
+              <TagsLi><TagsLink className='tag'>vision0</TagsLink></TagsLi>
+              <TagsLi><TagsLink className='tag'>vision0verflow</TagsLink></TagsLi>
             </TagsUl>
           </TagsDiv>
           <UserCardDiv className='user-card'>
-            <UserCardA className='avatar'>
+            <AvatarLink className='avatar' to='users/1'>
               <AvatarContainer>
                 <img className='avatar-image' alt='Vision0'
                   src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
                 />
               </AvatarContainer>
-            </UserCardA>
+            </AvatarLink>
             <div className='user-card-info'>
-                  <UserCardLinkDiv className='user-card-link'>
-                    <UserCardLinkA href="/users/1">Vision0</UserCardLinkA>
-                  </UserCardLinkDiv>
+              <UserNameContainer className='user-card-link'>
+                <UserNameLink to="/users/1">Vision0</UserNameLink>
+              </UserNameContainer>
             </div>
             <time className='user-card-time'>
             </time>

@@ -14,6 +14,7 @@ public class QuestionResponse {
     private String title;
     private String content;
     private UserResponse user;
+    private long numOfAnswers;
     private LocalDateTime createdAt;
     private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
@@ -25,6 +26,8 @@ public class QuestionResponse {
         this.content = question.getContent();
         if (question.getUser() != null)
             this.user = new UserResponse(question.getUser());
+        if (question.getAnswers() != null)
+            this.numOfAnswers = question.getAnswers().size();
         this.createdAt = question.getCreatedAt();
         this.editedAt = question.getEditedAt();
         this.deletedAt = question.getDeletedAt();
