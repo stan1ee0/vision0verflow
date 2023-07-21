@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import {useState, useEffect} from 'react';
+import {useNavigate, Link} from 'react-router-dom';
+import {styled} from 'styled-components';
 
-import { rootUrl } from '../index';
+import {serverUrl} from '../index';
 import Header from '../components/Header';
 
 const LoginContainer = styled.div`
@@ -71,6 +71,11 @@ const GoogleButton = styled.button`
   text-align: center;
   text-decoration: none;
   user-select: none;
+
+  &:hover {
+    background-color: hsl(210,8%,97.5%);
+    color: hsl(210,8%,25%);
+  }
 `;
 
 const ButtonSvg = styled.svg`
@@ -105,6 +110,11 @@ const GithubButton = styled.button`
   text-align: center;
   text-decoration: none;
   user-select: none;
+
+  &:hover {
+    background-color: hsl(210, 8%, 15%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const FormContainer = styled.div`
@@ -174,6 +184,11 @@ const LoginButton = styled.button`
   margin: 2px;
   margin-right: 0;
   margin-left: 0;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const BottomContainer = styled.div`
@@ -187,15 +202,12 @@ const BottomContainer = styled.div`
   margin-right: auto !important;
 `;
 
-const A = styled.a`
-`;
-
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const authUrl = `${rootUrl}/auth`;
+  const authUrl = `${serverUrl}/auth`;
   const isLoggedIn = !!localStorage.getItem('token');
 
   useEffect(() => {
@@ -238,7 +250,7 @@ export default function LoginPage() {
       const aiToken = data.aiToken;
       localStorage.setItem('token', token);
       localStorage.setItem('aiToken', aiToken);
-      navigate('/');
+      navigate(-1);
     })
     .catch((error) => {
       console.error('Error authenticating user:', error);
@@ -252,12 +264,12 @@ export default function LoginPage() {
         <LoginContent className='content'>
           <div>
             <LogoContainer>
-              <a href="/">
+              <Link to="/">
                 <Svg width="32" height="37" viewBox="0 0 32 37">
                   <path d="M26 33v-9h4v13H0V24h4v9h22Z" fill="#BCBBBB"></path>
                   <path d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0ZM26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5ZM9.1 15.2l15 7 1.4-3-15-7-1.4 3Zm14 10.79.68-2.95-16.1-3.35L7 23l16.1 2.99ZM23 30H7v-3h16v3Z" fill="#F48024"></path>
                 </Svg>
-              </a>
+              </Link>
             </LogoContainer>
             <ButtonsContainer>
               <GoogleButton>
@@ -301,7 +313,7 @@ export default function LoginPage() {
             </FormContainer>
             <BottomContainer>
               {' '}Don’t have an account?{' '}
-              <A>Sign up</A>
+              <Link>Sign up</Link>
             </BottomContainer>
           </div>
         </LoginContent>

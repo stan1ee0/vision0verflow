@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import QuestionsPage from './pages/QuestionsPage';
@@ -7,7 +7,7 @@ import QuestionPage from './pages/QuestionPage';
 import LoginPage from './pages/LoginPage';
 import LogoutPage from './pages/LogoutPage';
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -21,5 +21,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

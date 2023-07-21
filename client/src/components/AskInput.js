@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {styled} from 'styled-components';
 
-import { rootUrl, chatgptUrl, apiKey } from '../index';
+import {serverUrl, chatgptUrl, chatgptKey} from '../index';
 
 const AskInputMain = styled.div`
   margin-bottom: 48px;
@@ -145,6 +145,11 @@ const Button = styled.button`
   text-align: center;
   text-decoration: none;
   user-select: none;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 export default function AskInput() {
@@ -162,7 +167,7 @@ export default function AskInput() {
     const messages = [{role: 'system', content: 'Vision0 is asking.'}];
 
     try {
-      const questionsUrl = `${rootUrl}/questions`;
+      const questionsUrl = `${serverUrl}/questions`;
       const questionResponse = await fetch(questionsUrl, {
         method: 'POST',
         headers: {
@@ -187,7 +192,7 @@ export default function AskInput() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,        
+            'Authorization': `Bearer ${chatgptKey}`,        
           },
           body: JSON.stringify({
             model: 'gpt-3.5-turbo',

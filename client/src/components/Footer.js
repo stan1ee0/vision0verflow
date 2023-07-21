@@ -1,133 +1,162 @@
-import { styled } from 'styled-components';
+import {Link} from 'react-router-dom';
+import {styled} from 'styled-components';
 
-import logo from '../images/footerlogo.png';
-
-const FooterWrapper = styled.footer`
-  background-color: #232629;
-  display: flex;
-  align-items: center;
-  padding: 30px;
-  width: 100%;
-  justify-content: center;
+const LogoContainer = styled.div`
+  flex: 0 0 64px;
+  margin: -12px 0 32px 0;
 `;
 
-const LogoImage = styled.img`
-  width: 32px;
-  height: 37px;
-  margin-right: 1rem;
-  margin-bottom: 13rem;
+const Svg = styled.svg`
+  vertical-align: bottom;
 `;
 
-const Nav = styled.nav`
-  color: white;
-  display: flex;
-  justify-content: center;
-`;
-
-const Section = styled.div`
-  margin-bottom: 1rem;
+const ColumnContainer = styled.div`
+  padding: 0 12px 24px 0;
   flex: 1 0 auto;
-  padding: 10px;
 `;
 
-const Title = styled.h2`
-  font-size: 0.8rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #babfc4;
+const H5 = styled.h5`
+  margin-top: 0;
+  font-size: 100%;
 `;
 
-const List = styled.ul`
-  list-style-type: none;
-  padding: 0;
+const TitleLink = styled(Link)`
+  color: hsl(210,8%,75%);
+  text-decoration: none;
+
+  &:hover {
+    color: hsl(210,8%,75%);
+  }
+`;
+
+const Ul = styled.ul`
   margin: 0;
+  list-style: none;
 `;
 
-const ListItem = styled.li`
-  font-size: 0.9rem;
-  padding: 0.2rem 0;
-  color: #9199a1; /* 9199A1 */
+const Li = styled.li`
+  margin-top: 16px;
 `;
 
-const SocialLinks = styled.div`
+const FooterLink = styled(Link)`
+  &:hover {
+    color: hsl(210,8%,65%);
+  }
+`;
+
+const CopyrightContainer = styled.div`
+  flex: 1 1 150px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  font-size: 11px !important;
 `;
 
-const SocialLink = styled.a`
-  font-size: 0.7rem;
-  margin-right: 0.5rem;
-  color: #9199a1; /* 9199A1 */
+const CopyrightLi = styled.li`
+  margin-left: 12px;
 `;
 
-const CopyRight = styled.p`
-  font-size: 0.6rem;
-  color: #9199a1; /* 9199A1 */
-  margin-top: 12rem;
+const P = styled.p`
+  margin-top: auto;
+  margin-bottom: 24px;
+`;
+
+const Span = styled.span`
+  text-decoration: underline !important;
+`;
+
+const CopyrightLink = styled(Link)`
+  line-height: inherit;
+  color: hsl(210,8%,60%);
+  padding: 0;
+
+  &:hover {
+    color: hsl(210,8%,60%);
+  }
 `;
 
 export default function Footer() {
   return (
-    <FooterWrapper>
-      <LogoImage src={logo} alt="Stack Overflow" />
-      <Nav>
-        <Section>
-          <Title>STACK OVERFLOW</Title>
-          <List>
-            <ListItem>Questions</ListItem>
-            <ListItem>Help</ListItem>
-          </List>
-        </Section>
-        <Section>
-          <Title>PRODUCTS</Title>
-          <List>
-            <ListItem>Teams</ListItem>
-            <ListItem>Advertising</ListItem>
-            <ListItem>Collectives</ListItem>
-            <ListItem>Talent</ListItem>
-          </List>
-        </Section>
-        <Section>
-          <Title>COMPANY</Title>
-          <List>
-            <ListItem>About</ListItem>
-            <ListItem>Press</ListItem>
-            <ListItem>Work Here</ListItem>
-            <ListItem>Legal</ListItem>
-            <ListItem>Privacy Policy</ListItem>
-            <ListItem>Terms of Service</ListItem>
-            <ListItem>Contact Us</ListItem>
-            <ListItem>Cookie Settings</ListItem>
-            <ListItem>Cookie Policy</ListItem>
-          </List>
-        </Section>
-        <Section>
-          <Title>STACK EXCHANGE NETWORK</Title>
-          <List>
-            <ListItem>Technology</ListItem>
-            <ListItem>Culture & recreation</ListItem>
-            <ListItem>Life & arts</ListItem>
-            <ListItem>Science</ListItem>
-            <ListItem>Professional</ListItem>
-            <ListItem>Business</ListItem>
-            <ListItem>API</ListItem>
-            <ListItem>Data</ListItem>
-          </List>
-        </Section>
-        <Section>
-          <SocialLinks>
-            <SocialLink href="#">Blog</SocialLink>
-            <SocialLink href="#">Facebook</SocialLink>
-            <SocialLink href="#">Twitter</SocialLink>
-            <SocialLink href="#">LinkedIn</SocialLink>
-            <SocialLink href="#">Instagram</SocialLink>
-          </SocialLinks>
-          <CopyRight>
-            Site design / logo © 2023 Stack Exchange Inc; user contributions
-            licensed under CC BY-SA. rev 2023.6.16.43501
-          </CopyRight>
-        </Section>
-      </Nav>
-    </FooterWrapper>
+    <div className='footer'>
+      <div className='footer-container'>
+        <LogoContainer>
+          <Link to='/'>
+            <Svg width="32" height="37" viewBox="0 0 32 37">
+              <path d="M26 33v-9h4v13H0V24h4v9h22Z" fill="#BCBBBB"></path>
+              <path d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0ZM26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5ZM9.1 15.2l15 7 1.4-3-15-7-1.4 3Zm14 10.79.68-2.95-16.1-3.35L7 23l16.1 2.99ZM23 30H7v-3h16v3Z" fill="#F48024"></path>
+            </Svg>
+          </Link>
+        </LogoContainer>
+        <nav className='footer-nav'>
+          <ColumnContainer>
+            <H5 className='footer-title'>
+              <TitleLink to='/'>Stack Overflow</TitleLink>
+            </H5>
+            <Ul>
+              <li><FooterLink className='footer-link' to='/questions'>Questions</FooterLink></li>
+              <li><FooterLink className='footer-link'>Help</FooterLink></li>
+            </Ul>
+          </ColumnContainer>
+          <ColumnContainer>
+            <H5 className='footer-title'>
+              <TitleLink>Products</TitleLink>
+            </H5>
+            <Ul>
+              <li><FooterLink className='footer-link'>Teams</FooterLink></li>
+              <li><FooterLink className='footer-link'>Advertising</FooterLink></li>
+              <li><FooterLink className='footer-link'>Collectives</FooterLink></li>
+              <li><FooterLink className='footer-link'>Talent</FooterLink></li>
+            </Ul>
+          </ColumnContainer>
+          <ColumnContainer>
+            <H5 className='footer-title'>
+              <TitleLink>Company</TitleLink>
+            </H5>
+            <Ul>
+              <li><FooterLink className='footer-link'>About</FooterLink></li>
+              <li><FooterLink className='footer-link'>Press</FooterLink></li>
+              <li><FooterLink className='footer-link'>Work Here</FooterLink></li>
+              <li><FooterLink className='footer-link'>Legal</FooterLink></li>
+              <li><FooterLink className='footer-link'>Privacy Policy</FooterLink></li>
+              <li><FooterLink className='footer-link'>Terms of Service</FooterLink></li>
+              <li><FooterLink className='footer-link'>Contact Us</FooterLink></li>
+              <li><FooterLink className='footer-link'>Cookie Settings</FooterLink></li>
+              <li><FooterLink className='footer-link'>Cookie Policy</FooterLink></li>
+            </Ul>
+          </ColumnContainer>
+          <ColumnContainer>
+            <div>
+              <H5 className='footer-title'>
+                <TitleLink>Stack Exchange Network</TitleLink>
+              </H5>
+              <Ul>
+                <li><FooterLink className='footer-link'>Technology</FooterLink></li>
+                <li><FooterLink className='footer-link'>Culture & recreation</FooterLink></li>
+                <li><FooterLink className='footer-link'>Life & arts</FooterLink></li>
+                <li><FooterLink className='footer-link'>Science</FooterLink></li>
+                <li><FooterLink className='footer-link'>Professional</FooterLink></li>
+                <li><FooterLink className='footer-link'>Business</FooterLink></li>
+                <Li><FooterLink className='footer-link'>API</FooterLink></Li>
+                <li><FooterLink className='footer-link'>Data</FooterLink></li>
+              </Ul>
+            </div>
+          </ColumnContainer>
+        </nav>
+        <CopyrightContainer>
+          <ul className='footer-copyright'>
+            <li><FooterLink className='footer-link'>Blog</FooterLink></li>
+            <CopyrightLi><FooterLink className='footer-link'>Facebook</FooterLink></CopyrightLi>
+            <CopyrightLi><FooterLink className='footer-link'>Twitter</FooterLink></CopyrightLi>
+            <CopyrightLi><FooterLink className='footer-link'>LinkedIn</FooterLink></CopyrightLi>
+            <CopyrightLi><FooterLink className='footer-link'>Instagram</FooterLink></CopyrightLi>
+          </ul>
+          <P>
+            {' '}Site design / logo © 2023 Stack Exchange Inc; user contributions licensed under{' '}
+            <Span><CopyrightLink>CC BY-SA</CopyrightLink></Span>
+            .{' '}
+            <span>rev&nbsp;2023.7.20.43540</span>
+          </P>
+        </CopyrightContainer>
+      </div>
+    </div>
   );
 }

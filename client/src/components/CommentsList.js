@@ -1,4 +1,5 @@
-import { styled } from 'styled-components';
+import {Link} from 'react-router-dom';
+import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
 const UL = styled.ul`
@@ -31,7 +32,7 @@ const UserNameContainer = styled.div`
   align-items: center !important;
 `;
 
-const UserNameA = styled.a`
+const UserNameLink = styled(Link)`
   display: inline-block;
   white-space: nowrap;
   padding: 0;
@@ -49,6 +50,7 @@ export default function CommentsList({ comments }) {
 
 function CommentsBox({ comment }) {
   const commentContent = comment.content;
+  const userId = comment.user.id;
   const userName = comment.user.name;
 
   return (
@@ -58,7 +60,7 @@ function CommentsBox({ comment }) {
           <span>{commentContent}{' '}</span>
           <UserNameContainer>
             –&nbsp;
-            <UserNameA>{userName}</UserNameA>
+            <UserNameLink to={`/users/${userId}`}>{userName}</UserNameLink>
           </UserNameContainer>
         </CommentBodyDiv>
       </CommentContainer>
