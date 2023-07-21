@@ -41,6 +41,11 @@ const ButtonContainer = styled.div`
 
 const LogoutButton = styled.button`
   margin: 2px;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const CancelLink = styled(Link)`
@@ -48,12 +53,17 @@ const CancelLink = styled(Link)`
   color: hsl(206,100%,40%);
   margin: 2px;
   box-shadow: none;
+  
+  &:hover {
+    background-color: hsl(206,100%,97%);
+    color: hsl(206,100%,40%);
+  }
 `;
 
 const CaptionContainer = styled.div`
   text-align: left !important;
   color: hsl(210,8%,45%) !important;
-  font-size: 12px !immportant;
+  font-size: 12px !important;
   margin-top: 32px !important;
 `;
 

@@ -21,17 +21,19 @@ const HomeLink = styled(Link)`
   line-height: 2;
   font-size: 13px;
   padding-left: 8px !important;
+  color: hsl(210, 8%, 35%);
+
+  &:hover {
+    color: hsl(210, 8%, 5%);
+  }
 
   ${props =>
-    props.highlight ? css`
+    props.highlight && css`
       font-weight: bold;
       background: hsl(210, 8%, 95%);
       color: hsl(210, 8%, 5%);
       border-right: 3px solid hsl(27, 90%, 55%);
-    ` : css`
-      color: hsl(210, 8%, 35%);
-    `
-  }
+    `}
 `;
 
 const PublicLi = styled.li`
@@ -49,17 +51,22 @@ const QuestionsLink = styled(Link)`
   line-height: 2;
   font-size: 13px;
   padding-left: 8px !important;
+  color: hsl(210, 8%, 35%);
+
+  &:hover {
+    color: hsl(210, 8%, 5%);
+    path {
+      fill: hsl(210, 8%, 5%);
+    }
+  }
 
   ${props =>
-    props.highlight ? css`
+    props.highlight && css`
       font-weight: bold;
       background: hsl(210, 8%, 95%);
       color: hsl(210, 8%, 5%);
       border-right: 3px solid hsl(27, 90%, 55%);
-    ` : css`
-      color: hsl(210, 8%, 35%);
-    `
-  }
+    `}
 `;
 
 const Svg = styled.svg`
@@ -83,6 +90,10 @@ const NavLink = styled(Link)`
   line-height: 2;
   font-size: 13px;
   color: hsl(210, 8%, 35%);
+
+  &:hover {
+    color: hsl(210, 8%, 5%);
+  }
 `;
 
 export default function LeftSide() {

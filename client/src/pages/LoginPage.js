@@ -71,6 +71,11 @@ const GoogleButton = styled.button`
   text-align: center;
   text-decoration: none;
   user-select: none;
+
+  &:hover {
+    background-color: hsl(210,8%,97.5%);
+    color: hsl(210,8%,25%);
+  }
 `;
 
 const ButtonSvg = styled.svg`
@@ -105,6 +110,11 @@ const GithubButton = styled.button`
   text-align: center;
   text-decoration: none;
   user-select: none;
+
+  &:hover {
+    background-color: hsl(210, 8%, 15%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const FormContainer = styled.div`
@@ -174,6 +184,11 @@ const LoginButton = styled.button`
   margin: 2px;
   margin-right: 0;
   margin-left: 0;
+
+  &:hover {
+    background-color: hsl(209,100%,37.5%);
+    color: hsl(0, 0%, 100%);
+  }
 `;
 
 const BottomContainer = styled.div`
