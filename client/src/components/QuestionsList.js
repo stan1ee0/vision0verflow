@@ -92,11 +92,18 @@ export default function QuestionList() {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(questionsUrl);
-        const data = await response.json();
-        setQuestions(data);
-        setLoading(false);
+        if (response.ok) {
+          const data = await response.json();
+          setQuestions(data);
+          setLoading(false);
+        } else {
+          const error = new Error('Error getting questions');
+          error.status = response.status;
+          throw error;
+        }
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
 
