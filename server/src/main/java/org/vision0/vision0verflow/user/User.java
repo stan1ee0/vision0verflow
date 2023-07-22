@@ -25,7 +25,7 @@ public class User {
     private LocalDateTime registeredAt;
     private LocalDateTime terminatedAt;
     @Column(nullable = false)
-    private boolean terminated;
+    private boolean isTerminated;
 
     public User(UserPost userPost) {
         this.email = userPost.getEmail();
