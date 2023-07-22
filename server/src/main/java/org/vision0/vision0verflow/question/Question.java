@@ -36,7 +36,7 @@ public class Question {
     private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
     @Column(nullable = false)
-    private boolean deleted;
+    private boolean isDeleted;
 
     public Question(QuestionPost questionPost) {
         this.title = questionPost.getTitle();
