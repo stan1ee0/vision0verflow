@@ -1,6 +1,7 @@
 package org.vision0.vision0verflow;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.vision0.vision0verflow.answer.Answer;
@@ -21,6 +22,9 @@ public class Vision0verflowApplication {
 	private final AnswerService answerService;
 	private final CommentService commentService;
 
+	@Value("${vision.initialization.enabled:false}")
+	private boolean enabled;
+
 	@Autowired
 	public Vision0verflowApplication(UserService userService,
 									 QuestionService questionService,
@@ -38,18 +42,20 @@ public class Vision0verflowApplication {
 
 	@PostConstruct
 	public void setInitialEntities() {
-		User user = userService.register(new User("vision@verflow.org",
-				"Vision0", "Vision0verflow"));
-		userService.register(new User("aision@verflow.org",
-				"Aision0", "Aision0verflow"));
+		if (enabled) {
+			User user = userService.register(new User("vision@verflow.org",
+					"Vision0", "Vision0verflow"));
+			userService.register(new User("aision@verflow.org",
+					"Aision0", "Aision0verflow"));
 
-		Question question = questionService.create(new Question(
-				"About Vision0", "What is the meaning of Vision0?", user));
-		Answer answer = answerService.create(new Answer(
-				"What is the meaning of Vision 0verflow?", user, question));
+			Question question = questionService.create(new Question(
+					"About Vision0", "What is the meaning of Vision0?", user));
+			Answer answer = answerService.create(new Answer(
+					"What is the meaning of Vision 0verflow?", user, question));
 
-		commentService.create(new Comment("Vision0 means a pure vision.", user, question));
-		commentService.create(new Comment("Vision 0verflow means that a vision is overflowing," +
-				" but it's not a problem because it is pure.", user, answer));
+			commentService.create(new Comment("Vision0 means a pure vision.", user, question));
+			commentService.create(new Comment("Vision 0verflow means that a vision is overflowing," +
+					" but it's not a problem because it is pure.", user, answer));
+		}
 	}
 }
