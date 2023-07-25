@@ -7,6 +7,7 @@ import QuestionPage from './pages/QuestionPage';
 import LoginPage from './pages/LoginPage';
 import LogoutPage from './pages/LogoutPage';
 import UsersPage from './pages/UsersPage';
+import TagsPage from './pages/TagsPage';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path='/users/login' element={<LoginPage />} />
         <Route path='/users/logout' element={<LogoutPage />} />
         <Route path='/users' element={<UsersPage />} />
+        <Route path='/tags/' element={<TagsPage />} />
       </Routes>
     </BrowserRouter>
   );
