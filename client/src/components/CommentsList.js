@@ -2,13 +2,13 @@ import {Link} from 'react-router-dom';
 import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
-const UL = styled.ul`
+const ListUl = styled.ul`
   display: grid;
   list-style-type: none;
   margin: 0;
 `;
 
-const Li = styled.li`
+const CommentLi = styled.li`
   display: contents;
 `;
 
@@ -40,11 +40,11 @@ const UserNameLink = styled(Link)`
 
 export default function CommentsList({ comments }) {
   return (
-    <UL>
+    <ListUl>
       {comments.map((comment) => (
         <CommentsBox key={comment.id} comment={comment} />
       ))}
-    </UL>
+    </ListUl>
   );
 }
 
@@ -54,7 +54,7 @@ function CommentsBox({ comment }) {
   const userName = comment.user.name;
 
   return (
-    <Li>
+    <CommentLi>
       <CommentContainer>
         <CommentBodyDiv>
           <span>{commentContent}{' '}</span>
@@ -64,7 +64,7 @@ function CommentsBox({ comment }) {
           </UserNameContainer>
         </CommentBodyDiv>
       </CommentContainer>
-    </Li>
+    </CommentLi>
   )
 }
 

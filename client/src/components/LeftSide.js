@@ -27,8 +27,7 @@ const HomeLink = styled(Link)`
     color: hsl(210, 8%, 5%);
   }
 
-  ${props =>
-    props.highlight && css`
+  ${({highlighted}) => highlighted && css`
       font-weight: bold;
       background: hsl(210, 8%, 95%);
       color: hsl(210, 8%, 5%);
@@ -52,20 +51,25 @@ const QuestionsLink = styled(Link)`
   font-size: 13px;
   padding-left: 8px !important;
   color: hsl(210, 8%, 35%);
+  path {
+    fill: hsl(210, 8%, 55%);
+  }
 
   &:hover {
     color: hsl(210, 8%, 5%);
-    path {
+    & path {
       fill: hsl(210, 8%, 5%);
     }
   }
 
-  ${props =>
-    props.highlight && css`
+  ${({highlighted}) => highlighted && css`
       font-weight: bold;
       background: hsl(210, 8%, 95%);
       color: hsl(210, 8%, 5%);
       border-right: 3px solid hsl(27, 90%, 55%);
+      & path {
+        fill: hsl(210, 8%, 5%);
+      }
     `}
 `;
 
@@ -74,9 +78,6 @@ const Svg = styled.svg`
   margin-top: -1px;
   margin-right: 4px;
   vertical-align: bottom;
-  path {
-    fill: hsl(210, 8%, 55%);
-  }
 `;
 
 const QuestionsSpan = styled.span`
@@ -94,32 +95,43 @@ const NavLink = styled(Link)`
   &:hover {
     color: hsl(210, 8%, 5%);
   }
+
+  ${({highlighted}) => highlighted && css`
+    font-weight: bold;
+    background: hsl(210, 8%, 95%);
+    color: hsl(210, 8%, 5%);
+    border-right: 3px solid hsl(27, 90%, 55%);
+  `}
 `;
 
 export default function LeftSide() {
-  const activePath = useLocation().pathname;
+  const location = useLocation();
 
   return (
     <LeftSideContainer className="left-sidebar">
-      <div className='sticky-container'>
+      <div className="sticky-container">
         <nav role="navigation">
           <NavOl>
             <NavLi>
-              <HomeLink to="/" highlight={activePath === '/'}>Home</HomeLink>
+              <HomeLink to='/' highlighted={location.pathname === '/'}>Home</HomeLink>
             </NavLi>
             <li>
               <NavOl>
                 <PublicLi>Public</PublicLi>
                 <NavLi>
-                  <QuestionsLink to="/questions" highlight={activePath === '/questions'}>
-                    <Svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                  <QuestionsLink to='/questions' highlighted={location.pathname.startsWith('/questions')}>
+                    <Svg width="18" height="18" viewBox="0 0 18 18">
                       <path d="M9 1C4.64 1 1 4.64 1 9c0 4.36 3.64 8 8 8 4.36 0 8-3.64 8-8 0-4.36-3.64-8-8-8ZM8 15.32a6.46 6.46 0 0 1-4.3-2.74 6.46 6.46 0 0 1-.93-5.01L7 11.68v.8c0 .88.12 1.32 1 1.32v1.52Zm5.72-2c-.2-.66-1-1.32-1.72-1.32h-1v-2c0-.44-.56-1-1-1H6V7h1c.44 0 1-.56 1-1V5h2c.88 0 1.4-.72 1.4-1.6v-.33a6.45 6.45 0 0 1 3.83 4.51 6.45 6.45 0 0 1-1.51 5.73v.01Z"></path>
                     </Svg>
                     <QuestionsSpan>Questions</QuestionsSpan>
                   </QuestionsLink>
                 </NavLi>
-                <NavLi><NavLink>Tags</NavLink></NavLi>
-                <NavLi><NavLink>Users</NavLink></NavLi>
+                <NavLi>
+                  <NavLink>Tags</NavLink>
+                </NavLi>
+                <NavLi>
+                  <NavLink to='/users' highlighted={location.pathname === '/users'}>Users</NavLink>
+                </NavLi>
               </NavOl>
             </li>
           </NavOl>

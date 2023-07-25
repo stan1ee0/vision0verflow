@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { serverUrl } from '../index';
+import {serverUrl} from '../index';
 
-const InnerContainer = styled.div`
+const ListContainer = styled.div`
   margin-bottom: 30px;
 `;
 
@@ -111,17 +111,17 @@ export default function QuestionList() {
   }, []);
 
   return loading ? (
-    <InnerContainer>Loading...</InnerContainer>
+    <ListContainer>Loading...</ListContainer>
   ) : (
-    <InnerContainer>
+    <ListContainer>
       {questions.map((question) => (
         <QuestionsBox key={question.id} question={question} />
       ))}
-    </InnerContainer>
+    </ListContainer>
   );
 }
 
-function QuestionsBox({ question }) {
+function QuestionsBox({question}) {
   const questionId = question.id;
   const questionTitle = question.title;
   const numOfFollowups = question.numOfAnswers;
@@ -149,8 +149,8 @@ function QuestionsBox({ question }) {
         <div className="question-meta">
           <TagsDiv>
             <TagsUl>
-              <TagsLi><TagsLink className='tag'>vision0</TagsLink></TagsLi>
-              <TagsLi><TagsLink className='tag'>vision0verflow</TagsLink></TagsLi>
+              <TagsLi><TagsLink className='tag'>vision</TagsLink></TagsLi>
+              <TagsLi><TagsLink className='tag'>marvel</TagsLink></TagsLi>
             </TagsUl>
           </TagsDiv>
           <UserCardDiv className='user-card'>
