@@ -529,8 +529,8 @@ export default function QuestionPage() {
                         <TagListInnerContainer>
                           <TagsDiv>
                             <TagsUl>
-                              <TagsLi><TagsLink className='tag'>vision0</TagsLink></TagsLi>
-                              <TagsLi><TagsLink className='tag'>vision0verflow</TagsLink></TagsLi>
+                              <TagsLi><TagsLink className='tag'>vision</TagsLink></TagsLi>
+                              <TagsLi><TagsLink className='tag'>marvel</TagsLink></TagsLi>
                             </TagsUl>
                           </TagsDiv>
                         </TagListInnerContainer>

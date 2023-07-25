@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import CommentsList from './CommentsList';
 
-const InnerContainer = styled.div`
+const ListContainer = styled.div`
   width: auto;
   float: none;
   padding-top: 10px;
@@ -202,11 +202,11 @@ const FollowupCommentsContainer = styled.div`
 
 export default function FollowupsList({ followups }) {
   return (
-    <InnerContainer>
+    <ListContainer>
       {followups.map((followup) => (
         <FollowupsBox key={followup.id} followup={followup} />
       ))}
-    </InnerContainer>
+    </ListContainer>
   );
 }
 
