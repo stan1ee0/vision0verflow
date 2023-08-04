@@ -257,12 +257,13 @@ const BottomContainer = styled.div`
   margin-right: auto !important;
 `;
 
-export default function LoginPage() {
+export default function SignupPage() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const authUrl = `${serverUrl}/auth`;
+  const usersUrl = `${serverUrl}/users`;
   const isLoggedIn = !!localStorage.getItem('token');
 
   useEffect(() => {
@@ -274,37 +275,33 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const data = {
-      email: email,
-      password: password,
-    };
-
-    fetch(authUrl, {
+    fetch(usersUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
     })
     .then((response) => {
       if (response.ok) {
         return response.json();
-      } else if (response.status == 404) {
-        throw new Error('No user found with matching email');
-      } else if (response.status == 401) {
-        throw new Error('Not matching password');
+      } else if (response.status == 409) {
+        throw new Error('Email registered already');
       } else {
-        throw new Error('Error authenticating user');
+        throw new Error('Error registering user');
       }
     })
     .then((data) => {
-      console.log('User authenticated successfully!');
+      console.log('User registered successfully!');
+      console.log('Name: ', data.name);
+      console.log('Email: ', data.email);
+      setName('');
       setEmail('');
       setPassword('');
-      const token = data.token;
-      const aiToken = data.aiToken;
-      localStorage.setItem('token', token);
-      localStorage.setItem('aiToken', aiToken);
       navigate(-1);
     })
     .catch((error) => {
@@ -385,7 +382,7 @@ export default function LoginPage() {
                     <Label htmlFor="display-name">Display name</Label>
                     <InputContainer>
                       <input className='input' id="display-name" type="text" name="display-name"
-                        value={email} onChange={(event) => setEmail(event.target.value)}
+                        value={name} onChange={(event) => setName(event.target.value)}
                       />
                     </InputContainer>
                   </NameContainer>
