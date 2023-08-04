@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.vision0.vision0verflow.answer.Answer;
 import org.vision0.vision0verflow.comment.Comment;
 import org.vision0.vision0verflow.misc.View;
+import org.vision0.vision0verflow.misc.Vote;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
 import org.vision0.vision0verflow.user.User;
@@ -33,6 +34,8 @@ public class Question {
     private List<Comment> comments = new ArrayList<>();
     @OneToMany(mappedBy = "question")
     private List<View> views = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<Vote> votes = new ArrayList<>();
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)

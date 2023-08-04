@@ -77,7 +77,7 @@ public class QuestionController {
                 User user = userService.find(email);
                 miscService.addView(foundQuestion, user);
             } catch (JWTVerificationException e) {
-                System.out.println("Authentication failure during GET question");
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
         }
 
