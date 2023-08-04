@@ -305,7 +305,7 @@ export default function SignupPage() {
       navigate(-1);
     })
     .catch((error) => {
-      console.error('Error authenticating user:', error);
+      console.error('Error registering user:', error);
     });
   };
 
