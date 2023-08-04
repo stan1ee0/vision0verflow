@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.vision0.vision0verflow.misc.MiscService;
 import org.vision0.vision0verflow.question.dto.QuestionDetailResponse;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
@@ -22,14 +23,17 @@ public class QuestionController {
     private final QuestionService questionService;
     private final UserService userService;
     private final JwtTokenizer jwtTokenizer;
+    private final MiscService miscService;
 
     @Autowired
     public QuestionController(QuestionService questionService,
                               UserService userService,
-                              JwtTokenizer jwtTokenizer) {
+                              JwtTokenizer jwtTokenizer,
+                              MiscService miscService) {
         this.questionService = questionService;
         this.userService = userService;
         this.jwtTokenizer = jwtTokenizer;
+        this.miscService = miscService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -63,8 +67,19 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/{question-id}")
-    public QuestionDetailResponse getQuestion(@PathVariable("question-id") long questionId) {
+    public QuestionDetailResponse getQuestion(@PathVariable("question-id") long questionId,
+                                              @RequestHeader(value = "Authorization", required = false) String token) {
         Question foundQuestion = questionService.find(questionId);
+
+        if (token != null && token.startsWith("Bearer ")) {
+            try {
+                String email = jwtTokenizer.getVerifiedSubject(token.substring(7));
+                User user = userService.find(email);
+                miscService.addView(foundQuestion, user);
+            } catch (JWTVerificationException e) {
+                System.out.println("Authentication failure during GET question");
+            }
+        }
 
         return new QuestionDetailResponse(foundQuestion);
     }
