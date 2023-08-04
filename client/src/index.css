@@ -351,7 +351,7 @@ body {
     cursor: unset;
     font-size: 13px !important;
     opacity: unset;
-    padding: 0.6em 0.7em 0.6em 32px !important;
+    padding: 0.6em 0.7em 0.6em 0.7em !important;
     font-family: inherit !important;
     margin: 0;
     width: 100%;

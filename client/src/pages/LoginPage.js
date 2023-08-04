@@ -313,7 +313,7 @@ export default function LoginPage() {
             </FormContainer>
             <BottomContainer>
               {' '}Don’t have an account?{' '}
-              <Link>Sign up</Link>
+              <Link to ='/users/signup'>Sign up</Link>
             </BottomContainer>
           </div>
         </LoginContent>

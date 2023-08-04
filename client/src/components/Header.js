@@ -56,6 +56,7 @@ const Input = styled.input`
   color: hsl(210, 8%, 25%);
   display: block;
   line-height: calc(15/13);
+  padding: 0.6em 0.7em 0.6em 32px !important;
 `;
 
 const Svg = styled.svg`
@@ -228,8 +229,8 @@ export default function Header() {
           </ol>
         ) : (
           <ol className='header-content'>
-            <NavLi role="none"><LoginLink className="header-button" to="/users/login">Log in</LoginLink></NavLi>
-            <NavLi role="none"><SignupLink className="header-button">Sign up</SignupLink></NavLi>
+            <NavLi role="none"><LoginLink className='header-button' to='/users/login'>Log in</LoginLink></NavLi>
+            <NavLi role="none"><SignupLink className='header-button' to='/users/signup'>Sign up</SignupLink></NavLi>
           </ol>
         )}
         </Nav>

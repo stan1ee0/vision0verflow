@@ -71,10 +71,6 @@ const AskInputTitleInputContainer = styled.div`
   display: flex !important;
 `;
 
-const Input = styled.input`
-  padding: 0.6em 0.7em 0.6em 0.7em !important;
-`;
-
 const AskInputContentContainer = styled.div`
   width: 100% !important;
   display: flex !important;
@@ -273,7 +269,7 @@ export default function AskInput() {
                   </AskInputTitleHeadlineLabelContainer>
                 </AskInputTitleHeadlineContainer>
                 <AskInputTitleInputContainer>
-                  <Input className='input' id="title" name="title" type="text" maxLength={300}
+                  <input className='input' id="title" name="title" type="text" maxLength={300}
                     placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                     value={title} disabled={loading}
                     onChange={(event) => setTitle(event.target.value)}
