@@ -14,6 +14,7 @@ import org.vision0.vision0verflow.security.JwtTokenizer;
 import org.vision0.vision0verflow.user.User;
 import org.vision0.vision0verflow.user.UserService;
 
+@CrossOrigin
 @RestController
 public class MiscController {
     private final UserService userService;
@@ -39,8 +40,6 @@ public class MiscController {
                                  @PathVariable long id,
                                  @RequestBody VotePost votePost,
                                  @RequestHeader(value = "Authorization", required = false) String token) {
-        System.out.println(token);
-
         if (token != null && token.startsWith("Bearer ")) {
             Vote vote = new Vote(votePost);
 

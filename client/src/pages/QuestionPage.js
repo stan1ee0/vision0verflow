@@ -371,9 +371,11 @@ export default function QuestionPage() {
   const navigate = useNavigate();
 
   const questionUrl = `${serverUrl}/questions/${questionId}`;
+  const votesUrl = `${serverUrl}/questions/${questionId}/votes`;
+  const token = localStorage.getItem('token');
+  const aiToken = localStorage.getItem('aiToken');
 
   const fetchQuestion = async () => {
-    const token = localStorage.getItem('token');
     try {
       const response = await fetch(questionUrl, {
         method: 'GET',
@@ -398,8 +400,6 @@ export default function QuestionPage() {
     event.preventDefault();
     setLoading(true);
 
-    const token = localStorage.getItem('token');
-    const aiToken = localStorage.getItem('aiToken');
     const messages = [{role: 'system', content: 'Vision0 is asking.'}];
     messages.push({role: 'user', content: question.content});
     messages.push({role: 'assistant', content: question.comments[0].content});
@@ -493,6 +493,43 @@ export default function QuestionPage() {
     }
   };
 
+  const handleUpVote = () => {
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: 1,
+      }),
+    })
+    .catch((error) => {
+      console.log('Error voting up', error);
+    });
+  };
+
+  const handleDownVote = () => {
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: -1,
+      }),
+    })
+    .catch((error) => {
+      console.log('Error voting up', error);
+    });
+  };
+
+  const questionTitle = question?.title;
+  const questionContent = question?.content;
+  const scoreOfVotes = question?.scoreOfVotes;
+  const numOfFollowups = question?.numOfAnswers;
+
   return (
     <div>
       <Header />
@@ -502,9 +539,9 @@ export default function QuestionPage() {
           <div>
             <div>
               <QuestionHeader>
-                <QuestionHeaderH1><QuestionHeaderLink to={`/questions/${questionId}`}>{question?.title}</QuestionHeaderLink></QuestionHeaderH1>
+                <QuestionHeaderH1><QuestionHeaderLink to={`/questions/${questionId}`}>{questionTitle}</QuestionHeaderLink></QuestionHeaderH1>
                 <AskButtonContainer>
-                  <AskButtonLink className='button' to="/questions/ask"> Ask Question </AskButtonLink>
+                  <AskButtonLink className='button' to='/questions/ask'> Ask Question </AskButtonLink>
                 </AskButtonContainer>
               </QuestionHeader>
               <QuestionStats>
@@ -514,13 +551,13 @@ export default function QuestionPage() {
                   <QuestionPostContainer>
                     <QuestionVoteDiv>
                       <QuestionVoteContainer>
-                        <VoteButton className='header-button'>
+                        <VoteButton className='header-button' onClick={handleUpVote}>
                           <Svg width="18" height="18" viewBox="0 0 18 18">
                             <path d="M1 12h16L9 4l-8 8Z"></path>
                           </Svg>
                         </VoteButton>
-                        <VoteCountDiv>{' '}0{' '}</VoteCountDiv>
-                        <VoteDownButton className='header-button'>
+                        <VoteCountDiv>{' '}{scoreOfVotes}{' '}</VoteCountDiv>
+                        <VoteDownButton className='header-button' onClick={handleDownVote}>
                           <Svg width="18" height="18" viewBox="0 0 18 18">
                             <path d="M1 6h16l-8 8-8-8Z"></path>
                           </Svg>
@@ -529,7 +566,7 @@ export default function QuestionPage() {
                     </QuestionVoteDiv>
                     <QuestionPostDiv>
                       <PostBodyDiv className='prose'>
-                        <P>{question?.content}</P>
+                        <P>{questionContent}</P>
                       </PostBodyDiv>
                       <TagListContainer>
                         <TagListInnerContainer>
@@ -597,7 +634,7 @@ export default function QuestionPage() {
                   ) : (
                   <FollowupsHeader>
                     <FollowupsHeaderH2>
-                      {' '}{followups.length} {followups.length === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
+                      {' '}{numOfFollowups} {numOfFollowups === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
                     </FollowupsHeaderH2>
                   </FollowupsHeader>
                   )}

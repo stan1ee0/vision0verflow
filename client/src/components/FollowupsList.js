@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
+import {serverUrl} from '../index';
 import CommentsList from './CommentsList';
 
 const ListContainer = styled.div`
@@ -211,23 +212,59 @@ export default function FollowupsList({ followups }) {
 }
 
 function FollowupsBox({ followup }) {
+  const votesUrl = `${serverUrl}/answers/${followup.id}/votes`;
+  const token = localStorage.getItem('token');
+
+  const handleUpVote = () => {
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: 1,
+      }),
+    })
+    .catch((error) => {
+      console.log('Error voting up', error);
+    });
+  };
+
+  const handleDownVote = () => {
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: -1,
+      }),
+    })
+    .catch((error) => {
+      console.log('Error voting up', error);
+    });
+  };
+
   const userId = followup.user.id;
   const userName = followup.user.name;
   const followupContent = followup.content;
   const followupComments = followup.comments;
+  const scoreOfVotes = followup.scoreOfVotes;
 
   return (
     <FollowupContainer>
       <FollowupPostContainer>
         <FollowupVoteDiv>
           <FollowupVoteContainer>
-            <VoteButton className='header-button'>
+            <VoteButton className='header-button' onClick={handleUpVote}>
             <Svg width="18" height="18" viewBox="0 0 18 18">
               <path d="M1 12h16L9 4l-8 8Z"></path>
             </Svg>
             </VoteButton>
-            <VoteCountDiv>{' '}0{' '}</VoteCountDiv>
-            <VoteDownButton className='header-button'>
+            <VoteCountDiv>{' '}{scoreOfVotes}{' '}</VoteCountDiv>
+            <VoteDownButton className='header-button' onClick={handleDownVote}>
               <Svg width="18" height="18" viewBox="0 0 18 18">
                 <path d="M1 6h16l-8 8-8-8Z"></path>
               </Svg>
