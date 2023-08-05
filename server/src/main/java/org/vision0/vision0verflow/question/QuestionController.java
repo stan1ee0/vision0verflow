@@ -47,7 +47,8 @@ public class QuestionController {
                 String email = jwtTokenizer.getVerifiedSubject(token.substring(7));
                 User user = userService.find(email);
                 question.setUser(user);
-            } catch (JWTVerificationException e) {
+            }
+            catch (JWTVerificationException e) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
         }
@@ -76,7 +77,8 @@ public class QuestionController {
                 String email = jwtTokenizer.getVerifiedSubject(token.substring(7));
                 User user = userService.find(email);
                 miscService.addView(foundQuestion, user);
-            } catch (JWTVerificationException e) {
+            }
+            catch (JWTVerificationException e) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
         }
