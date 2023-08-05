@@ -51,10 +51,12 @@ public class CommentController {
         if (source.equals("questions")) {
             Question foundQuestion = questionService.find(id);
             comment.setQuestion(foundQuestion);
-        } else if (source.equals("answers")) {
+        }
+        else if (source.equals("answers")) {
             Answer foundAnswer = answerService.find(id);
             comment.setAnswer(foundAnswer);
-        } else {
+        }
+        else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 

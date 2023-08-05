@@ -373,8 +373,14 @@ export default function QuestionPage() {
   const questionUrl = `${serverUrl}/questions/${questionId}`;
 
   const fetchQuestion = async () => {
+    const token = localStorage.getItem('token');
     try {
-      const response = await fetch(questionUrl);
+      const response = await fetch(questionUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
       const data = await response.json();
       setQuestion(data);
       setFollowups(data?.answers || []);

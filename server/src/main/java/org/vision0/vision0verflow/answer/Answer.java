@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.vision0.vision0verflow.answer.dto.AnswerPatch;
 import org.vision0.vision0verflow.answer.dto.AnswerPost;
 import org.vision0.vision0verflow.comment.Comment;
+import org.vision0.vision0verflow.misc.Vote;
 import org.vision0.vision0verflow.question.Question;
 import org.vision0.vision0verflow.user.User;
 
@@ -28,6 +29,8 @@ public class Answer {
     private Question question;
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "answer")
+    private List<Vote> votes = new ArrayList<>();
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)

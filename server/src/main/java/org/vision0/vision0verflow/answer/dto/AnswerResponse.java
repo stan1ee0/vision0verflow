@@ -14,6 +14,7 @@ public class AnswerResponse {
     private String content;
     private UserResponse user;
     private long questionId;
+    private int scoreOfVotes;
     private LocalDateTime createdAt;
     private LocalDateTime editedAt;
     private LocalDateTime deletedAt;
@@ -26,6 +27,9 @@ public class AnswerResponse {
             this.user = new UserResponse(answer.getUser());
         if (answer.getQuestion() != null)
             this.questionId = answer.getQuestion().getId();
+        this.scoreOfVotes = answer.getVotes().stream()
+                .mapToInt(vote -> vote.getValue())
+                .sum();
         this.createdAt = answer.getCreatedAt();
         this.editedAt = answer.getEditedAt();
         this.deletedAt = answer.getDeletedAt();
