@@ -23,8 +23,7 @@ public class UserService {
     }
 
     public User register(User user) {
-        String email = user.getEmail();
-        if (isRegistered(email))
+        if (isRegistered(user.getEmail()))
             throw new ResponseStatusException(HttpStatus.CONFLICT);
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());

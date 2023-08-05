@@ -8,6 +8,7 @@ import org.vision0.vision0verflow.misc.View;
 import org.vision0.vision0verflow.misc.Vote;
 import org.vision0.vision0verflow.question.dto.QuestionPatch;
 import org.vision0.vision0verflow.question.dto.QuestionPost;
+import org.vision0.vision0verflow.tag.Tag;
 import org.vision0.vision0verflow.user.User;
 
 import javax.persistence.*;
@@ -36,6 +37,8 @@ public class Question {
     private List<View> views = new ArrayList<>();
     @OneToMany(mappedBy = "question")
     private List<Vote> votes = new ArrayList<>();
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
