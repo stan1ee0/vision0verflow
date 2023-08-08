@@ -1,6 +1,6 @@
 import {useParams, useNavigate, Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
-import {styled} from 'styled-components';
+import {styled, css} from 'styled-components';
 
 import {serverUrl, chatgptUrl, chatgptKey} from '../index';
 import Header from '../components/Header';
@@ -107,6 +107,10 @@ const VoteButton = styled.button`
   &:hover {
     background-color: hsl(27,95%,90%); 
   }
+
+  ${({highlighted}) => highlighted && css`
+    background-color: hsl(27,95%,90%); 
+  `}
 `;
 
 const VoteDownButton = styled(VoteButton)`
@@ -368,8 +372,11 @@ export default function QuestionPage() {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const [voteUp, setVoteUp] = useState(false);
+  const [voteDown, setVoteDown] = useState(false);
+  const [scoreOfVotes, setScoreOfVotes] = useState(0);
   const navigate = useNavigate();
-
+  
   const questionUrl = `${serverUrl}/questions/${questionId}`;
   const votesUrl = `${serverUrl}/questions/${questionId}/votes`;
   const token = localStorage.getItem('token');
@@ -383,12 +390,27 @@ export default function QuestionPage() {
           'Authorization': `Bearer ${token}`,
         }
       });
-      const data = await response.json();
-      setQuestion(data);
-      setFollowups(data?.answers || []);
-      setComments(data?.comments || []);
+      if (response.ok) {
+        const data = await response.json();
+        setQuestion(data);
+        setFollowups(data?.answers || []);
+        setComments(data?.comments || []);
+        setVoteUp(data?.voteValue === 1);
+        setVoteDown(data?.voteValue === -1);
+        setScoreOfVotes(data?.scoreOfVotes);
+      } else {
+        const error = new Error('Error fetching question');
+        error.status = response.status;
+        throw error;
+      }
     } catch (error) {
-      console.error('Error fetching question:', error);
+      console.error(error);
+      switch(error.status) {
+        case 401:
+          localStorage.removeItem('token');
+          localStorage.removeItem('aiToken');
+          navigate('/users/login');
+      }
     }
   };
 
@@ -480,7 +502,7 @@ export default function QuestionPage() {
         throw  followupError;
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error(error);
       setLoading(false);
       setContent(error.status);
 
@@ -494,6 +516,7 @@ export default function QuestionPage() {
   };
 
   const handleUpVote = () => {
+    const value = voteUp ? 0 : 1;
     fetch(votesUrl, {
       method: 'POST',
       headers: {
@@ -501,15 +524,33 @@ export default function QuestionPage() {
         'Authorization': `Bearer ${token}`, 
       },
       body: JSON.stringify({
-        value: 1,
+        value: value,
       }),
     })
+    .then((response) => {
+      if (response.ok) {
+        if (voteUp) {
+          setVoteUp(false);
+          setScoreOfVotes(scoreOfVotes - 1);
+        } else if (voteDown) {
+          setVoteUp(true);
+          setVoteDown(false);
+          setScoreOfVotes(scoreOfVotes + 2);   
+        } else {
+          setVoteUp(true);
+          setScoreOfVotes(scoreOfVotes + 1);
+        }
+      } else {
+        throw new Error('Error voting up');
+      }
+    })
     .catch((error) => {
-      console.log('Error voting up', error);
+      console.log(error);
     });
   };
 
   const handleDownVote = () => {
+    const value = voteDown ? 0 : -1;
     fetch(votesUrl, {
       method: 'POST',
       headers: {
@@ -517,17 +558,33 @@ export default function QuestionPage() {
         'Authorization': `Bearer ${token}`, 
       },
       body: JSON.stringify({
-        value: -1,
+        value: value,
       }),
     })
+    .then((response) => {
+      if (response.ok) {
+        if (voteDown) {
+          setVoteDown(false);
+          setScoreOfVotes(scoreOfVotes + 1);
+        } else if (voteUp) {
+          setVoteDown(true);
+          setVoteUp(false);
+          setScoreOfVotes(scoreOfVotes - 2);
+        } else {
+          setVoteDown(true);
+          setScoreOfVotes(scoreOfVotes - 1);
+        }
+      } else {
+        throw new Error('Error voting up');
+      }
+    })
     .catch((error) => {
-      console.log('Error voting up', error);
+      console.log(error);
     });
   };
 
   const questionTitle = question?.title;
   const questionContent = question?.content;
-  const scoreOfVotes = question?.scoreOfVotes;
   const numOfFollowups = question?.numOfAnswers;
 
   return (
@@ -551,13 +608,13 @@ export default function QuestionPage() {
                   <QuestionPostContainer>
                     <QuestionVoteDiv>
                       <QuestionVoteContainer>
-                        <VoteButton className='header-button' onClick={handleUpVote}>
+                        <VoteButton className='header-button' highlighted={voteUp} onClick={handleUpVote}>
                           <Svg width="18" height="18" viewBox="0 0 18 18">
                             <path d="M1 12h16L9 4l-8 8Z"></path>
                           </Svg>
                         </VoteButton>
                         <VoteCountDiv>{' '}{scoreOfVotes}{' '}</VoteCountDiv>
-                        <VoteDownButton className='header-button' onClick={handleDownVote}>
+                        <VoteDownButton className='header-button' highlighted={voteDown} onClick={handleDownVote}>
                           <Svg width="18" height="18" viewBox="0 0 18 18">
                             <path d="M1 6h16l-8 8-8-8Z"></path>
                           </Svg>
