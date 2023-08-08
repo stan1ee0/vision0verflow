@@ -239,7 +239,7 @@ export default function HomePage() {
               Looking for more? Browse the{' '}
               <Link to='/questions'>complete list of questions</Link>
               , or{' '}
-              <Link>popular tags</Link>
+              <Link to='/tags'>popular tags</Link>
               . Help us answer{' '}
               <Link>unanswered questions.</Link>
             </H2>

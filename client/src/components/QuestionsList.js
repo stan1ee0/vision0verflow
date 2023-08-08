@@ -124,13 +124,15 @@ export default function QuestionList() {
 function QuestionsBox({question}) {
   const questionId = question.id;
   const questionTitle = question.title;
+  const scoreOfVotes = question.scoreOfVotes;
   const numOfFollowups = question.numOfAnswers;
+  const numOfViews = question.numOfViews;
 
   return (
     <div className='question-box'>
       <div className='question-stats'>
         <Div className='question-stats-item'>
-          <Span>0</Span>
+          <Span>{scoreOfVotes}</Span>
           <span>votes</span>
         </Div>
         <Div className='question-stats-item'>
@@ -138,7 +140,7 @@ function QuestionsBox({question}) {
           <span>follow-ups</span>
         </Div>
         <Div className='question-stats-item'>
-          <Span>1</Span>
+          <Span>{numOfViews}</Span>
           <span>views</span>
         </Div>
       </div>

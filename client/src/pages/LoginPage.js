@@ -219,17 +219,15 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const data = {
-      email: email,
-      password: password,
-    };
-
     fetch(authUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
     })
     .then((response) => {
       if (response.ok) {

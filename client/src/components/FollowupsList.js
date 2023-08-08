@@ -1,7 +1,9 @@
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {styled} from 'styled-components';
+import {styled, css} from 'styled-components';
 import PropTypes from 'prop-types';
 
+import {serverUrl} from '../index';
 import CommentsList from './CommentsList';
 
 const ListContainer = styled.div`
@@ -52,6 +54,10 @@ const VoteButton = styled.button`
   &:hover {
     background-color: hsl(27,95%,90%); 
   }
+
+  ${({highlighted}) => highlighted && css`
+    background-color: hsl(27,95%,90%); 
+  `}
 `;
 
 const VoteDownButton = styled(VoteButton)`
@@ -211,6 +217,81 @@ export default function FollowupsList({ followups }) {
 }
 
 function FollowupsBox({ followup }) {
+  const [voteUp, setVoteUp] = useState(followup.voteValue === 1);
+  const [voteDown, setVoteDown] = useState(followup.voteValue === 1);
+  const [scoreOfVotes, setScoreOfVotes] = useState(followup.scoreOfVotes);
+
+  const votesUrl = `${serverUrl}/answers/${followup.id}/votes`;
+  const token = localStorage.getItem('token');
+
+  const handleUpVote = () => {
+    const value = voteUp ? 0 : 1;
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: value,
+      }),
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (voteUp) {
+          setVoteUp(false);
+          setScoreOfVotes(scoreOfVotes - 1);
+        } else if (voteDown) {
+          setVoteUp(true);
+          setVoteDown(false);
+          setScoreOfVotes(scoreOfVotes + 2);   
+        } else {
+          setVoteUp(true);
+          setScoreOfVotes(scoreOfVotes + 1);
+        }
+      } else {
+        throw new Error('Error voting up');
+      }
+    })
+    .catch((error) => {
+      console.log('Error voting up', error);
+    });
+  };
+
+  const handleDownVote = () => {
+    const value = voteDown ? 0 : -1;
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: value,
+      }),
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (voteDown) {
+          setVoteDown(false);
+          setScoreOfVotes(scoreOfVotes + 1);
+        } else if (voteUp) {
+          setVoteDown(true);
+          setVoteUp(false);
+          setScoreOfVotes(scoreOfVotes - 2);
+        } else {
+          setVoteDown(true);
+          setScoreOfVotes(scoreOfVotes - 1);
+        }
+      } else {
+        throw new Error('Error voting up');
+      }
+    })
+    .catch((error) => {
+      console.log('Error voting up', error);
+    });
+  };
+
   const userId = followup.user.id;
   const userName = followup.user.name;
   const followupContent = followup.content;
@@ -221,13 +302,13 @@ function FollowupsBox({ followup }) {
       <FollowupPostContainer>
         <FollowupVoteDiv>
           <FollowupVoteContainer>
-            <VoteButton className='header-button'>
+            <VoteButton className='header-button' highlighted={voteUp} onClick={handleUpVote}>
             <Svg width="18" height="18" viewBox="0 0 18 18">
               <path d="M1 12h16L9 4l-8 8Z"></path>
             </Svg>
             </VoteButton>
-            <VoteCountDiv>{' '}0{' '}</VoteCountDiv>
-            <VoteDownButton className='header-button'>
+            <VoteCountDiv>{' '}{scoreOfVotes}{' '}</VoteCountDiv>
+            <VoteDownButton className='header-button' highlighted={voteDown} onClick={handleDownVote}>
               <Svg width="18" height="18" viewBox="0 0 18 18">
                 <path d="M1 6h16l-8 8-8-8Z"></path>
               </Svg>

@@ -1,6 +1,6 @@
 import {useParams, useNavigate, Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
-import {styled} from 'styled-components';
+import {styled, css} from 'styled-components';
 
 import {serverUrl, chatgptUrl, chatgptKey} from '../index';
 import Header from '../components/Header';
@@ -107,6 +107,10 @@ const VoteButton = styled.button`
   &:hover {
     background-color: hsl(27,95%,90%); 
   }
+
+  ${({highlighted}) => highlighted && css`
+    background-color: hsl(27,95%,90%); 
+  `}
 `;
 
 const VoteDownButton = styled(VoteButton)`
@@ -368,12 +372,17 @@ export default function QuestionPage() {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const [voteUp, setVoteUp] = useState(false);
+  const [voteDown, setVoteDown] = useState(false);
+  const [scoreOfVotes, setScoreOfVotes] = useState(0);
   const navigate = useNavigate();
-
+  
   const questionUrl = `${serverUrl}/questions/${questionId}`;
+  const votesUrl = `${serverUrl}/questions/${questionId}/votes`;
+  const token = localStorage.getItem('token');
+  const aiToken = localStorage.getItem('aiToken');
 
   const fetchQuestion = async () => {
-    const token = localStorage.getItem('token');
     try {
       const response = await fetch(questionUrl, {
         method: 'GET',
@@ -381,12 +390,27 @@ export default function QuestionPage() {
           'Authorization': `Bearer ${token}`,
         }
       });
-      const data = await response.json();
-      setQuestion(data);
-      setFollowups(data?.answers || []);
-      setComments(data?.comments || []);
+      if (response.ok) {
+        const data = await response.json();
+        setQuestion(data);
+        setFollowups(data?.answers || []);
+        setComments(data?.comments || []);
+        setVoteUp(data?.voteValue === 1);
+        setVoteDown(data?.voteValue === -1);
+        setScoreOfVotes(data?.scoreOfVotes);
+      } else {
+        const error = new Error('Error fetching question');
+        error.status = response.status;
+        throw error;
+      }
     } catch (error) {
-      console.error('Error fetching question:', error);
+      console.error(error);
+      switch(error.status) {
+        case 401:
+          localStorage.removeItem('token');
+          localStorage.removeItem('aiToken');
+          navigate('/users/login');
+      }
     }
   };
 
@@ -398,8 +422,6 @@ export default function QuestionPage() {
     event.preventDefault();
     setLoading(true);
 
-    const token = localStorage.getItem('token');
-    const aiToken = localStorage.getItem('aiToken');
     const messages = [{role: 'system', content: 'Vision0 is asking.'}];
     messages.push({role: 'user', content: question.content});
     messages.push({role: 'assistant', content: question.comments[0].content});
@@ -480,7 +502,7 @@ export default function QuestionPage() {
         throw  followupError;
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error(error);
       setLoading(false);
       setContent(error.status);
 
@@ -493,6 +515,78 @@ export default function QuestionPage() {
     }
   };
 
+  const handleUpVote = () => {
+    const value = voteUp ? 0 : 1;
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: value,
+      }),
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (voteUp) {
+          setVoteUp(false);
+          setScoreOfVotes(scoreOfVotes - 1);
+        } else if (voteDown) {
+          setVoteUp(true);
+          setVoteDown(false);
+          setScoreOfVotes(scoreOfVotes + 2);   
+        } else {
+          setVoteUp(true);
+          setScoreOfVotes(scoreOfVotes + 1);
+        }
+      } else {
+        throw new Error('Error voting up');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
+
+  const handleDownVote = () => {
+    const value = voteDown ? 0 : -1;
+    fetch(votesUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        value: value,
+      }),
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (voteDown) {
+          setVoteDown(false);
+          setScoreOfVotes(scoreOfVotes + 1);
+        } else if (voteUp) {
+          setVoteDown(true);
+          setVoteUp(false);
+          setScoreOfVotes(scoreOfVotes - 2);
+        } else {
+          setVoteDown(true);
+          setScoreOfVotes(scoreOfVotes - 1);
+        }
+      } else {
+        throw new Error('Error voting up');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
+
+  const questionTitle = question?.title;
+  const questionContent = question?.content;
+  const numOfFollowups = question?.numOfAnswers;
+
   return (
     <div>
       <Header />
@@ -502,9 +596,9 @@ export default function QuestionPage() {
           <div>
             <div>
               <QuestionHeader>
-                <QuestionHeaderH1><QuestionHeaderLink to={`/questions/${questionId}`}>{question?.title}</QuestionHeaderLink></QuestionHeaderH1>
+                <QuestionHeaderH1><QuestionHeaderLink to={`/questions/${questionId}`}>{questionTitle}</QuestionHeaderLink></QuestionHeaderH1>
                 <AskButtonContainer>
-                  <AskButtonLink className='button' to="/questions/ask"> Ask Question </AskButtonLink>
+                  <AskButtonLink className='button' to='/questions/ask'> Ask Question </AskButtonLink>
                 </AskButtonContainer>
               </QuestionHeader>
               <QuestionStats>
@@ -514,13 +608,13 @@ export default function QuestionPage() {
                   <QuestionPostContainer>
                     <QuestionVoteDiv>
                       <QuestionVoteContainer>
-                        <VoteButton className='header-button'>
+                        <VoteButton className='header-button' highlighted={voteUp} onClick={handleUpVote}>
                           <Svg width="18" height="18" viewBox="0 0 18 18">
                             <path d="M1 12h16L9 4l-8 8Z"></path>
                           </Svg>
                         </VoteButton>
-                        <VoteCountDiv>{' '}0{' '}</VoteCountDiv>
-                        <VoteDownButton className='header-button'>
+                        <VoteCountDiv>{' '}{scoreOfVotes}{' '}</VoteCountDiv>
+                        <VoteDownButton className='header-button' highlighted={voteDown} onClick={handleDownVote}>
                           <Svg width="18" height="18" viewBox="0 0 18 18">
                             <path d="M1 6h16l-8 8-8-8Z"></path>
                           </Svg>
@@ -529,7 +623,7 @@ export default function QuestionPage() {
                     </QuestionVoteDiv>
                     <QuestionPostDiv>
                       <PostBodyDiv className='prose'>
-                        <P>{question?.content}</P>
+                        <P>{questionContent}</P>
                       </PostBodyDiv>
                       <TagListContainer>
                         <TagListInnerContainer>
@@ -597,7 +691,7 @@ export default function QuestionPage() {
                   ) : (
                   <FollowupsHeader>
                     <FollowupsHeaderH2>
-                      {' '}{followups.length} {followups.length === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
+                      {' '}{numOfFollowups} {numOfFollowups === 1 ? 'Follow-up' : 'Follow-ups'}{' '}
                     </FollowupsHeaderH2>
                   </FollowupsHeader>
                   )}
