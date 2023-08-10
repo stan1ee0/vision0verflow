@@ -395,9 +395,23 @@ export default function QuestionPage() {
         setQuestion(data);
         setFollowups(data?.answers || []);
         setComments(data?.comments || []);
-        setVoteUp(data?.voteValue === 1);
-        setVoteDown(data?.voteValue === -1);
         setScoreOfVotes(data?.scoreOfVotes);
+
+        const voteResponse = await fetch(votesUrl, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        });
+        if (voteResponse.ok) {
+          const voteData = await voteResponse.json();
+          setVoteUp(voteData?.value === 1);
+          setVoteDown(voteData?.value === -1);
+        } else {
+          const voteError = new Error('Error getting vote');
+          voteError.status = voteResponse.status;
+          throw voteError;
+        }
       } else {
         const error = new Error('Error fetching question');
         error.status = response.status;

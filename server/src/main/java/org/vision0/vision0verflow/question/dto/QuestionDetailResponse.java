@@ -6,12 +6,9 @@ import lombok.NoArgsConstructor;
 import org.vision0.vision0verflow.answer.dto.AnswerDetailResponse;
 import org.vision0.vision0verflow.answer.dto.AnswerResponse;
 import org.vision0.vision0verflow.comment.dto.CommentResponse;
-import org.vision0.vision0verflow.misc.Vote;
-import org.vision0.vision0verflow.misc.dto.VoteResponse;
 import org.vision0.vision0verflow.question.Question;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -20,7 +17,6 @@ import java.util.stream.Collectors;
 public class QuestionDetailResponse extends QuestionResponse {
     private List<AnswerResponse> answers;
     private List<CommentResponse> comments;
-    private int voteValue;
 
     public QuestionDetailResponse(Question question) {
         super(question);
@@ -32,12 +28,5 @@ public class QuestionDetailResponse extends QuestionResponse {
         this.comments = question.getComments().stream()
                 .map(comment -> new CommentResponse(comment))
                 .collect(Collectors.toList());
-
-        Optional<Vote> optionalVote = question.getVotes().stream()
-                .filter(vote -> vote.getUser().equals(question.getUser()))
-                .findFirst();
-
-        if (optionalVote.isPresent())
-            this.voteValue = optionalVote.get().getValue();
     }
 }

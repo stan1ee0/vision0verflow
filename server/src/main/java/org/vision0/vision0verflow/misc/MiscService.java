@@ -1,6 +1,8 @@
 package org.vision0.vision0verflow.misc;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import org.vision0.vision0verflow.answer.Answer;
 import org.vision0.vision0verflow.question.Question;
 import org.vision0.vision0verflow.user.User;
@@ -55,5 +57,19 @@ public class MiscService {
         Vote castedVote = voteRepository.save(vote);
 
         return castedVote;
+    }
+
+    public Vote findVote(Question question, User user) {
+        Vote foundVote = voteRepository.findByQuestionAndUser(question, user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return foundVote;
+    }
+
+    public Vote findVote(Answer answer, User user) {
+        Vote foundVote = voteRepository.findByAnswerAndUser(answer, user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return foundVote;
     }
 }

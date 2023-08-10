@@ -68,4 +68,36 @@ public class MiscController {
 
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/{source}/{id}/votes")
+    public VoteResponse getVotes(@PathVariable String source,
+                                 @PathVariable long id,
+                                 @RequestHeader(value = "Authorization", required = false) String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            Vote vote = new Vote();
+
+            try {
+                String email = jwtTokenizer.getVerifiedSubject(token.substring(7));
+                User user = userService.find(email);
+                vote.setUser(user);
+            }
+            catch (JWTVerificationException e) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            }
+
+            if (source.equals("questions")) {
+                Question foundQuestion = questionService.find(id);
+                vote = miscService.findVote(foundQuestion, vote.getUser());
+            }
+            else if (source.equals("answers")) {
+                Answer foundAnswer = answerService.find(id);
+                vote = miscService.findVote(foundAnswer, vote.getUser());
+            }
+            else throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+            return new VoteResponse(vote);
+        }
+
+        throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+    }
 }

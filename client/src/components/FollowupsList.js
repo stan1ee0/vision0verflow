@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {styled, css} from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -217,12 +217,47 @@ export default function FollowupsList({ followups }) {
 }
 
 function FollowupsBox({ followup }) {
-  const [voteUp, setVoteUp] = useState(followup.voteValue === 1);
-  const [voteDown, setVoteDown] = useState(followup.voteValue === 1);
+  const navigate = useNavigate();
+  const [voteUp, setVoteUp] = useState(0);
+  const [voteDown, setVoteDown] = useState(0);
   const [scoreOfVotes, setScoreOfVotes] = useState(followup.scoreOfVotes);
 
   const votesUrl = `${serverUrl}/answers/${followup.id}/votes`;
   const token = localStorage.getItem('token');
+
+  const getVote = async () => {
+    try {
+      const response = await fetch(votesUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setVoteUp(data?.value === 1);
+        setVoteDown(data?.value === -1);
+      } else {
+        const error = new Error('Error getting vote');
+        error.status = response.status;
+        throw error;
+      }
+    }
+    catch (error) {
+      console.error(error);
+      switch(error.status) {
+        case 401:
+          localStorage.removeItem('token');
+          localStorage.removeItem('aiToken');
+          navigate('/users/login');
+      }
+    }
+  };
+
+  useEffect(() => {
+    getVote();
+  }, [followup]);
 
   const handleUpVote = () => {
     const value = voteUp ? 0 : 1;
