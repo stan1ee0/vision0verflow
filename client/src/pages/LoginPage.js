@@ -244,10 +244,10 @@ export default function LoginPage() {
       console.log('User authenticated successfully!');
       setEmail('');
       setPassword('');
-      const token = data.token;
-      const aiToken = data.aiToken;
-      localStorage.setItem('token', token);
-      localStorage.setItem('aiToken', aiToken);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('aiToken', data.aiToken);
+      localStorage.setItem('userId', data.user.id);
+      localStorage.setItem('userName', data.user.name);
       navigate(-1);
     })
     .catch((error) => {
