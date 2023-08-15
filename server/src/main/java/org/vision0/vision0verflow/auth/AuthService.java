@@ -20,11 +20,13 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void authenticate(String email, String password) {
+    public User authenticate(String email, String password) {
         User foundUser = userService.find(email);
 
         String registeredPassword = foundUser.getPassword();
         if (!passwordEncoder.matches(password, registeredPassword))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+        return foundUser;
     }
 }

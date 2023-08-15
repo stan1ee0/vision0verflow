@@ -2,7 +2,7 @@ import {useParams, useNavigate, Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import {styled, css} from 'styled-components';
 
-import {serverUrl, chatgptUrl, chatgptKey} from '../index';
+import {serverUrl, chatgptUrl, chatgptKey, getAvatarUrl} from '../index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LeftSide from '../components/LeftSide';
@@ -366,7 +366,7 @@ const H2 = styled.h2`
 `;
 
 export default function QuestionPage() {
-  const { questionId } = useParams();
+  const {questionId} = useParams();
   const [question, setQuestion] = useState(null);
   const [followups, setFollowups] = useState([]);
   const [comments, setComments] = useState([]);
@@ -423,6 +423,8 @@ export default function QuestionPage() {
         case 401:
           localStorage.removeItem('token');
           localStorage.removeItem('aiToken');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userName');
           navigate('/users/login');
       }
     }
@@ -600,6 +602,9 @@ export default function QuestionPage() {
   const questionTitle = question?.title;
   const questionContent = question?.content;
   const numOfFollowups = question?.numOfAnswers;
+  const userId = question?.user.id;
+  const userName = question?.user.name;
+  const avatarUrl = getAvatarUrl(userId);
 
   return (
     <div>
@@ -665,14 +670,12 @@ export default function QuestionPage() {
                               <UserAvatarDiv>
                                 <Link to='/users/1'>
                                   <UserAvatarContainer>
-                                    <img className='user-avatar-image' alt='Vision0'
-                                      src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
-                                    />
+                                    <img className='user-avatar-image' alt={userName} src={avatarUrl} />
                                   </UserAvatarContainer>
                                 </Link>
                               </UserAvatarDiv>
                               <UserDetailsDiv>
-                                <Link to='/users/1'>Vision0</Link>
+                                <Link to={`/users/${userId}`}>{userName}</Link>
                                 <UserStatsDiv>
                                   <Span>100</Span>
                                 </UserStatsDiv>

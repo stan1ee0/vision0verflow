@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {styled} from 'styled-components';
 
+import {getAvatarUrl} from '../index';
 import hamburger from '../images/hamburger.jpg';
 
 const HeaderContainer = styled.header`
@@ -148,10 +149,14 @@ export default function Header() {
   const [keyword, setKeyword] = useState('');
 
   const isLoggedIn = !!localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const userName = localStorage.getItem('userName');
 
   const handleSubmit = (event) => {
     event.preventDefault();
   };
+
+  const avatarUrl = getAvatarUrl(userId);
 
   return (
     <HeaderContainer className='header'>
@@ -190,11 +195,9 @@ export default function Header() {
         {isLoggedIn ? (
           <ol className='header-content'>
             <NavLi role="none">
-              <AvatarLink className="header-item user-card" to="/users/1">
+              <AvatarLink className="header-item user-card" to={`/users/${userId}`}>
                 <AvatarContainer className='header-avatar'>
-                  <img className='header-avatar-image' alt='Vision0'
-                    src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
-                  />
+                  <img className='header-avatar-image' alt={userName} src={avatarUrl} />
                 </AvatarContainer>       
               </AvatarLink>
             </NavLi>

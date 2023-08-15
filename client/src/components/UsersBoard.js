@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
-import {serverUrl} from '../index';
+import {serverUrl, getAvatarUrl} from '../index';
 
 const BoardContainer = styled.div`
   display: grid !important;
@@ -115,25 +115,17 @@ export default function UsersBoard() {
 function UsersBox({user}) {
   const userId = user.id;
   const userName = user.name;
+  const avatarUrl = getAvatarUrl(userId);
 
   return (
     <UserInfoContainer>
       <UserAvatarDiv>
         <Link to={`/users/${userId}`}>
           <AvatarContainer>
-            {userId == 1 ? (
-            <Img alt={userName} width="48" height="48"
-              src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
-            />
-            ) : (
-            <Img alt={userName} width="48" height="48"
-              src='https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg'
-            />
-            )}
+            <Img alt={userName} width="48" height="48" src={avatarUrl} />
           </AvatarContainer>
         </Link>
       </UserAvatarDiv>
-      {userId == 1 ? (
       <UserDetailsDiv>
         <UserDetailsLink to={`/users/${userId}`}>{userName}</UserDetailsLink>
         <LocationSpan>{' '}Marvel{' '}</LocationSpan>
@@ -141,28 +133,11 @@ function UsersBox({user}) {
           <ReputationSpan>100</ReputationSpan>
         </UserFlairDiv>
       </UserDetailsDiv>
-      ) : (
-      <UserDetailsDiv>
-        <UserDetailsLink to={`/users/${userId}`}>{userName}</UserDetailsLink>
-        <LocationSpan>{' '}OpenAI{' '}</LocationSpan>
-        <UserFlairDiv>
-          <ReputationSpan>200</ReputationSpan>
-        </UserFlairDiv>
-      </UserDetailsDiv>
-      )}
-      {userId == 1 ? (
       <UserTagsDiv>
         <Link>vision</Link>
         ,{' '}
         <Link>marvel</Link>
       </UserTagsDiv>
-      ) : (
-      <UserTagsDiv>
-        <Link>chatgpt</Link>
-        ,{' '}
-        <Link>openai</Link>
-      </UserTagsDiv>
-      )}
     </UserInfoContainer>
   );
 }

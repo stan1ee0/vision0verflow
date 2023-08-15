@@ -9,6 +9,7 @@ import LogoutPage from './pages/LogoutPage';
 import UsersPage from './pages/UsersPage';
 import TagsPage from './pages/TagsPage';
 import SignupPage from './pages/SignupPage';
+import UserPage from './pages/UserPage';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path='/users/logout' element={<LogoutPage />} />
         <Route path='/users/signup' element={<SignupPage />} />
         <Route path='/users' element={<UsersPage />} />
+        <Route path='/users/:userId' element={<UserPage />} />
         <Route path='/tags/' element={<TagsPage />} />
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {styled} from 'styled-components';
 import PropTypes from 'prop-types';
 
-import {serverUrl} from '../index';
+import {serverUrl, getAvatarUrl} from '../index';
 
 const ListContainer = styled.div`
   margin-bottom: 30px;
@@ -127,6 +127,9 @@ function QuestionsBox({question}) {
   const scoreOfVotes = question.scoreOfVotes;
   const numOfFollowups = question.numOfAnswers;
   const numOfViews = question.numOfViews;
+  const userId = question.user.id;
+  const userName = question.user.name;
+  const avatarUrl = getAvatarUrl(userId);
 
   return (
     <div className='question-box'>
@@ -156,16 +159,14 @@ function QuestionsBox({question}) {
             </TagsUl>
           </TagsDiv>
           <UserCardDiv className='user-card'>
-            <AvatarLink className='avatar' to='users/1'>
+            <AvatarLink className='avatar' to={`users/${userId}`}>
               <AvatarContainer>
-                <img className='avatar-image' alt='Vision0'
-                  src='https://s3.amazonaws.com/comicgeeks/characters/avatars/1616.jpg?t=1687973152'
-                />
+                <img className='avatar-image' alt={userName} src={avatarUrl} />
               </AvatarContainer>
             </AvatarLink>
             <div className='user-card-info'>
               <UserNameContainer className='user-card-link'>
-                <UserNameLink to="/users/1">Vision0</UserNameLink>
+                <UserNameLink to={`/users/${userId}`}>{userName}</UserNameLink>
               </UserNameContainer>
             </div>
             <time className='user-card-time'>

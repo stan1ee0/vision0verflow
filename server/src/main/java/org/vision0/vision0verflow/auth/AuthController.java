@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.vision0.vision0verflow.auth.dto.AuthRequest;
 import org.vision0.vision0verflow.auth.dto.AuthResponse;
 import org.vision0.vision0verflow.security.JwtTokenizer;
+import org.vision0.vision0verflow.user.User;
 
 @CrossOrigin
 @RestController
@@ -25,11 +26,11 @@ public class AuthController {
     public AuthResponse postAuth(@RequestBody AuthRequest authRequest) {
         String email = authRequest.getEmail();
         String password = authRequest.getPassword();
-        authService.authenticate(email, password);
+        User authUser = authService.authenticate(email, password);
 
         String token = jwtTokenizer.generate(email);
         String aiToken = jwtTokenizer.generate("aision@verflow.org");
 
-        return new AuthResponse(token, aiToken);
+        return new AuthResponse(token, aiToken, authUser);
     }
 }
