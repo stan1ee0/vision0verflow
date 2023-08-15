@@ -366,7 +366,7 @@ const H2 = styled.h2`
 `;
 
 export default function QuestionPage() {
-  const { questionId } = useParams();
+  const {questionId} = useParams();
   const [question, setQuestion] = useState(null);
   const [followups, setFollowups] = useState([]);
   const [comments, setComments] = useState([]);
@@ -423,6 +423,8 @@ export default function QuestionPage() {
         case 401:
           localStorage.removeItem('token');
           localStorage.removeItem('aiToken');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userName');
           navigate('/users/login');
       }
     }

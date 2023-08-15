@@ -242,6 +242,8 @@ export default function AskInput() {
         case 401:
           localStorage.removeItem('token');
           localStorage.removeItem('aiToken');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userName');
           navigate('/users/login');
       }
     }

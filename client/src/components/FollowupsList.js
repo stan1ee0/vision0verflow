@@ -250,6 +250,8 @@ function FollowupsBox({ followup }) {
         case 401:
           localStorage.removeItem('token');
           localStorage.removeItem('aiToken');
+          localStorage.removeItem('userId');
+          localStorage.removeitem('userName');
           navigate('/users/login');
       }
     }

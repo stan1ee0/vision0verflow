@@ -83,6 +83,8 @@ export default function LogoutPage() {
 
     localStorage.removeItem('token');
     localStorage.removeItem('aiToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
     navigate('/');
   };
 
