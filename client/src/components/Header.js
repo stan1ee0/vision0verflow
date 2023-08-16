@@ -1,8 +1,8 @@
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
-import {styled} from 'styled-components';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
 
-import {getAvatarUrl} from '../index';
+import { serverUrl, getAvatarUrl } from '../index';
 import hamburger from '../images/hamburger.jpg';
 
 const HeaderContainer = styled.header`
@@ -147,16 +147,46 @@ const SignupLink = styled(Link)`
 
 export default function Header() {
   const [keyword, setKeyword] = useState('');
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const isLoggedIn = !!localStorage.getItem('token');
-  const userId = localStorage.getItem('userId');
-  const userName = localStorage.getItem('userName');
+  const authUrl = `${serverUrl}/auth`;
+
+  useEffect(() => {
+    const checkToken = async () => {
+      if (isLoggedIn) {
+        const token = localStorage.getItem('token');
+        try {
+          const response = await fetch(authUrl, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUser(data.user);
+          } else if (response.status == 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('aiToken');
+            navigate('/users/login');
+          } else {
+            console.log('Error getting user');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+
+    checkToken();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
   };
 
-  const avatarUrl = getAvatarUrl(userId);
+  const avatarUrl = getAvatarUrl(user?.id);
 
   return (
     <HeaderContainer className='header'>
@@ -195,9 +225,9 @@ export default function Header() {
         {isLoggedIn ? (
           <ol className='header-content'>
             <NavLi role="none">
-              <AvatarLink className="header-item user-card" to={`/users/${userId}`}>
+              <AvatarLink className="header-item user-card" to={`/users/${user?.id}`}>
                 <AvatarContainer className='header-avatar'>
-                  <img className='header-avatar-image' alt={userName} src={avatarUrl} />
+                  <img className='header-avatar-image' alt={user?.name} src={avatarUrl} />
                 </AvatarContainer>       
               </AvatarLink>
             </NavLi>

@@ -1,7 +1,7 @@
-import { styled } from 'styled-components';
-import { FaStackOverflow } from 'react-icons/fa';
-import { BiMessageAlt } from 'react-icons/bi';
-import { HiPencil } from 'react-icons/hi';
+import {styled} from 'styled-components';
+import {FaStackOverflow} from 'react-icons/fa';
+import {BiMessageAlt} from 'react-icons/bi';
+import {HiPencil} from 'react-icons/hi';
 
 const SideWidget = styled.div`
   background-color: hsl(47,87%,94%);

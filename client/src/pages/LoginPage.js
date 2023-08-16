@@ -246,8 +246,6 @@ export default function LoginPage() {
       setPassword('');
       localStorage.setItem('token', data.token);
       localStorage.setItem('aiToken', data.aiToken);
-      localStorage.setItem('userId', data.user.id);
-      localStorage.setItem('userName', data.user.name);
       navigate(-1);
     })
     .catch((error) => {

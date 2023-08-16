@@ -42,10 +42,10 @@ public class CommentController {
     }
 
     @PostMapping("/{source}/{id}/comments")
-    public CommentResponse postQuestionComment(@PathVariable String source,
-                                               @PathVariable long id,
-                                               @RequestBody CommentPost commentPost,
-                                               @RequestHeader(value = "Authorization", required = false) String token) {
+    public CommentResponse postComment(@PathVariable String source,
+                                       @PathVariable long id,
+                                       @RequestBody CommentPost commentPost,
+                                       @RequestHeader(value = "Authorization", required = false) String token) {
         Comment comment = new Comment(commentPost);
 
         if (source.equals("questions")) {

@@ -127,10 +127,10 @@ export default function LeftSide() {
                   </QuestionsLink>
                 </NavLi>
                 <NavLi>
-                  <NavLink to='/tags' highlighted={location.pathname === '/tags'}>Tags</NavLink>
+                  <NavLink to='/tags' highlighted={location.pathname.startsWith('/tags')}>Tags</NavLink>
                 </NavLi>
                 <NavLi>
-                  <NavLink to='/users' highlighted={location.pathname === '/users'}>Users</NavLink>
+                  <NavLink to='/users' highlighted={location.pathname.startsWith('/users')}>Users</NavLink>
                 </NavLi>
               </NavOl>
             </li>
